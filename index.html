@@ -1,493 +1,294 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IrisWest156 | Developer Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --cyan: #00eaff;
-      --pink: #ff00d4;
-      --purple: #7a00ff;
-      --dark: #0a0a10;
-      --text: #f5f5f5;
-      --muted: #aaa;
-      --panel: rgba(255, 255, 255, 0.04);
-      --border: rgba(255, 255, 255, 0.12);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: "Poppins", sans-serif;
-      background: radial-gradient(circle at 20% 30%, #111 0%, #000 100%);
-      color: var(--text);
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
-
-    /* NAVIGATION */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(10px);
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      padding: 1rem;
-      border-bottom: 1px solid var(--border);
-      z-index: 10;
-    }
-
-    nav a {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s, transform 0.3s;
-    }
-
-    nav a:hover {
-      color: var(--cyan);
-      transform: translateY(-2px);
-    }
-
-    /* MAIN LAYOUT */
-    main {
-      margin-top: 90px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    section {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 4rem 1rem;
-      max-width: 1200px;
-      margin: auto;
-      opacity: 0;
-      transform: scale(0.98);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-      pointer-events: none;
-    }
-
-    section.active {
-      opacity: 1;
-      transform: scale(1);
-      pointer-events: auto;
-      position: relative;
-    }
-
-    h1,
-    h2 {
-      text-align: center;
-      background: linear-gradient(90deg, var(--cyan), var(--pink));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 1.5rem;
-    }
-
-    /* HOME SECTION */
-    #home {
-      text-align: center;
-      background: linear-gradient(160deg, #05050a, #0f0f18);
-      padding: 6rem 1rem 7rem;
-      border-radius: 12px;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    #home img {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      border: 3px solid var(--cyan);
-      box-shadow: 0 0 25px rgba(0, 234, 255, 0.4);
-      margin-bottom: 1rem;
-      transition: transform 0.4s ease;
-    }
-
-    #home img:hover {
-      transform: scale(1.08);
-    }
-
-    #home p {
-      max-width: 650px;
-      margin: 1rem auto;
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 1rem;
-    }
-
-    .btns {
-      margin-top: 2rem;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .btns a {
-      background: linear-gradient(90deg, var(--cyan), var(--pink));
-      color: #fff;
-      padding: 0.9rem 1.6rem;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .btns a:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(255, 0, 212, 0.4);
-    }
-
-    /* PROJECT GRID */
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .project {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.5rem;
-      text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .project:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 0 25px rgba(0, 234, 255, 0.25);
-    }
-
-    .project img {
-      width: 100%;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-      object-fit: cover;
-    }
-
-    .project h3 {
-      color: var(--cyan);
-      font-size: 1.2rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .project p {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    /* FEATURED */
-    .featured {
-      text-align: center;
-      margin-bottom: 4rem;
-    }
-
-    .featured h3 {
-      color: var(--pink);
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .featured p {
-      color: var(--muted);
-      margin-bottom: 1rem;
-    }
-
-    .video-wrapper {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-      border-radius: 10px;
-      box-shadow: 0 0 25px rgba(255, 0, 212, 0.3);
-    }
-
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 2rem;
-      color: var(--muted);
-      background: linear-gradient(135deg, #0b0b10, #000);
-      border-top: 1px solid var(--border);
-      margin-top: 3rem;
-      font-size: 0.9rem;
-    }
-
-    /* RESPONSIVE DESIGN */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 1.9rem;
-      }
-      h2 {
-        font-size: 1.5rem;
-      }
-      nav {
-        gap: 1rem;
-      }
-      #home {
-        padding: 4rem 1rem 5rem;
-      }
-      .project-grid {
-        gap: 1.2rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      nav {
-        flex-direction: column;
-        align-items: center;
-      }
-      .btns a {
-        width: 100%;
-        max-width: 280px;
-        text-align: center;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IrisWest156 | Developer Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--cyan:#00eaff;
+--pink:#ff00d4;
+--dark:#0a0a10;
+--text:#f5f5f5;
+--muted:#aaa;
+--panel:rgba(255,255,255,0.04);
+--border:rgba(255,255,255,0.12)
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+font-family:Poppins,sans-serif;
+background:radial-gradient(circle at 20% 30%,#111 0%,#000 100%);
+color:var(--text);
+overflow-x:hidden
+}
+nav{
+position:fixed;
+top:0;
+width:100%;
+display:flex;
+justify-content:center;
+gap:1.5rem;
+padding:1rem;
+background:rgba(0,0,0,.65);
+backdrop-filter:blur(14px);
+border-bottom:1px solid var(--border);
+z-index:50
+}
+nav a{
+color:var(--text);
+text-decoration:none;
+font-weight:600;
+transition:.3s
+}
+nav a:hover{color:var(--cyan);transform:translateY(-2px)}
+main{
+margin-top:90px;
+min-height:100vh;
+position:relative
+}
+section{
+width:100%;
+max-width:1200px;
+margin:auto;
+padding:4rem 1rem;
+opacity:0;
+transform:translateY(50px) scale(.95);
+transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1);
+pointer-events:none;
+position:absolute;
+left:0;
+right:0
+}
+section.active{
+opacity:1;
+transform:translateY(0) scale(1);
+pointer-events:auto;
+position:relative
+}
+h1,h2{
+text-align:center;
+background:linear-gradient(90deg,var(--cyan),var(--pink));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:1.5rem
+}
+#home{
+text-align:center;
+background:linear-gradient(160deg,#05050a,#0f0f18);
+padding:6rem 1rem 7rem;
+border-radius:14px;
+max-width:900px
+}
+#home img{
+width:140px;
+height:140px;
+border-radius:50%;
+border:3px solid var(--cyan);
+box-shadow:0 0 30px rgba(0,234,255,.45);
+margin-bottom:1rem;
+transition:.4s
+}
+#home img:hover{transform:scale(1.12) rotate(2deg)}
+#home p{
+max-width:650px;
+margin:1rem auto;
+color:var(--muted)
+}
+.btns{
+margin-top:2rem;
+display:flex;
+justify-content:center;
+gap:1rem;
+flex-wrap:wrap
+}
+.btns a{
+padding:.9rem 1.6rem;
+border-radius:10px;
+background:linear-gradient(90deg,var(--cyan),var(--pink));
+color:#fff;
+text-decoration:none;
+font-weight:600;
+transition:.3s
+}
+.btns a:hover{
+transform:scale(1.08);
+box-shadow:0 0 25px rgba(255,0,212,.5)
+}
+.project-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:2rem
+}
+.project{
+background:var(--panel);
+border:1px solid var(--border);
+border-radius:14px;
+padding:1.5rem;
+text-align:center;
+transition:.35s
+}
+.project:hover{
+transform:translateY(-8px) scale(1.03);
+box-shadow:0 0 30px rgba(0,234,255,.25)
+}
+.project img{
+width:100%;
+border-radius:10px;
+margin-bottom:1rem;
+object-fit:cover
+}
+.project h3{color:var(--cyan)}
+.project p{color:var(--muted)}
+.featured{
+text-align:center;
+margin-bottom:4rem
+}
+.featured h3{color:var(--pink)}
+.video-wrapper{
+position:relative;
+padding-bottom:56.25%;
+height:0;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 0 30px rgba(255,0,212,.35)
+}
+.video-wrapper iframe{
+position:absolute;
+width:100%;
+height:100%;
+border:0
+}
+footer{
+text-align:center;
+padding:2rem;
+color:var(--muted);
+border-top:1px solid var(--border);
+background:linear-gradient(135deg,#0b0b10,#000)
+}
+@media(max-width:768px){
+h1{font-size:1.9rem}
+h2{font-size:1.5rem}
+}
+@media(max-width:480px){
+nav{flex-direction:column}
+.btns a{width:100%;max-width:280px}
+}
+</style>
 </head>
 <body>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#roblox">Roblox</a>
-    <a href="#featured">Featured</a>
-    <a href="#websites">Web</a>
-  </nav>
 
-  <main>
-    <!-- HOME -->
-    <section id="home" class="active">
-      <img src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-F2254AB2A99F8B9BFC1D64F8600D1216-Png/150/150/AvatarHeadshot/Webp/noFilter" alt="IrisWest156" />
-      <h1>IrisWest156</h1>
-      <p>Hey, I’m a Roblox and web developer who builds interactive, creative, and futuristic experiences. I’ve led and developed for multiple groups on Roblox, built UI systems, and enjoy designing everything from tools to full websites. I focus on performance, clean visuals, and ideas that are genuinely fun to use.</p>
-      <div class="btns">
-        <a href="#roblox">Roblox Work</a>
-        <a href="#featured">Featured Projects</a>
-      </div>
-    </section>
+<nav>
+<a href="#home">Home</a>
+<a href="#roblox">Roblox</a>
+<a href="#featured">Featured</a>
+<a href="#websites">Web</a>
+</nav>
 
-    <!-- ROBLOX -->
-    <section id="roblox">
-      <h2>Roblox Development</h2>
-      <div class="project-grid">
-        <div class="project">
-          <a href="https://www.roblox.com/communities/5989081/The-Jedi-Order#!/about" target="_blank">
-            <img src="https://tr.rbxcdn.com/180DAY-b12a68e292c39060a64f457d7b048de1/150/150/Image/Webp/noFilter" alt="">
-          </a>
-          <h3>|> The Jedi Order <|</h3>
-          <p>Former Head Developer</p>
-        </div>
-        <div class="project">
-          <a href="https://www.roblox.com/communities/11668364/The-New-Jedi-Order#!/about" target="_blank">
-            <img src="https://tr.rbxcdn.com/180DAY-57d697308eb5d0ade28b282b91b1a4e8/150/150/Image/Webp/noFilter" alt="">
-          </a>
-          <h3>》The New Jedi Order《</h3>
-          <p>Developer</p>
-        </div>
-        <div class="project">
-          <a href="https://www.roblox.com/communities/33763973/AJO-The-Ancient-Jedi-Order#!/about" target="_blank">
-            <img src="https://tr.rbxcdn.com/180DAY-9a39f10ae1dd86ae29d61f77ed04de9e/150/150/Image/Webp/noFilter" alt="">
-          </a>
-          <h3>AJO | The Ancient Jedi Order</h3>
-          <p>Former Developer</p>
-        </div>
-        <div class="project">
-          <a href="https://www.roblox.com/communities/34433644/The-Jedi-Order-on-Alderaan#!/about" target="_blank">
-            <img src="https://tr.rbxcdn.com/180DAY-9f0130856aff407bf1ef5b3ad82fe5b8/150/150/Image/Webp/noFilter" alt="">
-          </a>
-          <h3>The Jedi Order on Alderaan</h3>
-          <p>Former Head Developer</p>
-        </div>
-        <div class="project">
-          <a href="https://www.roblox.com/communities/35340042/Star-Wars-The-forgotten-Galaxy#!/about" target="_blank">
-            <img src="https://tr.rbxcdn.com/180DAY-d4cbcf53fffa2fca980ce8a69eff11e9/150/150/Image/Webp/noFilter" alt="">
-          </a>
-          <h3>Star Wars: The Forgotten Galaxy</h3>
-          <p>Former Developer</p>
-        </div>
-        <div class="project">
-          <a href="https://www.roblox.com/communities/34873261/Maccies-Restaurant-Roleplay#!/about" target="_blank">
-            <img src="https://tr.rbxcdn.com/180DAY-812cb85f9739cd1e9089e3c7c4fb645d/150/150/Image/Webp/noFilter" alt="">
-          </a>
-          <h3>Maccies Restaurant Roleplay</h3>
-          <p>Former Head Developer</p>
-        </div>
-        <div class="project">
-          <a href="https://www.roblox.com/communities/32438991/SCP-Foundation#!/about" target="_blank">
-            <img src="https://tr.rbxcdn.com/180DAY-f5adf117352003853b7b04d47c9c9dab/150/150/Image/Webp/noFilter" alt="">
-          </a>
-          <h3>〈 SCP Foundation 〉</h3>
-          <p>Former Developer</p>
-        </div>
+<main>
 
-         <div class="project">
-          <a href="https://www.roblox.com/communities/36064667/The-Jedi-Order#!/about" target="_blank">
-            <img src="https://tr.rbxcdn.com/180DAY-8fd79bd7a0d4bb6f6a544c46f7f2704a/150/150/Image/Webp/noFilter" alt="">
-          </a>
-          <h3>- .The Jedi Order. -</h3>
-          <p>Former Developer</p>
-        </div>
+<section id="home" class="active">
+<img src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-F2254AB2A99F8B9BFC1D64F8600D1216-Png/150/150/AvatarHeadshot/Webp/noFilter">
+<h1>IrisWest156</h1>
+<p>Hey, I’m a Roblox and web developer who builds interactive, creative, and futuristic experiences. I’ve led and developed for multiple groups on Roblox, built UI systems, and enjoy designing everything from tools to full websites. I focus on performance, clean visuals, and ideas that are genuinely fun to use.</p>
+<div class="btns">
+<a href="#roblox">Roblox Work</a>
+<a href="#featured">Featured Projects</a>
+</div>
+</section>
 
-                 <div class="project">
-          <a href="https://www.roblox.com/communities/34184402/VoxVerse-Studios#!/about" target="_blank">
-            <img src="https://tr.rbxcdn.com/180DAY-3e9465c17db4cb1d016a06ee199544ea/150/150/Image/Webp/noFilter" alt="">
-          </a>
-          <h3>VoxVerse Studios</h3>
-          <p>Former Developer</p>
-        </div>
+<section id="roblox">
+<h2>Roblox Development</h2>
+<div class="project-grid">
+<div class="project"><a href="https://www.roblox.com/communities/5989081/The-Jedi-Order#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-b12a68e292c39060a64f457d7b048de1/150/150/Image/Webp/noFilter"></a><h3>|> The Jedi Order <|</h3><p>Former Head Developer</p></div>
+<div class="project"><a href="https://www.roblox.com/communities/11668364/The-New-Jedi-Order#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-57d697308eb5d0ade28b282b91b1a4e8/150/150/Image/Webp/noFilter"></a><h3>》The New Jedi Order《</h3><p>Developer</p></div>
+<div class="project"><a href="https://www.roblox.com/communities/33763973/AJO-The-Ancient-Jedi-Order#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-9a39f10ae1dd86ae29d61f77ed04de9e/150/150/Image/Webp/noFilter"></a><h3>AJO | The Ancient Jedi Order</h3><p>Former Developer</p></div>
+<div class="project"><a href="https://www.roblox.com/communities/34433644/The-Jedi-Order-on-Alderaan#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-9f0130856aff407bf1ef5b3ad82fe5b8/150/150/Image/Webp/noFilter"></a><h3>The Jedi Order on Alderaan</h3><p>Former Head Developer</p></div>
+<div class="project"><a href="https://www.roblox.com/communities/35340042/Star-Wars-The-forgotten-Galaxy#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-d4cbcf53fffa2fca980ce8a69eff11e9/150/150/Image/Webp/noFilter"></a><h3>Star Wars: The Forgotten Galaxy</h3><p>Former Developer</p></div>
+<div class="project"><a href="https://www.roblox.com/communities/34873261/Maccies-Restaurant-Roleplay#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-812cb85f9739cd1e9089e3c7c4fb645d/150/150/Image/Webp/noFilter"></a><h3>Maccies Restaurant Roleplay</h3><p>Former Head Developer</p></div>
+<div class="project"><a href="https://www.roblox.com/communities/32438991/SCP-Foundation#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-f5adf117352003853b7b04d47c9c9dab/150/150/Image/Webp/noFilter"></a><h3>〈 SCP Foundation 〉</h3><p>Former Developer</p></div>
+<div class="project"><a href="https://www.roblox.com/communities/36064667/The-Jedi-Order#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-8fd79bd7a0d4bb6f6a544c46f7f2704a/150/150/Image/Webp/noFilter"></a><h3>- .The Jedi Order. -</h3><p>Former Developer</p></div>
+<div class="project"><a href="https://www.roblox.com/communities/34184402/VoxVerse-Studios#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-3e9465c17db4cb1d016a06ee199544ea/150/150/Image/Webp/noFilter"></a><h3>VoxVerse Studios</h3><p>Former Developer</p></div>
+<div class="project"><a href="https://www.roblox.com/communities/35925188/Voidfront#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-a213e0c82f80e6675386f12fcd444dec/150/150/Image/Webp/noFilter"></a><h3>Voidfront</h3><p>Former Developer</p></div>
+<div class="project"><a href="https://www.roblox.com/communities/34664761/h-Ga-actic-Republic#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-a768dd746b5c765eb2384bfbf696234f/150/150/Image/Webp/noFilter"></a><h3>Τhе GaΙactic Republic</h3><p>Former Developer</p></div>
+</div>
+</section>
 
-                 <div class="project">
-          <a href="https://www.roblox.com/communities/35925188/Voidfront#!/about" target="_blank">
-            <img src="https://tr.rbxcdn.com/180DAY-a213e0c82f80e6675386f12fcd444dec/150/150/Image/Webp/noFilter" alt="">
-          </a>
-          <h3>Voidfront</h3>
-          <p>Former Developer</p>
-        </div>
+<section id="featured">
+<h2>Featured Projects</h2>
 
-                 <div class="project">
-          <a href="https://www.roblox.com/communities/34664761/h-Ga-actic-Republic#!/about" target="_blank">
-            <img src="https://tr.rbxcdn.com/180DAY-a768dd746b5c765eb2384bfbf696234f/150/150/Image/Webp/noFilter" alt="">
-          </a>
-          <h3>Τhе GaΙactic Republic</h3>
-          <p>Former Developer</p>
-        </div>
-        
-      </div>
-    </section>
+<div class="featured">
+<h3>AFK System</h3>
+<p>Instant-response AFK system built for smooth usability.</p>
+<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/" allowfullscreen></iframe></div>
+</div>
 
-    <section id="featured">
-      <h2>Featured Projects</h2>
-      <div class="featured">
-        <h3>AFK System</h3>
-        <p>Instant-response AFK system built for smooth usability.</p>
-        <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe>
-        </div>
-      </div>
-      <div class="featured">
-        <h3>Overhead UI</h3>
-        <p>Clean and efficient overhead UI for player interaction.</p>
-        <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe>
-        </div>
-      </div>
-      <div class="featured">
-        <h3>Loggers</h3>
-        <p>Admin and activity loggers designed for transparency and performance.</p>
-        <div class="project-grid">
-          <div class="project"><img src="https://i.ibb.co/H8ftwBp/logger1.png" alt="Admin Logger"></div>
-          <div class="project"><img src="https://i.ibb.co/qYxYDgq1/logger2.png" alt="Activity Logger"></div>
-        </div>
-      </div>
-    </section>
+<div class="featured">
+<h3>Overhead UI</h3>
+<p>Clean and efficient overhead UI for player interaction.</p>
+<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/" allowfullscreen></iframe></div>
+</div>
 
-    <section id="featured">
-      <h2>Roblox Project</h2>
-      <div class="featured">
-        <h3>AFK System</h3>
-        <p>Instant-response AFK system built for smooth usability.</p>
-        <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe>
-        </div>
-      </div>
-      <div class="featured">
-        <h3>Overhead UI</h3>
-        <p>Clean and efficient overhead UI for player interaction.</p>
-        <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe>
-        </div>
-      </div>
-      <div class="featured">
-        <h3>Loggers</h3>
-        <p>Admin and activity loggers designed for transparency and performance.</p>
-        <div class="project-grid">
-          <div class="project"><img src="https://i.ibb.co/H8ftwBp/logger1.png" alt="Admin Logger"></div>
-          <div class="project"><img src="https://i.ibb.co/qYxYDgq1/logger2.png" alt="Activity Logger"></div>
-        </div>
-      </div>
+<div class="featured">
+<h3>Loggers</h3>
+<p>Admin and activity loggers designed for transparency and performance.</p>
+<div class="project-grid">
+<div class="project"><img src="https://i.ibb.co/H8ftwBp/logger1.png"></div>
+<div class="project"><img src="https://i.ibb.co/qYxYDgq1/logger2.png"></div>
+</div>
+</div>
 
+<div class="featured">
+<h3>Roblox Models / Builds</h3>
+<p>These are some of my builds or models that i have made.</p>
+<div class="project-grid">
+<div class="project"><img src="https://i.ibb.co/DZymNfX"></div>
+<div class="project"><img src="https://i.ibb.co/5XPV972k"></div>
+<div class="project"><img src="https://i.ibb.co/23Q72BPQ"></div>
+<div class="project"><img src="https://i.ibb.co/ZRwcXDk6"></div>
+<div class="project"><img src="https://i.ibb.co/B5b9hMSy"></div>
+<div class="project"><img src="https://i.ibb.co/20jYc9zn"></div>
+<div class="project"><img src="https://i.ibb.co/Y7fkcZhP"></div>
+<div class="project"><img src="https://i.ibb.co/RGRWRGzP"></div>
+<div class="project"><img src="https://i.ibb.co/Lzc2bmzS"></div>
+<div class="project"><img src="https://i.ibb.co/cKhbfs1h"></div>
+</div>
+</div>
 
-      <div class="featured">
-        <h3>Roblox Models/Builds</h3>
-        <p>These are some of my builds or models that i have made.</p>
-        <div class="project-grid">
-          <div class="project"><img src="https://ibb.co/DZymNfX" alt="Statue"></div>
-          <div class="project"><img src="https://ibb.co/5XPV972k" alt="Idk"></div>
-          <div class="project"><img src="https://ibb.co/23Q72BPQ" alt="Little Dojo"></div>
-          <div class="project"><img src="https://ibb.co/ZRwcXDk6" alt="test"></div>
-          <div class="project"><img src="https://ibb.co/B5b9hMSy" alt="Idk"></div>
-          <div class="project"><img src="https://ibb.co/20jYc9zn" alt="hangar"></div>
-          <div class="project"><img src="https://ibb.co/Y7fkcZhP" alt="prompt"></div>
-          <div class="project"><img src="https://ibb.co/RGRWRGzP" alt="ctroom"></div>
-          <div class="project"><img src="https://ibb.co/Lzc2bmzS" alt="statue"></div>
-          <div class="project"><img src="https://ibb.co/cKhbfs1h" alt="idk2"></div>
-        </div>
-      </div>
+</section>
 
+<section id="websites">
+<h2>Web Projects</h2>
+<div class="project-grid">
+<div class="project">
+<img src="https://example.com/website-preview.png">
+<h3>Developer Portfolio</h3>
+<p>Designed and built from scratch with dynamic visuals and fluid navigation.</p>
+</div>
+</div>
+</section>
 
-      
-    </section>
-    
-    <section id="websites">
-      <h2>Web Projects</h2>
-      <div class="project-grid">
-        <div class="project">
-          <img src="https://example.com/website-preview.png" alt="Developer Portfolio">
-          <h3>Developer Portfolio</h3>
-          <p>Designed and built from scratch with dynamic visuals and fluid navigation.</p>
-        </div>
-      </div>
-    </section>
-  </main>
+</main>
 
-  <footer>© 2025 IrisWest156 All Rights Reserved</footer>
+<footer>© 2025 IrisWest156 All Rights Reserved</footer>
 
-  <script>
-    const links = document.querySelectorAll("nav a");
-    const sections = document.querySelectorAll("section");
-    let current = document.querySelector("section.active");
+<script>
+const links=document.querySelectorAll("nav a")
+const sections=document.querySelectorAll("section")
+let current=document.querySelector("section.active")
+links.forEach(link=>{
+link.onclick=e=>{
+e.preventDefault()
+const next=document.querySelector(link.getAttribute("href"))
+if(next!==current){
+current.classList.remove("active")
+next.classList.add("active")
+current=next
+window.scrollTo({top:0,behavior:"smooth"})
+}}
+)
+</script>
 
-    links.forEach((link) => {
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
-        const id = link.getAttribute("href").substring(1);
-        const next = document.getElementById(id);
-        if (next !== current) {
-          current.classList.remove("active");
-          next.classList.add("active");
-          current = next;
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-      });
-    });
-  </script>
 </body>
 </html>
