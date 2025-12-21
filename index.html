@@ -9,19 +9,18 @@
 :root{
 --cyan:#00eaff;
 --pink:#ff00d4;
---dark:#0a0a10;
 --text:#f5f5f5;
 --muted:#aaa;
 --panel:rgba(255,255,255,0.04);
 --border:rgba(255,255,255,0.12)
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html,body{height:100%}
 body{
 font-family:Poppins,sans-serif;
 background:radial-gradient(circle at 20% 30%,#111 0%,#000 100%);
 color:var(--text);
-overflow-x:hidden
+overflow:hidden
 }
 nav{
 position:fixed;
@@ -34,7 +33,7 @@ padding:1rem;
 background:rgba(0,0,0,.65);
 backdrop-filter:blur(14px);
 border-bottom:1px solid var(--border);
-z-index:50
+z-index:10
 }
 nav a{
 color:var(--text);
@@ -42,30 +41,23 @@ text-decoration:none;
 font-weight:600;
 transition:.3s
 }
-nav a:hover{color:var(--cyan);transform:translateY(-2px)}
+nav a:hover{color:var(--cyan)}
 main{
-margin-top:90px;
-min-height:100vh;
-position:relative
+height:100%;
+display:flex;
+transition:transform .9s cubic-bezier(.22,1,.36,1)
 }
 section{
-width:100%;
-max-width:1200px;
-margin:auto;
-padding:4rem 1rem;
-opacity:0;
-transform:translateY(50px) scale(.95);
-transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1);
-pointer-events:none;
-position:absolute;
-left:0;
-right:0
+min-width:100%;
+height:100%;
+overflow-y:auto;
+padding:110px 1rem 4rem;
+display:flex;
+justify-content:center
 }
-section.active{
-opacity:1;
-transform:translateY(0) scale(1);
-pointer-events:auto;
-position:relative
+.inner{
+width:100%;
+max-width:1200px
 }
 h1,h2{
 text-align:center;
@@ -74,7 +66,7 @@ background:linear-gradient(90deg,var(--cyan),var(--pink));
 -webkit-text-fill-color:transparent;
 margin-bottom:1.5rem
 }
-#home{
+#home .inner{
 text-align:center;
 background:linear-gradient(160deg,#05050a,#0f0f18);
 padding:6rem 1rem 7rem;
@@ -141,10 +133,7 @@ object-fit:cover
 }
 .project h3{color:var(--cyan)}
 .project p{color:var(--muted)}
-.featured{
-text-align:center;
-margin-bottom:4rem
-}
+.featured{text-align:center;margin-bottom:4rem}
 .featured h3{color:var(--pink)}
 .video-wrapper{
 position:relative;
@@ -167,38 +156,30 @@ color:var(--muted);
 border-top:1px solid var(--border);
 background:linear-gradient(135deg,#0b0b10,#000)
 }
-@media(max-width:768px){
-h1{font-size:1.9rem}
-h2{font-size:1.5rem}
-}
-@media(max-width:480px){
-nav{flex-direction:column}
-.btns a{width:100%;max-width:280px}
-}
 </style>
 </head>
 <body>
 
 <nav>
-<a href="#home">Home</a>
-<a href="#roblox">Roblox</a>
-<a href="#featured">Featured</a>
-<a href="#websites">Web</a>
+<a data-index="0">Home</a>
+<a data-index="1">Roblox</a>
+<a data-index="2">Featured</a>
+<a data-index="3">Web</a>
 </nav>
 
-<main>
+<main id="slider">
 
-<section id="home" class="active">
+<section id="home"><div class="inner">
 <img src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-F2254AB2A99F8B9BFC1D64F8600D1216-Png/150/150/AvatarHeadshot/Webp/noFilter">
 <h1>IrisWest156</h1>
 <p>Hey, I’m a Roblox and web developer who builds interactive, creative, and futuristic experiences. I’ve led and developed for multiple groups on Roblox, built UI systems, and enjoy designing everything from tools to full websites. I focus on performance, clean visuals, and ideas that are genuinely fun to use.</p>
 <div class="btns">
-<a href="#roblox">Roblox Work</a>
-<a href="#featured">Featured Projects</a>
+<a data-index="1">Roblox Work</a>
+<a data-index="2">Featured Projects</a>
 </div>
-</section>
+</div></section>
 
-<section id="roblox">
+<section id="roblox"><div class="inner">
 <h2>Roblox Development</h2>
 <div class="project-grid">
 <div class="project"><a href="https://www.roblox.com/communities/5989081/The-Jedi-Order#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-b12a68e292c39060a64f457d7b048de1/150/150/Image/Webp/noFilter"></a><h3>|> The Jedi Order <|</h3><p>Former Head Developer</p></div>
@@ -213,21 +194,21 @@ nav{flex-direction:column}
 <div class="project"><a href="https://www.roblox.com/communities/35925188/Voidfront#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-a213e0c82f80e6675386f12fcd444dec/150/150/Image/Webp/noFilter"></a><h3>Voidfront</h3><p>Former Developer</p></div>
 <div class="project"><a href="https://www.roblox.com/communities/34664761/h-Ga-actic-Republic#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-a768dd746b5c765eb2384bfbf696234f/150/150/Image/Webp/noFilter"></a><h3>Τhе GaΙactic Republic</h3><p>Former Developer</p></div>
 </div>
-</section>
+</div></section>
 
-<section id="featured">
+<section id="featured"><div class="inner">
 <h2>Featured Projects</h2>
 
 <div class="featured">
 <h3>AFK System</h3>
 <p>Instant-response AFK system built for smooth usability.</p>
-<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/" allowfullscreen></iframe></div>
+<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe></div>
 </div>
 
 <div class="featured">
 <h3>Overhead UI</h3>
 <p>Clean and efficient overhead UI for player interaction.</p>
-<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/" allowfullscreen></iframe></div>
+<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe></div>
 </div>
 
 <div class="featured">
@@ -256,9 +237,9 @@ nav{flex-direction:column}
 </div>
 </div>
 
-</section>
+</div></section>
 
-<section id="websites">
+<section id="websites"><div class="inner">
 <h2>Web Projects</h2>
 <div class="project-grid">
 <div class="project">
@@ -267,27 +248,43 @@ nav{flex-direction:column}
 <p>Designed and built from scratch with dynamic visuals and fluid navigation.</p>
 </div>
 </div>
-</section>
+</div></section>
 
 </main>
 
 <footer>© 2025 IrisWest156 All Rights Reserved</footer>
 
 <script>
-const links=document.querySelectorAll("nav a")
-const sections=document.querySelectorAll("section")
-let current=document.querySelector("section.active")
-links.forEach(link=>{
-link.onclick=e=>{
-e.preventDefault()
-const next=document.querySelector(link.getAttribute("href"))
-if(next!==current){
-current.classList.remove("active")
-next.classList.add("active")
-current=next
-window.scrollTo({top:0,behavior:"smooth"})
-}}
-)
+const slider=document.getElementById("slider")
+const pages=[...slider.children]
+let index=0,startX=0,isDown=false
+
+const go=i=>{
+index=Math.max(0,Math.min(pages.length-1,i))
+slider.style.transform=`translateX(${-index*100}%)`
+}
+
+document.querySelectorAll("[data-index]").forEach(el=>{
+el.onclick=()=>go(+el.dataset.index)
+})
+
+window.addEventListener("keydown",e=>{
+if(e.key==="ArrowRight"||e.key==="ArrowDown")go(index+1)
+if(e.key==="ArrowLeft"||e.key==="ArrowUp")go(index-1)
+})
+
+slider.addEventListener("pointerdown",e=>{
+isDown=true
+startX=e.clientX
+})
+
+window.addEventListener("pointerup",e=>{
+if(!isDown)return
+const dx=e.clientX-startX
+if(dx<-80)go(index+1)
+if(dx>80)go(index-1)
+isDown=false
+})
 </script>
 
 </body>
