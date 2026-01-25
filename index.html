@@ -1,307 +1,1292 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IrisWest156 Portfolio</title>
-<link rel="icon" type="image/png" href="favicon.png">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-:root{
---cyan:#00eaff;
---pink:#ff00d4;
---text:#f5f5f5;
---muted:#aaa;
---panel:rgba(255,255,255,0.04);
---border:rgba(255,255,255,0.12)
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%}
-body{
-font-family:Poppins,sans-serif;
-background:radial-gradient(circle at 20% 30%,#111 0%,#000 100%);
-color:var(--text);
-overflow:hidden
-}
-nav{
-position:fixed;
-top:0;
-width:100%;
-display:flex;
-justify-content:center;
-gap:1.5rem;
-padding:1rem;
-background:rgba(0,0,0,.65);
-backdrop-filter:blur(14px);
-border-bottom:1px solid var(--border);
-z-index:10
-}
-nav a{
-color:var(--text);
-text-decoration:none;
-font-weight:600;
-transition:.3s
-}
-nav a:hover{color:var(--cyan)}
-main{
-height:100%;
-display:flex;
-transition:transform .9s cubic-bezier(.22,1,.36,1)
-}
-section{
-min-width:100%;
-height:100%;
-overflow-y:auto;
-padding:110px 1rem 4rem;
-display:flex;
-justify-content:center
-}
-.inner{
-width:100%;
-max-width:1200px
-}
-h1,h2{
-text-align:center;
-background:linear-gradient(90deg,var(--cyan),var(--pink));
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-margin-bottom:1.5rem
-}
-#home .inner{
-text-align:center;
-background:linear-gradient(160deg,#05050a,#0f0f18);
-padding:6rem 1rem 7rem;
-border-radius:14px;
-max-width:900px
-}
-#home img{
-width:140px;
-height:140px;
-border-radius:50%;
-border:3px solid var(--cyan);
-box-shadow:0 0 30px rgba(0,234,255,.45);
-margin-bottom:1rem;
-transition:.4s
-}
-#home img:hover{transform:scale(1.12) rotate(2deg)}
-#home p{
-max-width:650px;
-margin:1rem auto;
-color:var(--muted)
-}
-.btns{
-margin-top:2rem;
-display:flex;
-justify-content:center;
-gap:1rem;
-flex-wrap:wrap
-}
-.btns a{
-padding:.9rem 1.6rem;
-border-radius:10px;
-background:linear-gradient(90deg,var(--cyan),var(--pink));
-color:#fff;
-text-decoration:none;
-font-weight:600;
-transition:.3s
-}
-.btns a:hover{
-transform:scale(1.08);
-box-shadow:0 0 25px rgba(255,0,212,.5)
-}
-.project-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:2rem
-}
-.project{
-background:var(--panel);
-border:1px solid var(--border);
-border-radius:14px;
-padding:1.5rem;
-text-align:center;
-transition:.35s
-}
-.project:hover{
-transform:translateY(-8px) scale(1.03);
-box-shadow:0 0 30px rgba(0,234,255,.25)
-}
-.project img{
-width:100%;
-border-radius:10px;
-margin-bottom:1rem;
-object-fit:cover
-}
-.project h3{color:var(--cyan)}
-.project p{color:var(--muted)}
-.featured{text-align:center;margin-bottom:4rem}
-.featured h3{color:var(--pink)}
-.video-wrapper{
-position:relative;
-padding-bottom:56.25%;
-height:0;
-border-radius:12px;
-overflow:hidden;
-box-shadow:0 0 30px rgba(255,0,212,.35)
-}
-.video-wrapper iframe{
-position:absolute;
-width:100%;
-height:100%;
-border:0
-}
-footer{
-text-align:center;
-padding:2rem;
-color:var(--muted);
-border-top:1px solid var(--border);
-background:linear-gradient(135deg,#0b0b10,#000)
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NoraVex — Roblox Dev Portfolio</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      /* Nora / Lightning core */
+      --bg0:#050510;
+      --bg1:#07081a;
+      --panel:rgba(255,255,255,0.06);
+      --panel2:rgba(255,255,255,0.04);
+      --border:rgba(255,255,255,0.14);
+
+      --electric:#00E5FF; /* lightning cyan */
+      --bolt:#FFD45A;     /* lightning gold */
+      --violet:#7C5CFF;   /* speedforce violet */
+      --magenta:#FF2BD6;  /* neon magenta */
+
+      --text:#F7F8FF;
+      --muted:rgba(247,248,255,0.72);
+
+      --r:18px;
+      --shadow: 0 18px 70px rgba(0,229,255,0.10);
+      --shadow2: 0 18px 70px rgba(255,212,90,0.08);
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 18% 16%, rgba(0,229,255,0.18), transparent 55%),
+        radial-gradient(circle at 82% 20%, rgba(124,92,255,0.18), transparent 55%),
+        radial-gradient(circle at 50% 110%, rgba(255,212,90,0.14), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    /* ===== Lightning background layer ===== */
+    .storm{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-2;
+      overflow:hidden;
+      filter:saturate(1.15);
+    }
+    .storm::before,.storm::after{
+      content:"";
+      position:absolute;
+      inset:-45%;
+      transform:rotate(-10deg);
+      mix-blend-mode:screen;
+      opacity:.9;
+    }
+    .storm::before{
+      background:
+        repeating-linear-gradient(
+          110deg,
+          rgba(0,229,255,0) 0%,
+          rgba(0,229,255,0) 42%,
+          rgba(0,229,255,.12) 48%,
+          rgba(255,212,90,.10) 52%,
+          rgba(0,229,255,0) 58%,
+          rgba(0,229,255,0) 100%
+        );
+      animation:stormMove 10s linear infinite;
+    }
+    .storm::after{
+      background:
+        repeating-linear-gradient(
+          60deg,
+          rgba(124,92,255,0) 0%,
+          rgba(124,92,255,0) 45%,
+          rgba(124,92,255,.11) 50%,
+          rgba(255,43,214,.09) 53%,
+          rgba(124,92,255,0) 56%,
+          rgba(124,92,255,0) 100%
+        );
+      animation:stormMove 14s linear infinite reverse;
+      opacity:.8;
+    }
+    @keyframes stormMove{
+      0%{transform:translate3d(-6%, -3%, 0) rotate(-10deg)}
+      100%{transform:translate3d(6%, 3%, 0) rotate(-10deg)}
+    }
+
+    /* grain */
+    .grain{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-1;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.28'/%3E%3C/svg%3E");
+      opacity:.10;
+      mix-blend-mode:overlay;
+    }
+
+    /* ===== App layout: sidebar + content ===== */
+    .app{
+      display:grid;
+      grid-template-columns: 310px 1fr;
+      min-height:100vh;
+    }
+    @media (max-width: 980px){
+      .app{grid-template-columns: 1fr}
+    }
+
+    /* ===== Sidebar ===== */
+    .side{
+      position:sticky;
+      top:0;
+      height:100vh;
+      padding:22px 18px;
+      border-right:1px solid var(--border);
+      background:rgba(5,5,16,0.55);
+      backdrop-filter:blur(16px);
+    }
+    @media (max-width: 980px){
+      .side{
+        position:relative;
+        height:auto;
+        border-right:0;
+        border-bottom:1px solid var(--border);
+      }
+    }
+
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      padding:14px;
+      border-radius:var(--r);
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .brand::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:linear-gradient(90deg, transparent, rgba(255,212,90,0.22), transparent);
+      transform:rotate(25deg);
+      animation:shine 3s ease-in-out infinite;
+      opacity:.5;
+    }
+    @keyframes shine{
+      0%,100%{transform:translateX(-12%) rotate(25deg); opacity:.20}
+      50%{transform:translateX(12%) rotate(25deg); opacity:.55}
+    }
+
+    .logo{
+      width:44px;height:44px;border-radius:14px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,212,90,0.35), transparent 60%),
+        linear-gradient(135deg, rgba(0,229,255,0.95), rgba(124,92,255,0.95));
+      border:1px solid rgba(255,255,255,0.16);
+      box-shadow:0 0 28px rgba(0,229,255,0.18);
+      display:grid;place-items:center;
+      flex:0 0 auto;
+      position:relative;
+      z-index:1;
+    }
+    .logo svg{width:22px;height:22px;opacity:.95}
+
+    .brandText{
+      position:relative;
+      z-index:1;
+      line-height:1.1;
+    }
+    .brandText .name{
+      font-weight:800;
+      font-size:18px;
+      letter-spacing:.2px;
+      background:linear-gradient(90deg, var(--electric), var(--bolt), var(--magenta), var(--violet));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .brandText .role{
+      margin-top:4px;
+      font-size:12px;
+      color:var(--muted);
+      font-weight:600;
+    }
+
+    .pfp{
+      margin-top:14px;
+      border-radius:var(--r);
+      border:1px solid var(--border);
+      background:rgba(255,255,255,0.04);
+      padding:14px;
+      box-shadow:var(--shadow2);
+    }
+    .pfpRow{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .avatar{
+      width:64px;height:64px;border-radius:16px;
+      overflow:hidden;
+      border:2px solid rgba(0,229,255,0.55);
+      box-shadow:0 0 22px rgba(0,229,255,0.16);
+      background:rgba(0,0,0,0.25);
+      flex:0 0 auto;
+    }
+    .avatar img{width:100%;height:100%;object-fit:cover}
+    .pfpMeta h3{
+      margin:0;
+      font-size:14px;
+      font-weight:800;
+    }
+    .pfpMeta p{
+      margin:3px 0 0;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.4;
+    }
+
+    .quick{
+      margin-top:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .pill{
+      font-size:11px;
+      padding:7px 9px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(0,0,0,0.18);
+      color:rgba(247,248,255,0.90);
+      user-select:none;
+    }
+    .pill b{color:var(--electric)}
+
+    .nav{
+      margin-top:14px;
+      display:grid;
+      gap:8px;
+    }
+    .nav a{
+      text-decoration:none;
+      color:rgba(247,248,255,0.92);
+      font-weight:700;
+      font-size:13px;
+      padding:11px 12px;
+      border-radius:14px;
+      border:1px solid transparent;
+      background:rgba(255,255,255,0.03);
+      transition:.18s;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .nav a:hover{
+      border-color:rgba(0,229,255,0.22);
+      transform:translateY(-1px);
+      box-shadow:0 0 26px rgba(0,229,255,0.10);
+    }
+    .nav a span{
+      color:rgba(247,248,255,0.55);
+      font-weight:800;
+    }
+
+    .sideFooter{
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius:var(--r);
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.03);
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.5;
+    }
+    .sideFooter code{
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      color:rgba(247,248,255,0.90);
+      background:rgba(0,0,0,0.22);
+      border:1px solid rgba(255,255,255,0.10);
+      padding:2px 6px;
+      border-radius:8px;
+    }
+
+    /* ===== Main content ===== */
+    .main{
+      padding:22px 22px 70px;
+    }
+    .container{
+      max-width:var(--max);
+      margin:0 auto;
+    }
+
+    /* hero (completely different from your old slider) */
+    .hero{
+      border-radius: calc(var(--r) + 6px);
+      border:1px solid var(--border);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(0,229,255,0.22), transparent 55%),
+        radial-gradient(circle at 85% 30%, rgba(255,212,90,0.16), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      box-shadow:var(--shadow);
+      padding:22px;
+      overflow:hidden;
+      position:relative;
+    }
+    .heroTop{
+      display:grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap:16px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){
+      .heroTop{grid-template-columns:1fr}
+    }
+
+    .headline{
+      padding:18px;
+      border-radius:var(--r);
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.12);
+    }
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-size:12px;
+      color:rgba(247,248,255,0.86);
+      background:rgba(0,0,0,0.22);
+      border:1px solid rgba(255,255,255,0.12);
+      padding:8px 12px;
+      border-radius:999px;
+      width:max-content;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:linear-gradient(90deg,var(--electric),var(--bolt));
+      box-shadow:0 0 18px rgba(255,212,90,0.18);
+    }
+    h1{
+      margin:14px 0 0;
+      font-size:42px;
+      line-height:1.05;
+      letter-spacing:-0.8px;
+    }
+    @media (max-width: 520px){ h1{font-size:34px} }
+    .grad{
+      background:linear-gradient(90deg, var(--electric), var(--bolt), var(--magenta), var(--violet));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .lead{
+      margin:12px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+      max-width:70ch;
+    }
+
+    .cta{
+      margin-top:16px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      text-decoration:none;
+      font-weight:800;
+      font-size:13px;
+      border:1px solid rgba(255,255,255,0.14);
+      background:rgba(255,255,255,0.04);
+      color:var(--text);
+      transition:.18s;
+      cursor:pointer;
+    }
+    .btn:hover{
+      transform:translateY(-1px);
+      border-color:rgba(0,229,255,0.22);
+      box-shadow:0 0 24px rgba(0,229,255,0.10);
+    }
+    .btnPrimary{
+      border:0;
+      color:#071018;
+      background:linear-gradient(90deg, rgba(0,229,255,0.95), rgba(255,212,90,0.92), rgba(124,92,255,0.95));
+      box-shadow:0 0 26px rgba(0,229,255,0.14);
+    }
+
+    /* stat panel */
+    .stats{
+      padding:18px;
+      border-radius:var(--r);
+      background:rgba(0,0,0,0.20);
+      border:1px solid rgba(255,255,255,0.12);
+      position:relative;
+      overflow:hidden;
+    }
+    .stats::before{
+      content:"";
+      position:absolute; inset:-40%;
+      background:linear-gradient(90deg, transparent, rgba(0,229,255,0.14), transparent);
+      transform:rotate(20deg);
+      animation:shine 4s ease-in-out infinite;
+      opacity:.55;
+    }
+    .statsGrid{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+    .stat{
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.03);
+      padding:12px;
+      min-height:76px;
+    }
+    .stat .n{
+      font-weight:900;
+      font-size:18px;
+      letter-spacing:.2px;
+      background:linear-gradient(90deg, var(--electric), var(--bolt));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .stat .l{
+      margin-top:4px;
+      font-size:12px;
+      color:var(--muted);
+      font-weight:700;
+    }
+
+    /* sections */
+    .section{
+      margin-top:16px;
+      border-radius:calc(var(--r) + 6px);
+      border:1px solid var(--border);
+      background:rgba(255,255,255,0.03);
+      overflow:hidden;
+      box-shadow:0 10px 60px rgba(0,0,0,0.25);
+    }
+    .sectionHead{
+      padding:16px 18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:14px;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+      background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.00));
+    }
+    .sectionHead h2{
+      margin:0;
+      font-size:16px;
+      letter-spacing:-0.2px;
+    }
+    .sectionHead p{
+      margin:0;
+      font-size:12px;
+      color:var(--muted);
+      max-width:70ch;
+    }
+    .sectionBody{ padding:18px; }
+
+    /* cards */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
+    }
+    .card{
+      grid-column: span 6;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.03);
+      padding:16px;
+      transition:.18s;
+      position:relative;
+      overflow:hidden;
+    }
+    .card:hover{
+      transform:translateY(-2px);
+      border-color:rgba(0,229,255,0.22);
+      box-shadow:0 0 28px rgba(0,229,255,0.10);
+    }
+    .card.wide{ grid-column: span 12; }
+    @media (max-width: 980px){ .card{grid-column: span 12;} }
+
+    .cardTitle{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:6px;
+    }
+    .cardTitle h3{
+      margin:0;
+      font-size:14px;
+      font-weight:900;
+      letter-spacing:.1px;
+    }
+    .badge{
+      font-size:11px;
+      font-weight:900;
+      padding:7px 9px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(0,0,0,0.18);
+      color:rgba(247,248,255,0.88);
+      white-space:nowrap;
+    }
+    .badge.e{
+      border-color:rgba(0,229,255,0.22);
+      color:rgba(0,229,255,0.95);
+    }
+    .badge.g{
+      border-color:rgba(255,212,90,0.20);
+      color:rgba(255,212,90,0.95);
+    }
+    .badge.v{
+      border-color:rgba(124,92,255,0.22);
+      color:rgba(124,92,255,0.95);
+    }
+
+    .card p{
+      margin:0;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.6;
+    }
+
+    /* projects */
+    .toolbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:12px;
+    }
+    .search{
+      flex:1 1 220px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(0,0,0,0.18);
+      padding:10px 12px;
+    }
+    .search input{
+      width:100%;
+      border:0;
+      outline:none;
+      background:transparent;
+      color:var(--text);
+      font-weight:700;
+      font-size:13px;
+    }
+    .filters{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      justify-content:flex-end;
+    }
+    .chip{
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.03);
+      color:rgba(247,248,255,0.88);
+      font-weight:900;
+      font-size:11px;
+      padding:9px 10px;
+      border-radius:999px;
+      cursor:pointer;
+      transition:.15s;
+      user-select:none;
+    }
+    .chip:hover{
+      transform:translateY(-1px);
+      border-color:rgba(0,229,255,0.20);
+    }
+    .chip.active{
+      border-color:rgba(0,229,255,0.30);
+      background:rgba(0,229,255,0.08);
+      color:rgba(0,229,255,1);
+    }
+
+    .projects{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
+    }
+    .proj{
+      grid-column: span 4;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.03);
+      overflow:hidden;
+      transition:.18s;
+      cursor:pointer;
+      position:relative;
+    }
+    .proj:hover{
+      transform:translateY(-2px);
+      border-color:rgba(0,229,255,0.22);
+      box-shadow:0 0 28px rgba(0,229,255,0.10);
+    }
+    @media (max-width: 1100px){ .proj{grid-column: span 6;} }
+    @media (max-width: 760px){ .proj{grid-column: span 12;} }
+
+    .thumb{
+      height:150px;
+      background:
+        radial-gradient(circle at 25% 30%, rgba(0,229,255,0.20), transparent 55%),
+        radial-gradient(circle at 75% 25%, rgba(255,212,90,0.16), transparent 55%),
+        linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border-bottom:1px solid rgba(255,255,255,0.10);
+      position:relative;
+    }
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      opacity:.92;
+    }
+    .projBody{
+      padding:14px;
+    }
+    .projBody h4{
+      margin:0;
+      font-size:13px;
+      font-weight:900;
+    }
+    .meta{
+      margin-top:6px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+    }
+    .meta .mini{
+      font-size:11px;
+      font-weight:900;
+      padding:6px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(0,0,0,0.18);
+      color:rgba(247,248,255,0.82);
+    }
+    .meta .mini.bolt{
+      border-color:rgba(255,212,90,0.20);
+      color:rgba(255,212,90,0.95);
+    }
+    .meta .mini.elec{
+      border-color:rgba(0,229,255,0.22);
+      color:rgba(0,229,255,0.95);
+    }
+
+    /* modal */
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,0.55);
+      backdrop-filter:blur(14px);
+      z-index:50;
+      padding:18px;
+    }
+    .modal.open{display:flex}
+    .modalCard{
+      width:min(820px, 100%);
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,0.16);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(0,229,255,0.16), transparent 55%),
+        radial-gradient(circle at 80% 20%, rgba(255,212,90,0.12), transparent 55%),
+        rgba(8,8,20,0.88);
+      box-shadow:0 30px 110px rgba(0,0,0,0.55);
+      overflow:hidden;
+    }
+    .modalTop{
+      padding:16px 16px 10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+      border-bottom:1px solid rgba(255,255,255,0.10);
+    }
+    .modalTop h3{
+      margin:0;
+      font-size:15px;
+      font-weight:900;
+    }
+    .close{
+      border:1px solid rgba(255,255,255,0.14);
+      background:rgba(255,255,255,0.04);
+      color:var(--text);
+      font-weight:900;
+      border-radius:14px;
+      padding:10px 12px;
+      cursor:pointer;
+      transition:.15s;
+    }
+    .close:hover{transform:translateY(-1px); border-color:rgba(0,229,255,0.22)}
+    .modalBody{
+      padding:16px;
+      display:grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap:14px;
+    }
+    @media (max-width: 880px){ .modalBody{grid-template-columns:1fr} }
+    .modalMedia{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.12);
+      overflow:hidden;
+      background:rgba(0,0,0,0.25);
+      min-height:220px;
+      position:relative;
+    }
+    .modalMedia img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      opacity:.96;
+    }
+    .modalText{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.03);
+      padding:14px;
+    }
+    .modalText p{
+      margin:0;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.7;
+    }
+    .modalLinks{
+      margin-top:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .linkBtn{
+      text-decoration:none;
+      font-weight:900;
+      font-size:12px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.14);
+      background:rgba(255,255,255,0.04);
+      color:var(--text);
+      transition:.15s;
+    }
+    .linkBtn:hover{transform:translateY(-1px); border-color:rgba(0,229,255,0.22)}
+
+    /* footer */
+    .footer{
+      margin-top:16px;
+      padding:18px 10px;
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    /* reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .storm::before,.storm::after{animation:none !important}
+      .brand::before{animation:none !important}
+      *{scroll-behavior:auto !important}
+    }
+  </style>
 </head>
+
 <body>
+  <div class="storm"></div>
+  <div class="grain"></div>
 
-<nav>
-<a data-index="0">Home</a>
-<a data-index="1">Roblox</a>
-<a data-index="2">Featured</a>
-<a data-index="3">Web</a>
-</nav>
+  <div class="app">
+    <!-- SIDEBAR -->
+    <aside class="side">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M13 2 3 14h7l-1 8 12-14h-7l-1-6Z" fill="rgba(255,255,255,0.92)"/>
+          </svg>
+        </div>
+        <div class="brandText">
+          <div class="name">NoraVex</div>
+          <div class="role">Roblox Scripter • Builder • UI Systems</div>
+        </div>
+      </div>
 
-<main id="slider">
+      <div class="pfp">
+        <div class="pfpRow">
+          <div class="avatar">
+            <!-- Replace with your current Roblox avatar headshot -->
+            <img src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-3D3D154A992D2FD15574CCC33634CD36-Png/150/150/AvatarHeadshot/Webp/noFilter" alt="Roblox avatar headshot">
+          </div>
+          <div class="pfpMeta">
+            <h3>Lightning-themed dev</h3>
+            <p>
+              Fast iteration, clean visuals, smooth systems.
+            </p>
+          </div>
+        </div>
 
-<section id="home"><div class="inner">
-<img src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-3D3D154A992D2FD15574CCC33634CD36-Png/150/150/AvatarHeadshot/Webp/noFilter">
-<h1>irisWest156</h1>
-<p>Hey, I’m Iris a Roblox and web developer who builds interactive, creative, and mainly fun experiences. I’ve led and developed for multiple groups on Roblox, built UI systems, and enjoy designing everything from tools to full websites. I focus on performance, clean visuals, and ideas that are genuinely fun to use. You can find other projects/builds that i made and did not list here on my profile.</p>
-<div class="btns">
-<a data-index="1">Roblox Work</a>
-<a data-index="2">Featured Projects</a>
-</div>
-</div></section>
+        <div class="quick" aria-label="Quick tags">
+          <div class="pill"><b>Luau</b> scripting</div>
+          <div class="pill"><b>UI</b> systems</div>
+          <div class="pill"><b>Building</b> / maps</div>
+          <div class="pill"><b>Performance</b> focus</div>
+        </div>
+      </div>
 
-<section id="roblox"><div class="inner">
-<h2>Roblox Development</h2>
-<div class="project-grid">
-<div class="project"><a href="https://www.roblox.com/communities/35237014/Knight-s-Of-The-Republic-KOTR#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-dffe6202e3901e9d38c4795148be67c3/150/150/Image/Webp/noFilter"></a><h3>Knight’s Of The Republic | KOTR</h3><p>Developer</p></div>
-<div class="project"><a href="https://www.roblox.com/communities/5989081/The-Jedi-Order#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-b12a68e292c39060a64f457d7b048de1/150/150/Image/Webp/noFilter"></a><h3>|> The Jedi Order <|</h3><p>Deputy Quartermaster</p></div>
-<div class="project"><a href="https://www.roblox.com/communities/11668364/The-New-Jedi-Order#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-57d697308eb5d0ade28b282b91b1a4e8/150/150/Image/Webp/noFilter"></a><h3>》The New Jedi Order《</h3><p>Former Developer</p></div>
-<div class="project"><a href="https://www.roblox.com/communities/856729158/The-Sith-Empire#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-8e115dc41baee201e222a8396ef399a0/150/150/Image/Webp/noFilter"></a><h3>》The Sith Empire《</h3><p>Former Developer</p></div>
-<div class="project"><a href="https://www.roblox.com/communities/33763973/AJO-The-Ancient-Jedi-Order#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-9a39f10ae1dd86ae29d61f77ed04de9e/150/150/Image/Webp/noFilter"></a><h3>AJO | The Ancient Jedi Order</h3><p>Former Developer</p></div>
-<div class="project"><a href="https://www.roblox.com/communities/34433644/The-Jedi-Order-on-Alderaan#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-9f0130856aff407bf1ef5b3ad82fe5b8/150/150/Image/Webp/noFilter"></a><h3>The Jedi Order on Alderaan</h3><p>Former Head Developer</p></div>
-<div class="project"><a href="https://www.roblox.com/communities/35340042/Star-Wars-The-forgotten-Galaxy#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-d4cbcf53fffa2fca980ce8a69eff11e9/150/150/Image/Webp/noFilter"></a><h3>Star Wars: The Forgotten Galaxy</h3><p>Former Developer</p></div>
-<div class="project"><a href="https://www.roblox.com/communities/34873261/Maccies-Restaurant-Roleplay#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-812cb85f9739cd1e9089e3c7c4fb645d/150/150/Image/Webp/noFilter"></a><h3>Maccies Restaurant Roleplay</h3><p>Former Head Developer</p></div>
-<div class="project"><a href="https://www.roblox.com/communities/32438991/SCP-Foundation#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-f5adf117352003853b7b04d47c9c9dab/150/150/Image/Webp/noFilter"></a><h3>〈 SCP Foundation 〉</h3><p>Former Developer</p></div>
-<div class="project"><a href="https://www.roblox.com/communities/36064667/The-Jedi-Order#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-8fd79bd7a0d4bb6f6a544c46f7f2704a/150/150/Image/Webp/noFilter"></a><h3>- .The Jedi Order. -</h3><p>Former Developer</p></div>
-<div class="project"><a href="https://www.roblox.com/communities/34184402/VoxVerse-Studios#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-3e9465c17db4cb1d016a06ee199544ea/150/150/Image/Webp/noFilter"></a><h3>VoxVerse Studios</h3><p>Former Developer</p></div>
-<div class="project"><a href="https://www.roblox.com/communities/35925188/Voidfront#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-a213e0c82f80e6675386f12fcd444dec/150/150/Image/Webp/noFilter"></a><h3>Voidfront</h3><p>Former Developer</p></div>
-<div class="project"><a href="https://www.roblox.com/communities/34664761/h-Ga-actic-Republic#!/about" target="_blank"><img src="https://tr.rbxcdn.com/180DAY-a768dd746b5c765eb2384bfbf696234f/150/150/Image/Webp/noFilter"></a><h3>Τhе GaΙactic Republic</h3><p>Former Developer</p></div>
-</div>
-</div></section>
+      <nav class="nav" aria-label="Site navigation">
+        <a href="#about" data-jump>About <span>01</span></a>
+        <a href="#skills" data-jump>Skills <span>02</span></a>
+        <a href="#projects" data-jump>Projects <span>03</span></a>
+        <a href="#contact" data-jump>Contact <span>04</span></a>
+      </nav>
 
-<section id="featured"><div class="inner">
-<h2>Featured Projects</h2>
+      <div class="sideFooter">
+        Discord: <code>pure_script</code><br>
+        Tip: edit the Projects data at the bottom to add/remove items.
+      </div>
+    </aside>
 
-<div class="featured">
-<h3>AFK System</h3>
-<p>Instant-response AFK system built for smooth usability.</p>
-<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe></div>
-</div>
+    <!-- MAIN -->
+    <main class="main">
+      <div class="container">
 
-<div class="featured">
-<h3>Overhead UI</h3>
-<p>Clean and efficient overhead UI for player interaction.</p>
-<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe></div>
-</div>
+        <!-- HERO -->
+        <section class="hero" id="top">
+          <div class="heroTop">
+            <div class="headline">
+              <div class="kicker"><span class="dot"></span> Speedforce look. Lightning UI. Smooth gameplay.</div>
+              <h1><span class="grad">NoraVex</span> builds Roblox experiences that feel fast.</h1>
+              <p class="lead">
+                I’m a Roblox developer (scripter + builder) focused on interactive systems, clean UI, and performant code.
+                I work across projects and teams—shipping features, polishing gameplay, and making everything feel responsive.
+              </p>
+              <div class="cta">
+                <a class="btn btnPrimary" href="#projects" data-jump>View Projects</a>
+                <a class="btn" href="#skills" data-jump>Skills & Tooling</a>
+                <a class="btn" href="#contact" data-jump>Contact</a>
+              </div>
+            </div>
 
-<div class="featured">
-<h3>Loggers</h3>
-<p>Admin and activity loggers designed for transparency and performance.</p>
-<div class="project-grid">
-<div class="project"><img src="https://i.ibb.co/H8ftwBp/logger1.png"></div>
-<div class="project"><img src="https://i.ibb.co/qYxYDgq1/logger2.png"></div>
-</div>
-</div>
+            <div class="stats" aria-label="Quick stats">
+              <div class="statsGrid">
+                <div class="stat">
+                  <div class="n">Luau</div>
+                  <div class="l">Scripting systems</div>
+                </div>
+                <div class="stat">
+                  <div class="n">UI</div>
+                  <div class="l">Polished UX</div>
+                </div>
+                <div class="stat">
+                  <div class="n">Build</div>
+                  <div class="l">Maps / models</div>
+                </div>
+                <div class="stat">
+                  <div class="n">Perf</div>
+                  <div class="l">Optimized gameplay</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-<div class="featured">
-<h3>Roblox Models / Builds</h3>
-<p>These are some of my builds or models that i have made.</p>
-<div class="project-grid">
-<div class="project"><img src="https://i.ibb.co/1fPwh1fZ/afbeelding-2025-12-21-020218262.png"></div>
-<div class="project"><img src="https://i.ibb.co/kVNFNVQ0/afbeelding-2025-12-21-020106981.png"></div>
-<div class="project"><img src="https://i.ibb.co/GvC2WTRn/afbeelding-2025-12-21-020003449.png"></div>
-<div class="project"><img src="https://i.ibb.co/ym8Bg9zf/afbeelding-2025-12-21-015855126.png"></div>
-<div class="project"><img src="https://i.ibb.co/LXm3T72x/afbeelding-2025-12-21-015710939.png"></div>
-<div class="project"><img src="https://i.ibb.co/TDnP23FB/afbeelding-2025-12-21-015558214.png"></div>
-<div class="project"><img src="https://i.ibb.co/TMSBX5RS/afbeelding-2025-12-21-015404820.png"></div>
-<div class="project"><img src="https://i.ibb.co/RGqWS57N/afbeelding-2025-12-21-015222896.png"></div>
-<div class="project"><img src="https://i.ibb.co/KJkBYxZ/afbeelding-2025-12-21-015031053.png"></div>
-<div class="project"><img src="https://i.ibb.co/ymFhvxXF/afbeelding-2025-12-21-020555066.png"></div>
-</div>
-</div>
+        <!-- ABOUT -->
+        <section class="section" id="about">
+          <div class="sectionHead">
+            <div>
+              <h2><span class="grad">About</span></h2>
+              <p>Short, direct, and focused on what you do (no “only one project” framing).</p>
+            </div>
+          </div>
 
-</div></section>
+          <div class="sectionBody">
+            <div class="grid">
+              <div class="card wide">
+                <div class="cardTitle">
+                  <h3>What I do</h3>
+                  <span class="badge e">Lightning-speed iteration</span>
+                </div>
+                <p>
+                  I build Roblox systems that feel instant: responsive UI, clean server/client architecture,
+                  and gameplay tools that don’t lag behind the player. I like making “fast-feeling” experiences—
+                  smooth animations, immediate feedback, and predictable performance.
+                </p>
+              </div>
 
-<section id="websites"><div class="inner">
-<h2>Web Projects</h2>
-<div class="project-grid">
-<div class="project">
-<img src="https://i.ibb.co/bjWLnXDw/afbeelding-2025-12-21-023417788.png">
-<h3>Developer Portfolio</h3>
-<p>Designed and built from scratch with dynamic visuals and fluid navigation.</p>
-</div>
+              <div class="card">
+                <div class="cardTitle">
+                  <h3>My dev style</h3>
+                  <span class="badge v">Clean + maintainable</span>
+                </div>
+                <p>
+                  Organized modules, consistent naming, readable flow, and sensible boundaries between client/server.
+                  If it’s going to be maintained by a team, it should be easy to understand and extend.
+                </p>
+              </div>
 
-<div class="project">
-<img src="https://i.ibb.co/d44K0zhs/afbeelding-2025-12-21-023841178.png">
-<h3>Sith Archives</h3>
-<p>Made for an sith order works with databases and logins very fun. https://sitharchives.vercel.app </p>
-</div>
+              <div class="card">
+                <div class="cardTitle">
+                  <h3>What I like shipping</h3>
+                  <span class="badge g">Player-first</span>
+                </div>
+                <p>
+                  UI systems, AFK/interaction systems, overhead UI, admin tooling/loggers,
+                  movement/ability feel, and quality-of-life systems that make games feel polished.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-<div class="project">
-<img src="https://i.ibb.co/VcH6Fpwd/afbeelding-2025-12-21-024136938.png">
-<h3>Documentation Hub</h3>
-<p>Made for an sith order works with databases and logins very fun. https://sithhub.vercel.app </p>
-</div>
-  
-</div>
-</div></section>
+        <!-- SKILLS -->
+        <section class="section" id="skills">
+          <div class="sectionHead">
+            <div>
+              <h2><span class="grad">Skills</span></h2>
+              <p>Swap these to match exactly what you do most.</p>
+            </div>
+          </div>
 
-</main>
+          <div class="sectionBody">
+            <div class="grid">
+              <div class="card">
+                <div class="cardTitle">
+                  <h3>Scripting</h3>
+                  <span class="badge e">Luau</span>
+                </div>
+                <p>
+                  Module architecture, RemoteEvents/Functions, data flow, state handling, performance-minded patterns.
+                </p>
+              </div>
 
-<footer>© 2025 IrisWest156 All Rights Reserved</footer>
+              <div class="card">
+                <div class="cardTitle">
+                  <h3>UI & UX</h3>
+                  <span class="badge g">Polish</span>
+                </div>
+                <p>
+                  Clean layouts, readable hierarchy, tweened feedback, interaction patterns that feel “speedster smooth.”
+                </p>
+              </div>
 
-<script>
-const slider=document.getElementById("slider")
-const pages=[...slider.children]
-let index=0,startX=0,isDown=false
+              <div class="card">
+                <div class="cardTitle">
+                  <h3>Building</h3>
+                  <span class="badge v">World</span>
+                </div>
+                <p>
+                  Maps, models, set dressing, lighting vibes, and building for gameplay clarity—not just looks.
+                </p>
+              </div>
 
-const go=i=>{
-index=Math.max(0,Math.min(pages.length-1,i))
-slider.style.transform=`translateX(${-index*100}%)`
-}
+              <div class="card">
+                <div class="cardTitle">
+                  <h3>Tooling</h3>
+                  <span class="badge">Workflow</span>
+                </div>
+                <p>
+                  Debugging, profiling, clean iteration cycles, documentation, and building systems teams can reuse.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-document.querySelectorAll("[data-index]").forEach(el=>{
-el.onclick=()=>go(+el.dataset.index)
-})
+        <!-- PROJECTS -->
+        <section class="section" id="projects">
+          <div class="sectionHead">
+            <div>
+              <h2><span class="grad">Projects</span></h2>
+              <p>Search + filter. Click a card to open the details popup.</p>
+            </div>
+          </div>
 
-window.addEventListener("keydown",e=>{
-if(e.key==="ArrowRight"||e.key==="ArrowDown")go(index+1)
-if(e.key==="ArrowLeft"||e.key==="ArrowUp")go(index-1)
-})
+          <div class="sectionBody">
+            <div class="toolbar">
+              <div class="search" role="search" aria-label="Search projects">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="rgba(247,248,255,0.65)" stroke-width="2"/>
+                  <path d="M16.5 16.5 21 21" stroke="rgba(247,248,255,0.65)" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <input id="q" type="text" placeholder="Search projects (e.g. TFEP, UI, logger, AFK)..." autocomplete="off" />
+              </div>
 
-slider.addEventListener("pointerdown",e=>{
-isDown=true
-startX=e.clientX
-})
+              <div class="filters" aria-label="Project filters">
+                <div class="chip active" data-filter="all">All</div>
+                <div class="chip" data-filter="roblox">Roblox</div>
+                <div class="chip" data-filter="system">Systems</div>
+                <div class="chip" data-filter="ui">UI</div>
+                <div class="chip" data-filter="build">Build</div>
+                <div class="chip" data-filter="web">Web</div>
+              </div>
+            </div>
 
-window.addEventListener("pointerup",e=>{
-if(!isDown)return
-const dx=e.clientX-startX
-if(dx<-80)go(index+1)
-if(dx>80)go(index-1)
-isDown=false
-})
-</script>
+            <div class="projects" id="projectGrid"></div>
+          </div>
+        </section>
 
+        <!-- CONTACT -->
+        <section class="section" id="contact">
+          <div class="sectionHead">
+            <div>
+              <h2><span class="grad">Contact</span></h2>
+              <p>One clean contact method, as requested.</p>
+            </div>
+          </div>
+
+          <div class="sectionBody">
+            <div class="grid">
+              <div class="card wide">
+                <div class="cardTitle">
+                  <h3>Discord</h3>
+                  <span class="badge e">Fastest</span>
+                </div>
+                <p>
+                  Add/message me on Discord: <strong>pure_script</strong>
+                </p>
+                <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+                  <button class="btn btnPrimary" id="copyDiscord">Copy Discord</button>
+                  <a class="btn" href="#top" data-jump>Back to top</a>
+                </div>
+                <p id="copyNote" style="margin-top:10px; display:none;"></p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="footer">© <span id="year"></span> NoraVex — Lightning-themed portfolio</div>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Project details">
+    <div class="modalCard">
+      <div class="modalTop">
+        <div>
+          <h3 id="mTitle">Project</h3>
+          <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;" id="mBadges"></div>
+        </div>
+        <button class="close" id="closeModal">Close</button>
+      </div>
+      <div class="modalBody">
+        <div class="modalMedia">
+          <img id="mImg" alt="Project image">
+        </div>
+        <div class="modalText">
+          <p id="mDesc"></p>
+          <div class="modalLinks" id="mLinks"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Smooth jump for sidebar links (keeps it snappy, no old slider)
+    document.querySelectorAll("[data-jump]").forEach(a=>{
+      a.addEventListener("click",(e)=>{
+        const href = a.getAttribute("href");
+        if(!href || !href.startsWith("#")) return;
+        e.preventDefault();
+        const el = document.querySelector(href);
+        if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+      });
+    });
+
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Copy Discord
+    const copyBtn = document.getElementById("copyDiscord");
+    const copyNote = document.getElementById("copyNote");
+    copyBtn.addEventListener("click", async ()=>{
+      try{
+        await navigator.clipboard.writeText("pure_script");
+        copyNote.style.display = "block";
+        copyNote.style.color = "rgba(0,229,255,0.95)";
+        copyNote.textContent = "Copied: pure_script";
+      }catch{
+        copyNote.style.display = "block";
+        copyNote.style.color = "rgba(255,212,90,0.95)";
+        copyNote.textContent = "Couldn’t auto-copy. Discord: pure_script";
+      }
+    });
+
+    // ===== Projects data (EDIT THIS) =====
+    // Add/remove anything here. This replaces the old huge list and makes the site feel modern.
+    const PROJECTS = [
+      {
+        title: "The Flash: Earth Prime (TFEP)",
+        tags: ["roblox","system","ui"],
+        badge: "Active",
+        badgeStyle: "e",
+        image: "https://i.ibb.co/bjWLnXDw/afbeelding-2025-12-21-023417788.png",
+        desc: "Developer contributions across scripting and UI. Focus on responsiveness, clean visuals, and systems that feel fast in-game.",
+        links: [
+            { label: "Experience", url: "https://www.roblox.com/games/4812093631/The-Flash-Earth-Prime" }
+        ]
+      },
+      {
+        title: "AFK System",
+        tags: ["roblox","system","ui"],
+        badge: "System",
+        badgeStyle: "g",
+        image: "https://i.ibb.co/1fPwh1fZ/afbeelding-2025-12-21-020218262.png",
+        desc: "Instant-response AFK system with clean UX: quick toggles, clear state feedback, and performance-friendly updates.",
+        links: []
+      },
+      {
+        title: "Overhead UI",
+        tags: ["roblox","ui"],
+        badge: "UI",
+        badgeStyle: "v",
+        image: "https://i.ibb.co/kVNFNVQ0/afbeelding-2025-12-21-020106981.png",
+        desc: "Polished overhead UI for player interaction with smooth transitions and readable hierarchy.",
+        links: []
+      },
+      {
+        title: "Admin / Activity Loggers",
+        tags: ["roblox","system"],
+        badge: "Tools",
+        badgeStyle: "e",
+        image: "https://i.ibb.co/H8ftwBp/logger1.png",
+        desc: "Loggers designed for transparency and performance. Clear formatting, searchable entries, and low overhead.",
+        links: []
+      },
+      {
+        title: "Builds / Models Collection",
+        tags: ["roblox","build"],
+        badge: "Build",
+        badgeStyle: "g",
+        image: "https://i.ibb.co/GvC2WTRn/afbeelding-2025-12-21-020003449.png",
+        desc: "A selection of builds and models made for gameplay clarity, lighting vibe, and clean composition.",
+        links: []
+      },
+      {
+        title: "Developer Portfolio (Web)",
+        tags: ["web"],
+        badge: "Web",
+        badgeStyle: "v",
+        image: "https://i.ibb.co/bjWLnXDw/afbeelding-2025-12-21-023417788.png",
+        desc: "A lightning-themed portfolio site with modern layout, filtering, and a project details modal.",
+        links: []
+      }
+    ];
+
+    // Render projects
+    const grid = document.getElementById("projectGrid");
+    const q = document.getElementById("q");
+    const chips = [...document.querySelectorAll(".chip")];
+    let activeFilter = "all";
+
+    function miniBadge(text, cls){
+      return `<span class="mini ${cls||""}">${text}</span>`;
+    }
+
+    function projectCard(p, idx){
+      const tags = p.tags || [];
+      const tagPills = tags.slice(0,3).map(t=>{
+        const cls = t === "ui" ? "elec" : (t === "system" ? "bolt" : "");
+        return miniBadge(t.toUpperCase(), cls);
+      }).join("");
+
+      const badgeClass = p.badgeStyle ? p.badgeStyle : "";
+      const badge = p.badge ? `<span class="badge ${badgeClass}">${p.badge}</span>` : "";
+
+      const img = p.image
+        ? `<img src="${p.image}" alt="${p.title} thumbnail" loading="lazy">`
+        : "";
+
+      return `
+        <div class="proj" data-idx="${idx}">
+          <div class="thumb">${img}</div>
+          <div class="projBody">
+            <div class="cardTitle">
+              <h4>${p.title}</h4>
+              ${badge}
+            </div>
+            <div class="meta">${tagPills}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function matches(p){
+      const text = (p.title + " " + (p.desc||"") + " " + (p.tags||[]).join(" ")).toLowerCase();
+      const query = (q.value || "").trim().toLowerCase();
+      const filterOk = activeFilter === "all" || (p.tags||[]).includes(activeFilter);
+      const queryOk = !query || text.includes(query);
+      return filterOk && queryOk;
+    }
+
+    function render(){
+      grid.innerHTML = PROJECTS
+        .map((p,i)=> matches(p) ? projectCard(p,i) : "")
+        .join("");
+
+      // attach click handlers
+      [...grid.querySelectorAll(".proj")].forEach(card=>{
+        card.addEventListener("click", ()=>{
+          const idx = Number(card.getAttribute("data-idx"));
+          openModal(PROJECTS[idx]);
+        });
+      });
+    }
+
+    // Filter chips
+    chips.forEach(c=>{
+      c.addEventListener("click", ()=>{
+        chips.forEach(x=>x.classList.remove("active"));
+        c.classList.add("active");
+        activeFilter = c.getAttribute("data-filter");
+        render();
+      });
+    });
+
+    q.addEventListener("input", render);
+
+    // Modal logic
+    const modal = document.getElementById("modal");
+    const closeModalBtn = document.getElementById("closeModal");
+    const mTitle = document.getElementById("mTitle");
+    const mDesc = document.getElementById("mDesc");
+    const mImg = document.getElementById("mImg");
+    const mBadges = document.getElementById("mBadges");
+    const mLinks = document.getElementById("mLinks");
+
+    function openModal(p){
+      mTitle.textContent = p.title;
+      mDesc.textContent = p.desc || "";
+      mImg.src = p.image || "";
+      mImg.style.display = p.image ? "block" : "none";
+
+      mBadges.innerHTML = (p.tags || []).map(t=>{
+        const cls = t === "ui" ? "e" : (t === "system" ? "g" : (t === "build" ? "v" : ""));
+        return `<span class="badge ${cls}">${t.toUpperCase()}</span>`;
+      }).join("");
+
+      mLinks.innerHTML = (p.links || []).map(l=>{
+        const safeUrl = l.url || "#";
+        return `<a class="linkBtn" href="${safeUrl}" target="_blank" rel="noopener noreferrer">${l.label}</a>`;
+      }).join("");
+
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal(){
+      modal.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+    closeModalBtn.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e)=>{
+      if(e.target === modal) closeModal();
+    });
+    window.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape" && modal.classList.contains("open")) closeModal();
+    });
+
+    render();
+  </script>
 </body>
 </html>
