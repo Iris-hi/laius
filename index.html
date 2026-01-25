@@ -3,31 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NoraVex — Roblox Dev Portfolio</title>
+  <title>NoraVex — Portfolio</title>
   <link rel="icon" type="image/png" href="favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-
   <style>
     :root{
-      /* Nora / Lightning core */
-      --bg0:#050510;
-      --bg1:#07081a;
-      --panel:rgba(255,255,255,0.06);
-      --panel2:rgba(255,255,255,0.04);
-      --border:rgba(255,255,255,0.14);
+      --bg0:#050611;
+      --bg1:#070a1a;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.04);
+      --border:rgba(255,255,255,.14);
 
-      --electric:#00E5FF; /* lightning cyan */
-      --bolt:#FFD45A;     /* lightning gold */
-      --violet:#7C5CFF;   /* speedforce violet */
-      --magenta:#FF2BD6;  /* neon magenta */
+      --electric:#00E5FF;
+      --bolt:#FFD45A;
+      --violet:#7C5CFF;
+      --magenta:#FF2BD6;
 
       --text:#F7F8FF;
-      --muted:rgba(247,248,255,0.72);
+      --muted:rgba(247,248,255,.72);
 
       --r:18px;
-      --shadow: 0 18px 70px rgba(0,229,255,0.10);
-      --shadow2: 0 18px 70px rgba(255,212,90,0.08);
-      --max:1180px;
+      --max:1120px;
+
+      --ease:cubic-bezier(.22,1,.36,1);
+      --shadow:0 18px 70px rgba(0,229,255,.10);
+      --shadow2:0 18px 70px rgba(255,212,90,.07);
+
+      --navH:70px;
     }
 
     *{box-sizing:border-box}
@@ -37,63 +39,63 @@
       font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;
       color:var(--text);
       background:
-        radial-gradient(circle at 18% 16%, rgba(0,229,255,0.18), transparent 55%),
-        radial-gradient(circle at 82% 20%, rgba(124,92,255,0.18), transparent 55%),
-        radial-gradient(circle at 50% 110%, rgba(255,212,90,0.14), transparent 55%),
+        radial-gradient(circle at 12% 20%, rgba(0,229,255,.18), transparent 55%),
+        radial-gradient(circle at 84% 18%, rgba(124,92,255,.18), transparent 55%),
+        radial-gradient(circle at 50% 115%, rgba(255,212,90,.14), transparent 55%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
     }
 
-    /* ===== Lightning background layer ===== */
-    .storm{
+    a{color:inherit}
+
+    .bg{
       position:fixed;
       inset:0;
-      pointer-events:none;
       z-index:-2;
+      pointer-events:none;
       overflow:hidden;
-      filter:saturate(1.15);
+      filter:saturate(1.12);
     }
-    .storm::before,.storm::after{
+    .bg::before,.bg::after{
       content:"";
       position:absolute;
-      inset:-45%;
-      transform:rotate(-10deg);
+      inset:-40%;
       mix-blend-mode:screen;
-      opacity:.9;
+      opacity:.85;
+      transform:rotate(-10deg);
     }
-    .storm::before{
+    .bg::before{
       background:
         repeating-linear-gradient(
           110deg,
           rgba(0,229,255,0) 0%,
-          rgba(0,229,255,0) 42%,
-          rgba(0,229,255,.12) 48%,
+          rgba(0,229,255,0) 44%,
+          rgba(0,229,255,.12) 49%,
           rgba(255,212,90,.10) 52%,
           rgba(0,229,255,0) 58%,
           rgba(0,229,255,0) 100%
         );
-      animation:stormMove 10s linear infinite;
+      animation:bgMove 10s linear infinite;
     }
-    .storm::after{
+    .bg::after{
       background:
         repeating-linear-gradient(
           60deg,
           rgba(124,92,255,0) 0%,
-          rgba(124,92,255,0) 45%,
+          rgba(124,92,255,0) 46%,
           rgba(124,92,255,.11) 50%,
           rgba(255,43,214,.09) 53%,
           rgba(124,92,255,0) 56%,
           rgba(124,92,255,0) 100%
         );
-      animation:stormMove 14s linear infinite reverse;
-      opacity:.8;
+      animation:bgMove 14s linear infinite reverse;
+      opacity:.75;
     }
-    @keyframes stormMove{
-      0%{transform:translate3d(-6%, -3%, 0) rotate(-10deg)}
-      100%{transform:translate3d(6%, 3%, 0) rotate(-10deg)}
+    @keyframes bgMove{
+      0%{transform:translate3d(-6%,-3%,0) rotate(-10deg)}
+      100%{transform:translate3d(6%,3%,0) rotate(-10deg)}
     }
 
-    /* grain */
     .grain{
       position:fixed;
       inset:0;
@@ -104,240 +106,181 @@
       mix-blend-mode:overlay;
     }
 
-    /* ===== App layout: sidebar + content ===== */
-    .app{
-      display:grid;
-      grid-template-columns: 310px 1fr;
-      min-height:100vh;
-    }
-    @media (max-width: 980px){
-      .app{grid-template-columns: 1fr}
-    }
-
-    /* ===== Sidebar ===== */
-    .side{
-      position:sticky;
+    header{
+      position:fixed;
       top:0;
-      height:100vh;
-      padding:22px 18px;
-      border-right:1px solid var(--border);
-      background:rgba(5,5,16,0.55);
+      left:0;
+      right:0;
+      height:var(--navH);
+      z-index:20;
+      background:rgba(5,6,17,.55);
       backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(255,255,255,.10);
     }
-    @media (max-width: 980px){
-      .side{
-        position:relative;
-        height:auto;
-        border-right:0;
-        border-bottom:1px solid var(--border);
-      }
+    .nav{
+      max-width:var(--max);
+      margin:0 auto;
+      height:100%;
+      padding:0 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
     }
 
     .brand{
       display:flex;
-      gap:12px;
       align-items:center;
-      padding:14px;
-      border-radius:var(--r);
-      border:1px solid var(--border);
-      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-      box-shadow:var(--shadow);
+      gap:12px;
+      min-width:220px;
+    }
+    .mark{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,212,90,.35), transparent 60%),
+        linear-gradient(135deg, rgba(0,229,255,.95), rgba(124,92,255,.95));
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow:0 0 28px rgba(0,229,255,.18);
+      display:grid;
+      place-items:center;
       overflow:hidden;
       position:relative;
+      flex:0 0 auto;
     }
-    .brand::before{
+    .mark::before{
       content:"";
       position:absolute;
       inset:-40%;
-      background:linear-gradient(90deg, transparent, rgba(255,212,90,0.22), transparent);
+      background:linear-gradient(90deg, transparent, rgba(255,212,90,.28), transparent);
       transform:rotate(25deg);
-      animation:shine 3s ease-in-out infinite;
-      opacity:.5;
+      animation:shine 3s var(--ease) infinite;
+      opacity:.45;
     }
     @keyframes shine{
-      0%,100%{transform:translateX(-12%) rotate(25deg); opacity:.20}
+      0%,100%{transform:translateX(-12%) rotate(25deg); opacity:.18}
       50%{transform:translateX(12%) rotate(25deg); opacity:.55}
     }
-
-    .logo{
-      width:44px;height:44px;border-radius:14px;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,212,90,0.35), transparent 60%),
-        linear-gradient(135deg, rgba(0,229,255,0.95), rgba(124,92,255,0.95));
-      border:1px solid rgba(255,255,255,0.16);
-      box-shadow:0 0 28px rgba(0,229,255,0.18);
-      display:grid;place-items:center;
-      flex:0 0 auto;
-      position:relative;
-      z-index:1;
-    }
-    .logo svg{width:22px;height:22px;opacity:.95}
+    .mark svg{width:22px;height:22px;opacity:.95; position:relative; z-index:1}
 
     .brandText{
-      position:relative;
-      z-index:1;
-      line-height:1.1;
+      line-height:1.06;
     }
     .brandText .name{
-      font-weight:800;
-      font-size:18px;
+      font-weight:900;
+      font-size:16px;
       letter-spacing:.2px;
       background:linear-gradient(90deg, var(--electric), var(--bolt), var(--magenta), var(--violet));
       -webkit-background-clip:text;
       -webkit-text-fill-color:transparent;
     }
-    .brandText .role{
+    .brandText .sub{
       margin-top:4px;
       font-size:12px;
       color:var(--muted);
       font-weight:600;
     }
 
-    .pfp{
-      margin-top:14px;
-      border-radius:var(--r);
-      border:1px solid var(--border);
-      background:rgba(255,255,255,0.04);
-      padding:14px;
-      box-shadow:var(--shadow2);
-    }
-    .pfpRow{
+    .links{
       display:flex;
-      gap:12px;
+      gap:8px;
       align-items:center;
-    }
-    .avatar{
-      width:64px;height:64px;border-radius:16px;
-      overflow:hidden;
-      border:2px solid rgba(0,229,255,0.55);
-      box-shadow:0 0 22px rgba(0,229,255,0.16);
-      background:rgba(0,0,0,0.25);
-      flex:0 0 auto;
-    }
-    .avatar img{width:100%;height:100%;object-fit:cover}
-    .pfpMeta h3{
-      margin:0;
-      font-size:14px;
-      font-weight:800;
-    }
-    .pfpMeta p{
-      margin:3px 0 0;
-      font-size:12px;
-      color:var(--muted);
-      line-height:1.4;
-    }
-
-    .quick{
-      margin-top:12px;
-      display:flex;
       flex-wrap:wrap;
-      gap:8px;
+      justify-content:flex-end;
     }
-    .pill{
-      font-size:11px;
-      padding:7px 9px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(0,0,0,0.18);
-      color:rgba(247,248,255,0.90);
-      user-select:none;
-    }
-    .pill b{color:var(--electric)}
-
-    .nav{
-      margin-top:14px;
-      display:grid;
-      gap:8px;
-    }
-    .nav a{
-      text-decoration:none;
-      color:rgba(247,248,255,0.92);
-      font-weight:700;
-      font-size:13px;
-      padding:11px 12px;
-      border-radius:14px;
+    .tab{
+      appearance:none;
       border:1px solid transparent;
-      background:rgba(255,255,255,0.03);
-      transition:.18s;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
-    .nav a:hover{
-      border-color:rgba(0,229,255,0.22);
-      transform:translateY(-1px);
-      box-shadow:0 0 26px rgba(0,229,255,0.10);
-    }
-    .nav a span{
-      color:rgba(247,248,255,0.55);
+      background:rgba(255,255,255,.03);
+      color:rgba(247,248,255,.92);
       font-weight:800;
+      font-size:13px;
+      padding:10px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      transition:transform .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease);
+    }
+    .tab:hover{
+      transform:translateY(-1px);
+      border-color:rgba(0,229,255,.22);
+      background:rgba(255,255,255,.04);
+    }
+    .tab[aria-current="page"]{
+      border-color:rgba(0,229,255,.30);
+      background:rgba(0,229,255,.08);
+      color:rgba(0,229,255,1);
     }
 
-    .sideFooter{
-      margin-top:14px;
-      padding:12px 14px;
-      border-radius:var(--r);
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(255,255,255,0.03);
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.5;
+    main{
+      padding-top:calc(var(--navH) + 18px);
+      padding-bottom:72px;
     }
-    .sideFooter code{
-      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      color:rgba(247,248,255,0.90);
-      background:rgba(0,0,0,0.22);
-      border:1px solid rgba(255,255,255,0.10);
-      padding:2px 6px;
-      border-radius:8px;
-    }
-
-    /* ===== Main content ===== */
-    .main{
-      padding:22px 22px 70px;
-    }
-    .container{
+    .frame{
       max-width:var(--max);
       margin:0 auto;
+      padding:0 16px;
     }
 
-    /* hero (completely different from your old slider) */
+    .stage{
+      position:relative;
+      min-height:calc(100vh - var(--navH) - 90px);
+      border-radius:calc(var(--r) + 10px);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.03);
+      box-shadow:0 22px 110px rgba(0,0,0,.35);
+      overflow:hidden;
+    }
+
+    .page{
+      position:absolute;
+      inset:0;
+      padding:22px;
+      overflow:auto;
+      opacity:0;
+      transform:translate3d(18px, 0, 0);
+      pointer-events:none;
+      transition:opacity .55s var(--ease), transform .55s var(--ease);
+    }
+    .page.active{
+      opacity:1;
+      transform:translate3d(0,0,0);
+      pointer-events:auto;
+    }
+    .page::-webkit-scrollbar{width:10px}
+    .page::-webkit-scrollbar-thumb{background:rgba(255,255,255,.10); border-radius:10px}
+    .page::-webkit-scrollbar-track{background:transparent}
+
     .hero{
-      border-radius: calc(var(--r) + 6px);
-      border:1px solid var(--border);
+      border-radius:calc(var(--r) + 6px);
+      border:1px solid rgba(255,255,255,.12);
       background:
-        radial-gradient(circle at 15% 20%, rgba(0,229,255,0.22), transparent 55%),
-        radial-gradient(circle at 85% 30%, rgba(255,212,90,0.16), transparent 55%),
-        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+        radial-gradient(circle at 16% 22%, rgba(0,229,255,.22), transparent 55%),
+        radial-gradient(circle at 84% 28%, rgba(255,212,90,.16), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
       box-shadow:var(--shadow);
       padding:22px;
-      overflow:hidden;
       position:relative;
+      overflow:hidden;
     }
-    .heroTop{
+    .heroGrid{
       display:grid;
-      grid-template-columns: 1.25fr 0.75fr;
+      grid-template-columns: 1.3fr .7fr;
       gap:16px;
       align-items:stretch;
     }
-    @media (max-width: 980px){
-      .heroTop{grid-template-columns:1fr}
+    @media (max-width: 900px){
+      .heroGrid{grid-template-columns:1fr}
     }
 
-    .headline{
-      padding:18px;
-      border-radius:var(--r);
-      background:rgba(255,255,255,0.03);
-      border:1px solid rgba(255,255,255,0.12);
-    }
     .kicker{
       display:inline-flex;
       align-items:center;
       gap:10px;
       font-size:12px;
-      color:rgba(247,248,255,0.86);
-      background:rgba(0,0,0,0.22);
-      border:1px solid rgba(255,255,255,0.12);
+      color:rgba(247,248,255,.86);
+      background:rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.12);
       padding:8px 12px;
       border-radius:999px;
       width:max-content;
@@ -345,26 +288,29 @@
     .dot{
       width:10px;height:10px;border-radius:50%;
       background:linear-gradient(90deg,var(--electric),var(--bolt));
-      box-shadow:0 0 18px rgba(255,212,90,0.18);
+      box-shadow:0 0 18px rgba(255,212,90,.18);
     }
+
     h1{
       margin:14px 0 0;
       font-size:42px;
       line-height:1.05;
-      letter-spacing:-0.8px;
+      letter-spacing:-.8px;
     }
     @media (max-width: 520px){ h1{font-size:34px} }
+
     .grad{
       background:linear-gradient(90deg, var(--electric), var(--bolt), var(--magenta), var(--violet));
       -webkit-background-clip:text;
       -webkit-text-fill-color:transparent;
     }
+
     .lead{
       margin:12px 0 0;
       color:var(--muted);
       font-size:14px;
       line-height:1.7;
-      max-width:70ch;
+      max-width:72ch;
     }
 
     .cta{
@@ -375,110 +321,119 @@
       align-items:center;
     }
     .btn{
+      appearance:none;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      font-weight:900;
+      font-size:13px;
+      padding:12px 14px;
+      border-radius:14px;
+      cursor:pointer;
+      transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
       display:inline-flex;
       align-items:center;
       gap:10px;
-      padding:12px 14px;
-      border-radius:14px;
       text-decoration:none;
-      font-weight:800;
-      font-size:13px;
-      border:1px solid rgba(255,255,255,0.14);
-      background:rgba(255,255,255,0.04);
-      color:var(--text);
-      transition:.18s;
-      cursor:pointer;
+      user-select:none;
     }
     .btn:hover{
       transform:translateY(-1px);
-      border-color:rgba(0,229,255,0.22);
-      box-shadow:0 0 24px rgba(0,229,255,0.10);
+      border-color:rgba(0,229,255,.22);
+      box-shadow:0 0 24px rgba(0,229,255,.10);
     }
-    .btnPrimary{
+    .btn.primary{
       border:0;
-      color:#071018;
-      background:linear-gradient(90deg, rgba(0,229,255,0.95), rgba(255,212,90,0.92), rgba(124,92,255,0.95));
-      box-shadow:0 0 26px rgba(0,229,255,0.14);
+      color:#061018;
+      background:linear-gradient(90deg, rgba(0,229,255,.95), rgba(255,212,90,.92), rgba(124,92,255,.95));
+      box-shadow:0 0 26px rgba(0,229,255,.14);
+    }
+    .btn.primary:hover{
+      box-shadow:0 0 30px rgba(255,212,90,.18);
     }
 
-    /* stat panel */
-    .stats{
+    .profile{
+      border-radius:calc(var(--r) + 6px);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.18);
       padding:18px;
-      border-radius:var(--r);
-      background:rgba(0,0,0,0.20);
-      border:1px solid rgba(255,255,255,0.12);
+      box-shadow:var(--shadow2);
       position:relative;
       overflow:hidden;
     }
-    .stats::before{
-      content:"";
-      position:absolute; inset:-40%;
-      background:linear-gradient(90deg, transparent, rgba(0,229,255,0.14), transparent);
-      transform:rotate(20deg);
-      animation:shine 4s ease-in-out infinite;
-      opacity:.55;
+    .pRow{
+      display:flex;
+      gap:12px;
+      align-items:center;
     }
-    .statsGrid{
-      position:relative;
-      z-index:1;
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
+    .avatar{
+      width:70px;height:70px;border-radius:18px;
+      overflow:hidden;
+      border:2px solid rgba(0,229,255,.55);
+      box-shadow:0 0 22px rgba(0,229,255,.16);
+      background:rgba(0,0,0,.25);
+      flex:0 0 auto;
     }
-    .stat{
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(255,255,255,0.03);
-      padding:12px;
-      min-height:76px;
-    }
-    .stat .n{
+    .avatar img{width:100%;height:100%;object-fit:cover}
+    .pMeta h3{
+      margin:0;
+      font-size:15px;
       font-weight:900;
-      font-size:18px;
-      letter-spacing:.2px;
-      background:linear-gradient(90deg, var(--electric), var(--bolt));
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
     }
-    .stat .l{
-      margin-top:4px;
+    .pMeta p{
+      margin:4px 0 0;
       font-size:12px;
       color:var(--muted);
-      font-weight:700;
+      line-height:1.45;
     }
 
-    /* sections */
+    .chips{
+      margin-top:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .chip{
+      font-size:11px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.03);
+      color:rgba(247,248,255,.88);
+      font-weight:800;
+    }
+    .chip b{color:var(--electric)}
+
     .section{
       margin-top:16px;
-      border-radius:calc(var(--r) + 6px);
-      border:1px solid var(--border);
-      background:rgba(255,255,255,0.03);
+      border-radius:calc(var(--r) + 10px);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.03);
       overflow:hidden;
-      box-shadow:0 10px 60px rgba(0,0,0,0.25);
     }
     .sectionHead{
       padding:16px 18px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
       display:flex;
       justify-content:space-between;
-      align-items:flex-end;
       gap:14px;
-      border-bottom:1px solid rgba(255,255,255,0.08);
-      background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.00));
+      align-items:flex-end;
     }
     .sectionHead h2{
       margin:0;
-      font-size:16px;
-      letter-spacing:-0.2px;
+      font-size:15px;
+      font-weight:900;
+      letter-spacing:-.2px;
     }
     .sectionHead p{
       margin:0;
       font-size:12px;
       color:var(--muted);
-      max-width:70ch;
+      max-width:72ch;
     }
-    .sectionBody{ padding:18px; }
+    .sectionBody{padding:18px}
 
-    /* cards */
     .grid{
       display:grid;
       grid-template-columns: repeat(12, 1fr);
@@ -487,81 +442,175 @@
     .card{
       grid-column: span 6;
       border-radius:18px;
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.03);
       padding:16px;
-      transition:.18s;
-      position:relative;
+      transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
       overflow:hidden;
+      position:relative;
     }
     .card:hover{
       transform:translateY(-2px);
-      border-color:rgba(0,229,255,0.22);
-      box-shadow:0 0 28px rgba(0,229,255,0.10);
+      border-color:rgba(0,229,255,.22);
+      box-shadow:0 0 28px rgba(0,229,255,.10);
     }
-    .card.wide{ grid-column: span 12; }
-    @media (max-width: 980px){ .card{grid-column: span 12;} }
+    .card.wide{grid-column:span 12}
+    @media (max-width: 900px){
+      .card{grid-column:span 12}
+    }
 
-    .cardTitle{
+    .cardTop{
       display:flex;
-      align-items:center;
       justify-content:space-between;
       gap:10px;
+      align-items:flex-start;
       margin-bottom:6px;
     }
-    .cardTitle h3{
+    .card h3{
       margin:0;
       font-size:14px;
       font-weight:900;
-      letter-spacing:.1px;
     }
     .badge{
       font-size:11px;
       font-weight:900;
-      padding:7px 9px;
+      padding:7px 10px;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(0,0,0,0.18);
-      color:rgba(247,248,255,0.88);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.18);
+      color:rgba(247,248,255,.88);
       white-space:nowrap;
     }
-    .badge.e{
-      border-color:rgba(0,229,255,0.22);
-      color:rgba(0,229,255,0.95);
-    }
-    .badge.g{
-      border-color:rgba(255,212,90,0.20);
-      color:rgba(255,212,90,0.95);
-    }
-    .badge.v{
-      border-color:rgba(124,92,255,0.22);
-      color:rgba(124,92,255,0.95);
-    }
+    .badge.e{border-color:rgba(0,229,255,.22); color:rgba(0,229,255,.95)}
+    .badge.g{border-color:rgba(255,212,90,.20); color:rgba(255,212,90,.95)}
+    .badge.v{border-color:rgba(124,92,255,.22); color:rgba(124,92,255,.95)}
+    .badge.m{border-color:rgba(255,43,214,.20); color:rgba(255,43,214,.95)}
 
     .card p{
       margin:0;
       color:var(--muted);
       font-size:12px;
-      line-height:1.6;
+      line-height:1.65;
     }
 
-    /* projects */
-    .toolbar{
+    .list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .item{
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.18);
+      padding:14px;
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      align-items:flex-start;
+      transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
+    }
+    .item:hover{
+      transform:translateY(-2px);
+      border-color:rgba(0,229,255,.22);
+      box-shadow:0 0 26px rgba(0,229,255,.10);
+    }
+    .item h4{
+      margin:0;
+      font-size:13px;
+      font-weight:900;
+    }
+    .item p{
+      margin:6px 0 0;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.6;
+      max-width:80ch;
+    }
+
+    .tags{
+      margin-top:8px;
       display:flex;
       flex-wrap:wrap;
+      gap:8px;
+    }
+    .tag{
+      font-size:11px;
+      font-weight:900;
+      padding:6px 9px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.03);
+      color:rgba(247,248,255,.88);
+    }
+
+    .workGrid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
+    }
+    .tile{
+      grid-column:span 4;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.03);
+      overflow:hidden;
+      cursor:pointer;
+      transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
+    }
+    .tile:hover{
+      transform:translateY(-2px);
+      border-color:rgba(0,229,255,.22);
+      box-shadow:0 0 28px rgba(0,229,255,.10);
+    }
+    @media (max-width: 1000px){ .tile{grid-column:span 6} }
+    @media (max-width: 700px){ .tile{grid-column:span 12} }
+
+    .thumb{
+      height:150px;
+      background:
+        radial-gradient(circle at 25% 30%, rgba(0,229,255,.20), transparent 55%),
+        radial-gradient(circle at 75% 25%, rgba(255,212,90,.16), transparent 55%),
+        linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border-bottom:1px solid rgba(255,255,255,.10);
+      position:relative;
+      overflow:hidden;
+    }
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92}
+    .tileBody{padding:14px}
+    .tileBody h4{margin:0;font-size:13px;font-weight:900}
+    .tileBody p{margin:7px 0 0;font-size:12px;color:var(--muted);line-height:1.6}
+    .miniRow{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+    .mini{
+      font-size:11px;
+      font-weight:900;
+      padding:6px 9px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.18);
+      color:rgba(247,248,255,.84);
+    }
+    .mini.e{border-color:rgba(0,229,255,.22);color:rgba(0,229,255,.95)}
+    .mini.g{border-color:rgba(255,212,90,.20);color:rgba(255,212,90,.95)}
+    .mini.v{border-color:rgba(124,92,255,.22);color:rgba(124,92,255,.95)}
+    .mini.m{border-color:rgba(255,43,214,.20);color:rgba(255,43,214,.95)}
+
+    .toolbar{
+      display:flex;
       gap:10px;
       align-items:center;
       justify-content:space-between;
+      flex-wrap:wrap;
       margin-bottom:12px;
     }
     .search{
-      flex:1 1 220px;
+      flex:1 1 260px;
       display:flex;
       gap:10px;
       align-items:center;
       border-radius:14px;
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(0,0,0,0.18);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.18);
       padding:10px 12px;
     }
     .search input{
@@ -570,7 +619,7 @@
       outline:none;
       background:transparent;
       color:var(--text);
-      font-weight:700;
+      font-weight:800;
       font-size:13px;
     }
     .filters{
@@ -579,493 +628,369 @@
       gap:8px;
       justify-content:flex-end;
     }
-    .chip{
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(255,255,255,0.03);
-      color:rgba(247,248,255,0.88);
+    .f{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.03);
+      color:rgba(247,248,255,.88);
       font-weight:900;
       font-size:11px;
       padding:9px 10px;
       border-radius:999px;
       cursor:pointer;
-      transition:.15s;
+      transition:transform .15s var(--ease), border-color .15s var(--ease), background .15s var(--ease);
       user-select:none;
     }
-    .chip:hover{
-      transform:translateY(-1px);
-      border-color:rgba(0,229,255,0.20);
-    }
-    .chip.active{
-      border-color:rgba(0,229,255,0.30);
-      background:rgba(0,229,255,0.08);
+    .f:hover{transform:translateY(-1px); border-color:rgba(0,229,255,.20)}
+    .f.active{
+      border-color:rgba(0,229,255,.30);
+      background:rgba(0,229,255,.08);
       color:rgba(0,229,255,1);
     }
 
-    .projects{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:12px;
-    }
-    .proj{
-      grid-column: span 4;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(255,255,255,0.03);
-      overflow:hidden;
-      transition:.18s;
-      cursor:pointer;
-      position:relative;
-    }
-    .proj:hover{
-      transform:translateY(-2px);
-      border-color:rgba(0,229,255,0.22);
-      box-shadow:0 0 28px rgba(0,229,255,0.10);
-    }
-    @media (max-width: 1100px){ .proj{grid-column: span 6;} }
-    @media (max-width: 760px){ .proj{grid-column: span 12;} }
-
-    .thumb{
-      height:150px;
-      background:
-        radial-gradient(circle at 25% 30%, rgba(0,229,255,0.20), transparent 55%),
-        radial-gradient(circle at 75% 25%, rgba(255,212,90,0.16), transparent 55%),
-        linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-      border-bottom:1px solid rgba(255,255,255,0.10);
-      position:relative;
-    }
-    .thumb img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      opacity:.92;
-    }
-    .projBody{
-      padding:14px;
-    }
-    .projBody h4{
-      margin:0;
-      font-size:13px;
-      font-weight:900;
-    }
-    .meta{
-      margin-top:6px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      align-items:center;
-    }
-    .meta .mini{
-      font-size:11px;
-      font-weight:900;
-      padding:6px 8px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(0,0,0,0.18);
-      color:rgba(247,248,255,0.82);
-    }
-    .meta .mini.bolt{
-      border-color:rgba(255,212,90,0.20);
-      color:rgba(255,212,90,0.95);
-    }
-    .meta .mini.elec{
-      border-color:rgba(0,229,255,0.22);
-      color:rgba(0,229,255,0.95);
-    }
-
-    /* modal */
     .modal{
       position:fixed;
       inset:0;
       display:none;
       align-items:center;
       justify-content:center;
-      background:rgba(0,0,0,0.55);
+      background:rgba(0,0,0,.56);
       backdrop-filter:blur(14px);
       z-index:50;
       padding:18px;
     }
     .modal.open{display:flex}
     .modalCard{
-      width:min(820px, 100%);
+      width:min(920px, 100%);
       border-radius:22px;
-      border:1px solid rgba(255,255,255,0.16);
+      border:1px solid rgba(255,255,255,.16);
       background:
-        radial-gradient(circle at 20% 20%, rgba(0,229,255,0.16), transparent 55%),
-        radial-gradient(circle at 80% 20%, rgba(255,212,90,0.12), transparent 55%),
-        rgba(8,8,20,0.88);
-      box-shadow:0 30px 110px rgba(0,0,0,0.55);
+        radial-gradient(circle at 20% 20%, rgba(0,229,255,.16), transparent 55%),
+        radial-gradient(circle at 80% 20%, rgba(255,212,90,.12), transparent 55%),
+        rgba(8,8,20,.90);
+      box-shadow:0 30px 110px rgba(0,0,0,.55);
       overflow:hidden;
+      transform:translate3d(0, 10px, 0);
+      opacity:0;
+      animation:pop .35s var(--ease) forwards;
+    }
+    @keyframes pop{
+      to{transform:translate3d(0,0,0);opacity:1}
     }
     .modalTop{
-      padding:16px 16px 10px;
+      padding:16px 16px 12px;
       display:flex;
       justify-content:space-between;
       align-items:flex-start;
       gap:10px;
-      border-bottom:1px solid rgba(255,255,255,0.10);
+      border-bottom:1px solid rgba(255,255,255,.10);
     }
-    .modalTop h3{
-      margin:0;
-      font-size:15px;
-      font-weight:900;
-    }
+    .modalTop h3{margin:0;font-size:15px;font-weight:900}
     .close{
-      border:1px solid rgba(255,255,255,0.14);
-      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.04);
       color:var(--text);
       font-weight:900;
       border-radius:14px;
       padding:10px 12px;
       cursor:pointer;
-      transition:.15s;
+      transition:transform .15s var(--ease), border-color .15s var(--ease);
     }
-    .close:hover{transform:translateY(-1px); border-color:rgba(0,229,255,0.22)}
+    .close:hover{transform:translateY(-1px); border-color:rgba(0,229,255,.22)}
     .modalBody{
       padding:16px;
       display:grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1.1fr .9fr;
       gap:14px;
     }
-    @media (max-width: 880px){ .modalBody{grid-template-columns:1fr} }
+    @media (max-width: 900px){ .modalBody{grid-template-columns:1fr} }
     .modalMedia{
       border-radius:18px;
-      border:1px solid rgba(255,255,255,0.12);
+      border:1px solid rgba(255,255,255,.12);
       overflow:hidden;
-      background:rgba(0,0,0,0.25);
-      min-height:220px;
+      background:rgba(0,0,0,.25);
+      min-height:240px;
       position:relative;
     }
-    .modalMedia img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      opacity:.96;
-    }
+    .modalMedia img{width:100%;height:100%;object-fit:cover;display:block;opacity:.96}
     .modalText{
       border-radius:18px;
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.03);
       padding:14px;
     }
-    .modalText p{
-      margin:0;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.7;
-    }
-    .modalLinks{
-      margin-top:12px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
+    .modalText p{margin:0;color:var(--muted);font-size:12px;line-height:1.75}
+    .modalBadges{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+    .modalLinks{margin-top:12px;display:flex;flex-wrap:wrap;gap:10px}
     .linkBtn{
       text-decoration:none;
       font-weight:900;
       font-size:12px;
       padding:10px 12px;
       border-radius:14px;
-      border:1px solid rgba(255,255,255,0.14);
-      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.04);
       color:var(--text);
-      transition:.15s;
+      transition:transform .15s var(--ease), border-color .15s var(--ease);
     }
-    .linkBtn:hover{transform:translateY(-1px); border-color:rgba(0,229,255,0.22)}
+    .linkBtn:hover{transform:translateY(-1px); border-color:rgba(0,229,255,.22)}
 
-    /* footer */
+    .contactBox{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    @media (max-width: 900px){ .contactBox{grid-template-columns:1fr} }
+    .contactCard{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.18);
+      padding:16px;
+      transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
+    }
+    .contactCard:hover{
+      transform:translateY(-2px);
+      border-color:rgba(0,229,255,.22);
+      box-shadow:0 0 26px rgba(0,229,255,.10);
+    }
+    .contactCard h3{margin:0;font-size:14px;font-weight:900}
+    .contactCard p{margin:8px 0 0;color:var(--muted);font-size:12px;line-height:1.7}
+    .copyNote{margin-top:10px;color:rgba(0,229,255,.95);font-weight:900;font-size:12px;display:none}
+
     .footer{
-      margin-top:16px;
-      padding:18px 10px;
+      margin-top:14px;
       text-align:center;
       color:var(--muted);
       font-size:12px;
+      padding:14px 0 0;
     }
 
-    /* reduced motion */
+    .reveal{
+      opacity:0;
+      transform:translate3d(0, 10px, 0);
+      transition:opacity .55s var(--ease), transform .55s var(--ease);
+      will-change:opacity, transform;
+    }
+    .reveal.on{
+      opacity:1;
+      transform:translate3d(0,0,0);
+    }
+
     @media (prefers-reduced-motion: reduce){
-      .storm::before,.storm::after{animation:none !important}
-      .brand::before{animation:none !important}
-      *{scroll-behavior:auto !important}
+      .bg::before,.bg::after{animation:none}
+      .mark::before{animation:none}
+      .page{transition:none}
+      .reveal{transition:none}
+      .modalCard{animation:none; opacity:1; transform:none}
     }
   </style>
 </head>
 
 <body>
-  <div class="storm"></div>
+  <div class="bg"></div>
   <div class="grain"></div>
 
-  <div class="app">
-    <!-- SIDEBAR -->
-    <aside class="side">
+  <header>
+    <div class="nav">
       <div class="brand">
-        <div class="logo" aria-hidden="true">
+        <div class="mark" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none">
-            <path d="M13 2 3 14h7l-1 8 12-14h-7l-1-6Z" fill="rgba(255,255,255,0.92)"/>
+            <path d="M13 2 3 14h7l-1 8 12-14h-7l-1-6Z" fill="rgba(255,255,255,.92)"/>
           </svg>
         </div>
         <div class="brandText">
           <div class="name">NoraVex</div>
-          <div class="role">Roblox Scripter • Builder • UI Systems</div>
+          <div class="sub">Roblox Scripter • Builder • UI Systems</div>
         </div>
       </div>
 
-      <div class="pfp">
-        <div class="pfpRow">
-          <div class="avatar">
-            <!-- Replace with your current Roblox avatar headshot -->
-            <img src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-3D3D154A992D2FD15574CCC33634CD36-Png/150/150/AvatarHeadshot/Webp/noFilter" alt="Roblox avatar headshot">
-          </div>
-          <div class="pfpMeta">
-            <h3>Lightning-themed dev</h3>
-            <p>
-              Fast iteration, clean visuals, smooth systems.
-            </p>
-          </div>
-        </div>
-
-        <div class="quick" aria-label="Quick tags">
-          <div class="pill"><b>Luau</b> scripting</div>
-          <div class="pill"><b>UI</b> systems</div>
-          <div class="pill"><b>Building</b> / maps</div>
-          <div class="pill"><b>Performance</b> focus</div>
-        </div>
+      <div class="links" role="navigation" aria-label="Pages">
+        <button class="tab" data-go="home" aria-current="page">Home</button>
+        <button class="tab" data-go="work">Work</button>
+        <button class="tab" data-go="systems">Systems</button>
+        <button class="tab" data-go="contact">Contact</button>
       </div>
+    </div>
+  </header>
 
-      <nav class="nav" aria-label="Site navigation">
-        <a href="#about" data-jump>About <span>01</span></a>
-        <a href="#skills" data-jump>Skills <span>02</span></a>
-        <a href="#projects" data-jump>Projects <span>03</span></a>
-        <a href="#contact" data-jump>Contact <span>04</span></a>
-      </nav>
+  <main>
+    <div class="frame">
+      <div class="stage" id="stage">
 
-      <div class="sideFooter">
-        Discord: <code>pure_script</code><br>
-        Tip: edit the Projects data at the bottom to add/remove items.
-      </div>
-    </aside>
+        <section class="page active" data-page="home">
+          <div class="hero reveal">
+            <div class="heroGrid">
+              <div>
+                <div class="kicker"><span class="dot"></span> Lightning UI • Speedforce feel • Smooth gameplay</div>
+                <h1><span class="grad">NoraVex</span> — immersive Roblox development.</h1>
+                <p class="lead">
+                  I build fast-feeling experiences: clean systems, polished UI, and gameplay that responds instantly.
+                  Scripting and building are both part of my workflow — performance and presentation matter equally.
+                </p>
+                <div class="cta">
+                  <button class="btn primary" data-route="work">Explore Work</button>
+                  <button class="btn" data-route="systems">View Systems</button>
+                  <button class="btn" data-route="contact">Contact</button>
+                </div>
+              </div>
 
-    <!-- MAIN -->
-    <main class="main">
-      <div class="container">
-
-        <!-- HERO -->
-        <section class="hero" id="top">
-          <div class="heroTop">
-            <div class="headline">
-              <div class="kicker"><span class="dot"></span> Speedforce look. Lightning UI. Smooth gameplay.</div>
-              <h1><span class="grad">NoraVex</span> builds Roblox experiences that feel fast.</h1>
-              <p class="lead">
-                I’m a Roblox developer (scripter + builder) focused on interactive systems, clean UI, and performant code.
-                I work across projects and teams—shipping features, polishing gameplay, and making everything feel responsive.
-              </p>
-              <div class="cta">
-                <a class="btn btnPrimary" href="#projects" data-jump>View Projects</a>
-                <a class="btn" href="#skills" data-jump>Skills & Tooling</a>
-                <a class="btn" href="#contact" data-jump>Contact</a>
+              <div class="profile reveal">
+                <div class="pRow">
+                  <div class="avatar">
+                    <img src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-3D3D154A992D2FD15574CCC33634CD36-Png/150/150/AvatarHeadshot/Webp/noFilter" alt="Roblox avatar" />
+                  </div>
+                  <div class="pMeta">
+                    <h3>Lightning-themed dev</h3>
+                    <p>Fast iteration, clean visuals, and systems that feel “instant.”</p>
+                  </div>
+                </div>
+                <div class="chips">
+                  <div class="chip"><b>Luau</b> scripting</div>
+                  <div class="chip"><b>UI</b> polish</div>
+                  <div class="chip"><b>Build</b> work</div>
+                  <div class="chip"><b>Perf</b> focus</div>
+                </div>
               </div>
             </div>
+          </div>
 
-            <div class="stats" aria-label="Quick stats">
-              <div class="statsGrid">
-                <div class="stat">
-                  <div class="n">Luau</div>
-                  <div class="l">Scripting systems</div>
+          <div class="section reveal" style="margin-top:16px;">
+            <div class="sectionHead">
+              <div>
+                <h2><span class="grad">What I ship</span></h2>
+                <p>Click through the pages for details. Everything is editable from one simple list.</p>
+              </div>
+            </div>
+            <div class="sectionBody">
+              <div class="grid">
+                <div class="card">
+                  <div class="cardTop">
+                    <h3>Gameplay systems</h3>
+                    <span class="badge e">Luau</span>
+                  </div>
+                  <p>Modular, readable code with sensible server/client boundaries and responsive events.</p>
                 </div>
-                <div class="stat">
-                  <div class="n">UI</div>
-                  <div class="l">Polished UX</div>
+                <div class="card">
+                  <div class="cardTop">
+                    <h3>UI systems</h3>
+                    <span class="badge g">UX</span>
+                  </div>
+                  <p>Clean layouts, smooth feedback, and UI that feels fast instead of heavy.</p>
                 </div>
-                <div class="stat">
-                  <div class="n">Build</div>
-                  <div class="l">Maps / models</div>
+                <div class="card">
+                  <div class="cardTop">
+                    <h3>Admin tools</h3>
+                    <span class="badge v">Tools</span>
+                  </div>
+                  <p>Loggers, moderation tooling, and quality-of-life tools for staff and teams.</p>
                 </div>
-                <div class="stat">
-                  <div class="n">Perf</div>
-                  <div class="l">Optimized gameplay</div>
+                <div class="card">
+                  <div class="cardTop">
+                    <h3>Building & vibe</h3>
+                    <span class="badge m">Build</span>
+                  </div>
+                  <p>Maps and models with clarity, lighting mood, and gameplay-friendly composition.</p>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div class="footer">© <span id="year"></span> NoraVex</div>
+        </section>
+
+        <section class="page" data-page="work">
+          <div class="section reveal">
+            <div class="sectionHead">
+              <div>
+                <h2><span class="grad">Work</span></h2>
+                <p>Click a card for a full-screen project view.</p>
+              </div>
+            </div>
+            <div class="sectionBody">
+              <div class="toolbar">
+                <div class="search">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="rgba(247,248,255,0.65)" stroke-width="2"/>
+                    <path d="M16.5 16.5 21 21" stroke="rgba(247,248,255,0.65)" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                  <input id="qWork" type="text" placeholder="Search work (name, tags, description)..." autocomplete="off" />
+                </div>
+                <div class="filters" id="workFilters"></div>
+              </div>
+
+              <div class="workGrid" id="workGrid"></div>
             </div>
           </div>
         </section>
 
-        <!-- ABOUT -->
-        <section class="section" id="about">
-          <div class="sectionHead">
-            <div>
-              <h2><span class="grad">About</span></h2>
-              <p>Short, direct, and focused on what you do (no “only one project” framing).</p>
+        <section class="page" data-page="systems">
+          <div class="section reveal">
+            <div class="sectionHead">
+              <div>
+                <h2><span class="grad">Systems</span></h2>
+                <p>List-style layout: easier to add and maintain than complex grids.</p>
+              </div>
             </div>
-          </div>
-
-          <div class="sectionBody">
-            <div class="grid">
-              <div class="card wide">
-                <div class="cardTitle">
-                  <h3>What I do</h3>
-                  <span class="badge e">Lightning-speed iteration</span>
+            <div class="sectionBody">
+              <div class="toolbar">
+                <div class="search">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="rgba(247,248,255,0.65)" stroke-width="2"/>
+                    <path d="M16.5 16.5 21 21" stroke="rgba(247,248,255,0.65)" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                  <input id="qSys" type="text" placeholder="Search systems..." autocomplete="off" />
                 </div>
-                <p>
-                  I build Roblox systems that feel instant: responsive UI, clean server/client architecture,
-                  and gameplay tools that don’t lag behind the player. I like making “fast-feeling” experiences—
-                  smooth animations, immediate feedback, and predictable performance.
-                </p>
+                <div class="filters" id="sysFilters"></div>
               </div>
 
-              <div class="card">
-                <div class="cardTitle">
-                  <h3>My dev style</h3>
-                  <span class="badge v">Clean + maintainable</span>
-                </div>
-                <p>
-                  Organized modules, consistent naming, readable flow, and sensible boundaries between client/server.
-                  If it’s going to be maintained by a team, it should be easy to understand and extend.
-                </p>
-              </div>
-
-              <div class="card">
-                <div class="cardTitle">
-                  <h3>What I like shipping</h3>
-                  <span class="badge g">Player-first</span>
-                </div>
-                <p>
-                  UI systems, AFK/interaction systems, overhead UI, admin tooling/loggers,
-                  movement/ability feel, and quality-of-life systems that make games feel polished.
-                </p>
-              </div>
+              <div class="list" id="sysList"></div>
             </div>
           </div>
         </section>
 
-        <!-- SKILLS -->
-        <section class="section" id="skills">
-          <div class="sectionHead">
-            <div>
-              <h2><span class="grad">Skills</span></h2>
-              <p>Swap these to match exactly what you do most.</p>
-            </div>
-          </div>
-
-          <div class="sectionBody">
-            <div class="grid">
-              <div class="card">
-                <div class="cardTitle">
-                  <h3>Scripting</h3>
-                  <span class="badge e">Luau</span>
-                </div>
-                <p>
-                  Module architecture, RemoteEvents/Functions, data flow, state handling, performance-minded patterns.
-                </p>
-              </div>
-
-              <div class="card">
-                <div class="cardTitle">
-                  <h3>UI & UX</h3>
-                  <span class="badge g">Polish</span>
-                </div>
-                <p>
-                  Clean layouts, readable hierarchy, tweened feedback, interaction patterns that feel “speedster smooth.”
-                </p>
-              </div>
-
-              <div class="card">
-                <div class="cardTitle">
-                  <h3>Building</h3>
-                  <span class="badge v">World</span>
-                </div>
-                <p>
-                  Maps, models, set dressing, lighting vibes, and building for gameplay clarity—not just looks.
-                </p>
-              </div>
-
-              <div class="card">
-                <div class="cardTitle">
-                  <h3>Tooling</h3>
-                  <span class="badge">Workflow</span>
-                </div>
-                <p>
-                  Debugging, profiling, clean iteration cycles, documentation, and building systems teams can reuse.
-                </p>
+        <section class="page" data-page="contact">
+          <div class="section reveal">
+            <div class="sectionHead">
+              <div>
+                <h2><span class="grad">Contact</span></h2>
+                <p>Fastest: Discord. Clean and direct.</p>
               </div>
             </div>
-          </div>
-        </section>
-
-        <!-- PROJECTS -->
-        <section class="section" id="projects">
-          <div class="sectionHead">
-            <div>
-              <h2><span class="grad">Projects</span></h2>
-              <p>Search + filter. Click a card to open the details popup.</p>
-            </div>
-          </div>
-
-          <div class="sectionBody">
-            <div class="toolbar">
-              <div class="search" role="search" aria-label="Search projects">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="rgba(247,248,255,0.65)" stroke-width="2"/>
-                  <path d="M16.5 16.5 21 21" stroke="rgba(247,248,255,0.65)" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-                <input id="q" type="text" placeholder="Search projects (e.g. TFEP, UI, logger, AFK)..." autocomplete="off" />
-              </div>
-
-              <div class="filters" aria-label="Project filters">
-                <div class="chip active" data-filter="all">All</div>
-                <div class="chip" data-filter="roblox">Roblox</div>
-                <div class="chip" data-filter="system">Systems</div>
-                <div class="chip" data-filter="ui">UI</div>
-                <div class="chip" data-filter="build">Build</div>
-                <div class="chip" data-filter="web">Web</div>
-              </div>
-            </div>
-
-            <div class="projects" id="projectGrid"></div>
-          </div>
-        </section>
-
-        <!-- CONTACT -->
-        <section class="section" id="contact">
-          <div class="sectionHead">
-            <div>
-              <h2><span class="grad">Contact</span></h2>
-              <p>One clean contact method, as requested.</p>
-            </div>
-          </div>
-
-          <div class="sectionBody">
-            <div class="grid">
-              <div class="card wide">
-                <div class="cardTitle">
+            <div class="sectionBody">
+              <div class="contactBox">
+                <div class="contactCard reveal">
                   <h3>Discord</h3>
-                  <span class="badge e">Fastest</span>
+                  <p>Username: <b>pure_script</b></p>
+                  <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+                    <button class="btn primary" id="copyDiscord">Copy</button>
+                    <button class="btn" data-route="home">Back to Home</button>
+                  </div>
+                  <div class="copyNote" id="copyNote">Copied.</div>
                 </div>
-                <p>
-                  Add/message me on Discord: <strong>pure_script</strong>
-                </p>
-                <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-                  <button class="btn btnPrimary" id="copyDiscord">Copy Discord</button>
-                  <a class="btn" href="#top" data-jump>Back to top</a>
+
+                <div class="contactCard reveal">
+                  <h3>What to send</h3>
+                  <p>
+                    Project name + what you need (script, UI, build, tools) + timeframe + any references.
+                    If you have a task list or footage, that helps immediately.
+                  </p>
                 </div>
-                <p id="copyNote" style="margin-top:10px; display:none;"></p>
               </div>
+
+              <div class="footer">© <span id="year2"></span> NoraVex</div>
             </div>
           </div>
         </section>
 
-        <div class="footer">© <span id="year"></span> NoraVex — Lightning-themed portfolio</div>
       </div>
-    </main>
-  </div>
+    </div>
+  </main>
 
-  <!-- MODAL -->
-  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Project details">
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Project view">
     <div class="modalCard">
       <div class="modalTop">
         <div>
-          <h3 id="mTitle">Project</h3>
-          <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;" id="mBadges"></div>
+          <h3 id="mTitle">Title</h3>
+          <div class="modalBadges" id="mBadges"></div>
         </div>
         <button class="close" id="closeModal">Close</button>
       </div>
@@ -1082,211 +1007,256 @@
   </div>
 
   <script>
-    // Smooth jump for sidebar links (keeps it snappy, no old slider)
-    document.querySelectorAll("[data-jump]").forEach(a=>{
-      a.addEventListener("click",(e)=>{
-        const href = a.getAttribute("href");
-        if(!href || !href.startsWith("#")) return;
-        e.preventDefault();
-        const el = document.querySelector(href);
-        if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
-      });
+    const DATA = {
+      profile: {
+        avatar: "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-1E959943B31170C5968BF967A41403BF-Png/150/150/AvatarHeadshot/Webp/noFilter"
+      },
+      work: [
+        {
+          title: "Dynamic Creations",
+          blurb: "Dynamic Creations AKA Creator of The Flash Earth Prime.",
+          desc: "I work at Dynamic Creations helping them developer their game The Flash Earth Prime i mainly help on the scripting and building side so thats what i focus on for them.",
+          image: "https://tr.rbxcdn.com/180DAY-0596677997fbad98e2c9ee9d418bc8d5/150/150/Image/Webp/noFilter",
+          tags: ["roblox","system"],
+          links: [ "https://www.roblox.com/communities/5799624/Dynamic-Creations#!/about" ]
+        }
+      ],
+      systems: [
+        {
+          name: "Placeholder",
+          what: "Placeholder.",
+          details: "Extra detail:.",
+          tags: ["system"]
+        }
+      ]
+    };
+
+    const pages = [...document.querySelectorAll(".page")];
+    const tabs = [...document.querySelectorAll(".tab")];
+    const stage = document.getElementById("stage");
+
+    const setActiveTab = (id) => {
+      tabs.forEach(t => t.setAttribute("aria-current", t.dataset.go === id ? "page" : "false"));
+    };
+
+    const showPage = (id, push=true) => {
+      pages.forEach(p => p.classList.toggle("active", p.dataset.page === id));
+      setActiveTab(id);
+      const active = pages.find(p => p.dataset.page === id);
+      if(active) active.scrollTop = 0;
+      if(push) history.pushState({page:id}, "", "#" + id);
+      requestAnimationFrame(() => runReveal(active));
+    };
+
+    const getRoute = () => (location.hash || "#home").replace("#","") || "home";
+
+    tabs.forEach(t => {
+      t.addEventListener("click", () => showPage(t.dataset.go));
     });
 
-    // Footer year
+    document.querySelectorAll("[data-route]").forEach(b => {
+      b.addEventListener("click", () => showPage(b.dataset.route));
+    });
+
+    window.addEventListener("popstate", () => showPage(getRoute(), false));
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(e.isIntersecting) e.target.classList.add("on");
+      });
+    }, {root: stage, threshold: 0.08});
+
+    const runReveal = (scope) => {
+      if(!scope) return;
+      scope.querySelectorAll(".reveal").forEach(el => {
+        el.classList.remove("on");
+        io.observe(el);
+      });
+    };
+
     document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("year2").textContent = new Date().getFullYear();
 
-    // Copy Discord
-    const copyBtn = document.getElementById("copyDiscord");
-    const copyNote = document.getElementById("copyNote");
-    copyBtn.addEventListener("click", async ()=>{
-      try{
-        await navigator.clipboard.writeText("pure_script");
-        copyNote.style.display = "block";
-        copyNote.style.color = "rgba(0,229,255,0.95)";
-        copyNote.textContent = "Copied: pure_script";
-      }catch{
-        copyNote.style.display = "block";
-        copyNote.style.color = "rgba(255,212,90,0.95)";
-        copyNote.textContent = "Couldn’t auto-copy. Discord: pure_script";
-      }
-    });
-
-    // ===== Projects data (EDIT THIS) =====
-    // Add/remove anything here. This replaces the old huge list and makes the site feel modern.
-    const PROJECTS = [
-      {
-        title: "The Flash: Earth Prime (TFEP)",
-        tags: ["roblox","system","ui"],
-        badge: "Active",
-        badgeStyle: "e",
-        image: "https://i.ibb.co/bjWLnXDw/afbeelding-2025-12-21-023417788.png",
-        desc: "Developer contributions across scripting and UI. Focus on responsiveness, clean visuals, and systems that feel fast in-game.",
-        links: [
-            { label: "Experience", url: "https://www.roblox.com/games/4812093631/The-Flash-Earth-Prime" }
-        ]
-      },
-      {
-        title: "AFK System",
-        tags: ["roblox","system","ui"],
-        badge: "System",
-        badgeStyle: "g",
-        image: "https://i.ibb.co/1fPwh1fZ/afbeelding-2025-12-21-020218262.png",
-        desc: "Instant-response AFK system with clean UX: quick toggles, clear state feedback, and performance-friendly updates.",
-        links: []
-      },
-      {
-        title: "Overhead UI",
-        tags: ["roblox","ui"],
-        badge: "UI",
-        badgeStyle: "v",
-        image: "https://i.ibb.co/kVNFNVQ0/afbeelding-2025-12-21-020106981.png",
-        desc: "Polished overhead UI for player interaction with smooth transitions and readable hierarchy.",
-        links: []
-      },
-      {
-        title: "Admin / Activity Loggers",
-        tags: ["roblox","system"],
-        badge: "Tools",
-        badgeStyle: "e",
-        image: "https://i.ibb.co/H8ftwBp/logger1.png",
-        desc: "Loggers designed for transparency and performance. Clear formatting, searchable entries, and low overhead.",
-        links: []
-      },
-      {
-        title: "Builds / Models Collection",
-        tags: ["roblox","build"],
-        badge: "Build",
-        badgeStyle: "g",
-        image: "https://i.ibb.co/GvC2WTRn/afbeelding-2025-12-21-020003449.png",
-        desc: "A selection of builds and models made for gameplay clarity, lighting vibe, and clean composition.",
-        links: []
-      },
-      {
-        title: "Developer Portfolio (Web)",
-        tags: ["web"],
-        badge: "Web",
-        badgeStyle: "v",
-        image: "https://i.ibb.co/bjWLnXDw/afbeelding-2025-12-21-023417788.png",
-        desc: "A lightning-themed portfolio site with modern layout, filtering, and a project details modal.",
-        links: []
-      }
-    ];
-
-    // Render projects
-    const grid = document.getElementById("projectGrid");
-    const q = document.getElementById("q");
-    const chips = [...document.querySelectorAll(".chip")];
-    let activeFilter = "all";
-
-    function miniBadge(text, cls){
-      return `<span class="mini ${cls||""}">${text}</span>`;
-    }
-
-    function projectCard(p, idx){
-      const tags = p.tags || [];
-      const tagPills = tags.slice(0,3).map(t=>{
-        const cls = t === "ui" ? "elec" : (t === "system" ? "bolt" : "");
-        return miniBadge(t.toUpperCase(), cls);
-      }).join("");
-
-      const badgeClass = p.badgeStyle ? p.badgeStyle : "";
-      const badge = p.badge ? `<span class="badge ${badgeClass}">${p.badge}</span>` : "";
-
-      const img = p.image
-        ? `<img src="${p.image}" alt="${p.title} thumbnail" loading="lazy">`
-        : "";
-
-      return `
-        <div class="proj" data-idx="${idx}">
-          <div class="thumb">${img}</div>
-          <div class="projBody">
-            <div class="cardTitle">
-              <h4>${p.title}</h4>
-              ${badge}
-            </div>
-            <div class="meta">${tagPills}</div>
-          </div>
-        </div>
-      `;
-    }
-
-    function matches(p){
-      const text = (p.title + " " + (p.desc||"") + " " + (p.tags||[]).join(" ")).toLowerCase();
-      const query = (q.value || "").trim().toLowerCase();
-      const filterOk = activeFilter === "all" || (p.tags||[]).includes(activeFilter);
-      const queryOk = !query || text.includes(query);
-      return filterOk && queryOk;
-    }
-
-    function render(){
-      grid.innerHTML = PROJECTS
-        .map((p,i)=> matches(p) ? projectCard(p,i) : "")
-        .join("");
-
-      // attach click handlers
-      [...grid.querySelectorAll(".proj")].forEach(card=>{
-        card.addEventListener("click", ()=>{
-          const idx = Number(card.getAttribute("data-idx"));
-          openModal(PROJECTS[idx]);
-        });
-      });
-    }
-
-    // Filter chips
-    chips.forEach(c=>{
-      c.addEventListener("click", ()=>{
-        chips.forEach(x=>x.classList.remove("active"));
-        c.classList.add("active");
-        activeFilter = c.getAttribute("data-filter");
-        render();
-      });
-    });
-
-    q.addEventListener("input", render);
-
-    // Modal logic
     const modal = document.getElementById("modal");
-    const closeModalBtn = document.getElementById("closeModal");
     const mTitle = document.getElementById("mTitle");
-    const mDesc = document.getElementById("mDesc");
-    const mImg = document.getElementById("mImg");
     const mBadges = document.getElementById("mBadges");
+    const mImg = document.getElementById("mImg");
+    const mDesc = document.getElementById("mDesc");
     const mLinks = document.getElementById("mLinks");
 
-    function openModal(p){
-      mTitle.textContent = p.title;
+    const openModal = (p) => {
+      mTitle.textContent = p.title || "Project";
       mDesc.textContent = p.desc || "";
-      mImg.src = p.image || "";
-      mImg.style.display = p.image ? "block" : "none";
-
-      mBadges.innerHTML = (p.tags || []).map(t=>{
-        const cls = t === "ui" ? "e" : (t === "system" ? "g" : (t === "build" ? "v" : ""));
-        return `<span class="badge ${cls}">${t.toUpperCase()}</span>`;
+      const tags = (p.tags || []).map(tag => {
+        const cls = tag === "ui" ? "g" : tag === "system" ? "e" : tag === "build" ? "m" : "v";
+        return `<span class="badge ${cls}">${String(tag).toUpperCase()}</span>`;
       }).join("");
+      mBadges.innerHTML = tags;
 
-      mLinks.innerHTML = (p.links || []).map(l=>{
-        const safeUrl = l.url || "#";
-        return `<a class="linkBtn" href="${safeUrl}" target="_blank" rel="noopener noreferrer">${l.label}</a>`;
+      if(p.image){
+        mImg.src = p.image;
+        mImg.style.display = "block";
+      }else{
+        mImg.removeAttribute("src");
+        mImg.style.display = "none";
+      }
+
+      mLinks.innerHTML = (p.links || []).map(l => {
+        const url = l.url || "#";
+        const label = l.label || "Link";
+        return `<a class="linkBtn" href="${url}" target="_blank" rel="noopener noreferrer">${label}</a>`;
       }).join("");
 
       modal.classList.add("open");
       document.body.style.overflow = "hidden";
-    }
+    };
 
-    function closeModal(){
+    const closeModal = () => {
       modal.classList.remove("open");
       document.body.style.overflow = "";
-    }
-    closeModalBtn.addEventListener("click", closeModal);
-    modal.addEventListener("click", (e)=>{
-      if(e.target === modal) closeModal();
-    });
-    window.addEventListener("keydown", (e)=>{
-      if(e.key === "Escape" && modal.classList.contains("open")) closeModal();
+    };
+
+    document.getElementById("closeModal").addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => { if(e.target === modal) closeModal(); });
+    window.addEventListener("keydown", (e) => { if(e.key === "Escape" && modal.classList.contains("open")) closeModal(); });
+
+    const uniqueTags = (arr) => {
+      const s = new Set();
+      arr.forEach(x => (x.tags||[]).forEach(t => s.add(String(t))));
+      return ["all", ...[...s].sort((a,b)=>a.localeCompare(b))];
+    };
+
+    const makeFilterBar = (el, tags, onPick) => {
+      el.innerHTML = tags.map((t,i)=>`<button class="f ${i===0?"active":""}" data-f="${t}">${t.toUpperCase()}</button>`).join("");
+      [...el.querySelectorAll(".f")].forEach(btn => {
+        btn.addEventListener("click", () => {
+          [...el.querySelectorAll(".f")].forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          onPick(btn.dataset.f);
+        });
+      });
+    };
+
+    const renderWork = () => {
+      const grid = document.getElementById("workGrid");
+      const q = document.getElementById("qWork");
+      const filterBar = document.getElementById("workFilters");
+
+      const tags = uniqueTags(DATA.work);
+      let active = "all";
+
+      const draw = () => {
+        const query = (q.value || "").trim().toLowerCase();
+        const items = DATA.work.filter(p => {
+          const tagOk = active === "all" || (p.tags||[]).map(String).includes(active);
+          const blob = ((p.title||"") + " " + (p.blurb||"") + " " + (p.desc||"") + " " + (p.tags||[]).join(" ")).toLowerCase();
+          const qOk = !query || blob.includes(query);
+          return tagOk && qOk;
+        });
+
+        grid.innerHTML = items.map((p,idx) => {
+          const pills = (p.tags || []).slice(0,3).map(t=>{
+            const cls = t === "ui" ? "g" : t === "system" ? "e" : t === "build" ? "m" : "v";
+            return `<span class="mini ${cls}">${String(t).toUpperCase()}</span>`;
+          }).join("");
+
+          const img = p.image ? `<img src="${p.image}" alt="${p.title} image" loading="lazy">` : "";
+
+          return `
+            <div class="tile reveal" data-idx="${idx}">
+              <div class="thumb">${img}</div>
+              <div class="tileBody">
+                <h4>${p.title || "Untitled"}</h4>
+                <p>${p.blurb || ""}</p>
+                <div class="miniRow">${pills}</div>
+              </div>
+            </div>
+          `;
+        }).join("");
+
+        [...grid.querySelectorAll(".tile")].forEach((tile) => {
+          const idx = Number(tile.dataset.idx);
+          const shown = items[idx];
+          tile.addEventListener("click", () => openModal(shown));
+        });
+
+        const page = document.querySelector('.page[data-page="work"]');
+        requestAnimationFrame(() => runReveal(page));
+      };
+
+      makeFilterBar(filterBar, tags, (f) => { active = f; draw(); });
+      q.addEventListener("input", draw);
+      draw();
+    };
+
+    const renderSystems = () => {
+      const list = document.getElementById("sysList");
+      const q = document.getElementById("qSys");
+      const filterBar = document.getElementById("sysFilters");
+
+      const tags = (() => {
+        const s = new Set();
+        DATA.systems.forEach(x => (x.tags||[]).forEach(t => s.add(String(t))));
+        return ["all", ...[...s].sort((a,b)=>a.localeCompare(b))];
+      })();
+      let active = "all";
+
+      const draw = () => {
+        const query = (q.value || "").trim().toLowerCase();
+        const items = DATA.systems.filter(s => {
+          const tagOk = active === "all" || (s.tags||[]).map(String).includes(active);
+          const blob = ((s.name||"") + " " + (s.what||"") + " " + (s.details||"") + " " + (s.tags||[]).join(" ")).toLowerCase();
+          const qOk = !query || blob.includes(query);
+          return tagOk && qOk;
+        });
+
+        list.innerHTML = items.map(s => {
+          const tagsHtml = (s.tags||[]).map(t => `<span class="tag">${String(t).toUpperCase()}</span>`).join("");
+          return `
+            <div class="item reveal">
+              <div>
+                <h4>${s.name || "System"}</h4>
+                <p>${s.what || ""}</p>
+                ${s.details ? `<p style="margin-top:8px">${s.details}</p>` : ``}
+                <div class="tags">${tagsHtml}</div>
+              </div>
+              <span class="badge e">SYSTEM</span>
+            </div>
+          `;
+        }).join("");
+
+        const page = document.querySelector('.page[data-page="systems"]');
+        requestAnimationFrame(() => runReveal(page));
+      };
+
+      makeFilterBar(filterBar, tags, (f) => { active = f; draw(); });
+      q.addEventListener("input", draw);
+      draw();
+    };
+
+    const copyBtn = document.getElementById("copyDiscord");
+    const copyNote = document.getElementById("copyNote");
+    copyBtn.addEventListener("click", async () => {
+      try{
+        await navigator.clipboard.writeText("pure_script");
+        copyNote.style.display = "block";
+        copyNote.textContent = "Copied: pure_script";
+      }catch{
+        copyNote.style.display = "block";
+        copyNote.textContent = "Discord: pure_script";
+      }
     });
 
-    render();
+    const init = () => {
+      const route = getRoute();
+      showPage(route, false);
+      renderWork();
+      renderSystems();
+      const active = pages.find(p => p.classList.contains("active"));
+      runReveal(active);
+    };
+
+    init();
   </script>
 </body>
 </html>
