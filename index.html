@@ -1,1450 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NoraVex — Roblox Dev Portfolio</title>
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8">
+  <title>Gaming Hub - Play Awesome Games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
   <style>
-    :root{
-      --bg:#050713;
-      --bg2:#070a1a;
-      --panel:rgba(255,255,255,.06);
-      --panel2:rgba(255,255,255,.04);
-      --border:rgba(255,255,255,.14);
-
-      --c1:#00E5FF;  /* electric */
-      --c2:#FFD45A;  /* bolt gold */
-      --c3:#7C5CFF;  /* violet */
-      --c4:#FF2BD6;  /* magenta */
-
-      --text:#F7F8FF;
-      --muted:rgba(247,248,255,.74);
-
-      --r:22px;
-      --max:1180px;
-      --navH:76px;
-
-      --ease:cubic-bezier(.22,1,.36,1);
-      --shadow:0 26px 120px rgba(0,0,0,.55);
-      --glow:0 0 28px rgba(0,229,255,.16);
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at 12% 14%, rgba(0,229,255,.15), transparent 55%),
-        radial-gradient(circle at 85% 18%, rgba(124,92,255,.17), transparent 58%),
-        radial-gradient(circle at 52% 112%, rgba(255,212,90,.14), transparent 55%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
-      overflow-x:hidden;
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      overflow: hidden;
     }
 
-    a{color:inherit; text-decoration:none}
-    button{font-family:inherit}
-
-    /* ---------- Ambient layers ---------- */
-    .ambient{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:-4;
-      overflow:hidden;
-      filter:saturate(1.14) contrast(1.02);
-    }
-    .ambient::before,
-    .ambient::after{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      opacity:.85;
-      transform:rotate(-12deg);
-      mix-blend-mode:screen;
-      will-change:transform;
-    }
-    .ambient::before{
-      background:
-        repeating-linear-gradient(
-          120deg,
-          rgba(0,229,255,0) 0%,
-          rgba(0,229,255,0) 44%,
-          rgba(0,229,255,.12) 49%,
-          rgba(255,212,90,.10) 52%,
-          rgba(0,229,255,0) 58%,
-          rgba(0,229,255,0) 100%
-        );
-      animation:ambMove 12s linear infinite;
-    }
-    .ambient::after{
-      background:
-        repeating-linear-gradient(
-          70deg,
-          rgba(124,92,255,0) 0%,
-          rgba(124,92,255,0) 46%,
-          rgba(124,92,255,.11) 50%,
-          rgba(255,43,214,.09) 53%,
-          rgba(124,92,255,0) 56%,
-          rgba(124,92,255,0) 100%
-        );
-      animation:ambMove 18s linear infinite reverse;
-      opacity:.72;
-    }
-    @keyframes ambMove{
-      0%{transform:translate3d(-6%,-3%,0) rotate(-12deg)}
-      100%{transform:translate3d(6%,3%,0) rotate(-12deg)}
+    .container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
 
-    .grain{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:-3;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.30'/%3E%3C/svg%3E");
-      opacity:.10;
-      mix-blend-mode:overlay;
+    .header {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    /* Cursor glow */
-    .cursorGlow{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:-2;
-      background:
-        radial-gradient(circle at var(--mx,50%) var(--my,35%),
-          rgba(0,229,255,.18),
-          rgba(255,212,90,.10) 18%,
-          rgba(124,92,255,.10) 34%,
-          transparent 56%);
-      opacity:.92;
-      transition:opacity .2s var(--ease);
+    .header h1 {
+      color: #fff;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      margin-bottom: 10px;
     }
 
-    /* ---------- Speedforce overlay (triggered) ---------- */
-    .speedforce{
-      position:fixed;
-      inset:-10%;
-      pointer-events:none;
-      z-index:80;
-      opacity:0;
-      transform:translate3d(0,0,0);
-      filter:blur(.2px);
-      mix-blend-mode:screen;
-    }
-    .speedforce::before,
-    .speedforce::after{
-      content:"";
-      position:absolute;
-      inset:-30%;
-      background:
-        repeating-linear-gradient(100deg,
-          rgba(0,229,255,0) 0%,
-          rgba(0,229,255,0) 36%,
-          rgba(0,229,255,.18) 40%,
-          rgba(255,212,90,.12) 42%,
-          rgba(255,43,214,.10) 44%,
-          rgba(124,92,255,0) 50%,
-          rgba(124,92,255,0) 100%);
-      transform:rotate(-10deg);
-      opacity:.9;
-      will-change:transform, opacity;
-    }
-    .speedforce::after{
-      background:
-        repeating-linear-gradient(70deg,
-          rgba(255,255,255,0) 0%,
-          rgba(255,255,255,0) 52%,
-          rgba(255,255,255,.08) 54%,
-          rgba(0,229,255,.12) 55%,
-          rgba(255,255,255,0) 58%,
-          rgba(255,255,255,0) 100%);
-      opacity:.75;
-      transform:rotate(-14deg);
+    .game-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 15px;
     }
 
-    body.speed .speedforce{
-      opacity:1;
-      animation:speedFade .55s var(--ease) both;
-    }
-    body.speed .speedforce::before{
-      animation:speedStreak .55s var(--ease) both;
-    }
-    body.speed .speedforce::after{
-      animation:speedStreak2 .55s var(--ease) both;
-    }
-    body.speed .site{
-      filter:blur(1.8px) saturate(1.06);
-      transform:translate3d(0,0,0);
-    }
-    @keyframes speedFade{
-      0%{opacity:0}
-      20%{opacity:.95}
-      100%{opacity:0}
-    }
-    @keyframes speedStreak{
-      0%{transform:translate3d(-18%, -6%, 0) rotate(-10deg)}
-      100%{transform:translate3d(18%, 6%, 0) rotate(-10deg)}
-    }
-    @keyframes speedStreak2{
-      0%{transform:translate3d(-22%, -4%, 0) rotate(-14deg)}
-      100%{transform:translate3d(22%, 4%, 0) rotate(-14deg)}
+    .game-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
     }
 
-    /* ---------- Header ---------- */
-    header{
-      position:fixed;
-      top:0; left:0; right:0;
-      height:var(--navH);
-      z-index:60;
-      background:rgba(5,7,19,.58);
-      backdrop-filter:blur(16px);
-      border-bottom:1px solid rgba(255,255,255,.10);
-    }
-    .nav{
-      max-width:var(--max);
-      height:100%;
-      margin:0 auto;
-      padding:0 16px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
+    .game-btn:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width:220px;
-    }
-    .mark{
-      width:46px; height:46px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.16);
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,212,90,.34), transparent 62%),
-        linear-gradient(135deg, rgba(0,229,255,.95), rgba(124,92,255,.95));
-      box-shadow:0 0 30px rgba(0,229,255,.18);
-      display:grid;
-      place-items:center;
-      position:relative;
-      overflow:hidden;
-      flex:0 0 auto;
-    }
-    .mark::before{
-      content:"";
-      position:absolute;
-      inset:-50%;
-      background:linear-gradient(90deg, transparent, rgba(255,212,90,.28), transparent);
-      transform:rotate(20deg);
-      animation:logoShine 3.2s var(--ease) infinite;
-      opacity:.5;
-    }
-    @keyframes logoShine{
-      0%,100%{transform:translateX(-12%) rotate(20deg); opacity:.18}
-      50%{transform:translateX(12%) rotate(20deg); opacity:.58}
-    }
-    .mark svg{width:22px;height:22px;position:relative;z-index:1}
-
-    .brandText{line-height:1.06}
-    .brandText .name{
-      font-weight:900;
-      font-size:16px;
-      letter-spacing:.2px;
-      background:linear-gradient(90deg, var(--c1), var(--c2), var(--c4), var(--c3));
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
-    .brandText .sub{
-      margin-top:4px;
-      font-size:12px;
-      color:var(--muted);
-      font-weight:700;
+    .game-btn.active {
+      background: #fff;
+      color: #667eea;
+      border-color: #fff;
     }
 
-    .navLinks{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .pill{
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.03);
-      color:rgba(247,248,255,.92);
-      font-weight:900;
-      font-size:12px;
-      padding:10px 12px;
-      border-radius:999px;
-      cursor:pointer;
-      transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease);
-    }
-    .pill:hover{
-      transform:translateY(-1px);
-      border-color:rgba(0,229,255,.22);
-      box-shadow:0 0 18px rgba(0,229,255,.10);
-      background:rgba(255,255,255,.04);
-    }
-    .pill.active{
-      border-color:rgba(0,229,255,.30);
-      background:rgba(0,229,255,.08);
-      color:rgba(0,229,255,1);
-      box-shadow:0 0 22px rgba(0,229,255,.12);
+    .game-container {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      background: #000;
     }
 
-    /* ---------- Layout ---------- */
-    .site{
-      padding-top:calc(var(--navH) + 26px);
-      padding-bottom:84px;
-      transition:filter .35s var(--ease);
-    }
-    .wrap{
-      max-width:var(--max);
-      margin:0 auto;
-      padding:0 16px;
+    .game-frame {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: none;
     }
 
-    .card{
-      border-radius:var(--r);
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.03);
-      box-shadow:var(--shadow);
-      overflow:hidden;
+    .game-frame.active {
+      display: block;
     }
 
-    /* ---------- Hero ---------- */
-    .hero{
-      position:relative;
-      overflow:hidden;
-      border-radius:calc(var(--r) + 6px);
-      border:1px solid rgba(255,255,255,.12);
-      background:
-        radial-gradient(circle at 16% 20%, rgba(0,229,255,.22), transparent 55%),
-        radial-gradient(circle at 84% 18%, rgba(255,212,90,.16), transparent 55%),
-        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      box-shadow:0 24px 110px rgba(0,0,0,.5);
-      padding:24px;
-    }
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background:
-        repeating-linear-gradient(120deg,
-          rgba(0,229,255,0) 0%,
-          rgba(0,229,255,0) 46%,
-          rgba(0,229,255,.12) 49%,
-          rgba(255,212,90,.08) 52%,
-          rgba(124,92,255,0) 56%,
-          rgba(124,92,255,0) 100%);
-      transform:rotate(-12deg);
-      opacity:.42;
-      animation:heroSweep 8.5s linear infinite;
-      mix-blend-mode:screen;
-      pointer-events:none;
-    }
-    @keyframes heroSweep{
-      0%{transform:translateX(-4%) rotate(-12deg)}
-      100%{transform:translateX(4%) rotate(-12deg)}
+    .loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 24px;
+      text-align: center;
     }
 
-    .heroGrid{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:16px;
-      position:relative;
-      z-index:1;
-      align-items:stretch;
-    }
-    @media (max-width: 980px){
-      .heroGrid{grid-template-columns:1fr}
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top: 4px solid white;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
     }
 
-    .kicker{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      font-size:12px;
-      color:rgba(247,248,255,.92);
-      background:rgba(0,0,0,.24);
-      border:1px solid rgba(255,255,255,.12);
-      padding:8px 12px;
-      border-radius:999px;
-      width:max-content;
-    }
-    .dot{
-      width:10px;height:10px;border-radius:50%;
-      background:linear-gradient(90deg,var(--c1),var(--c2));
-      box-shadow:0 0 18px rgba(255,212,90,.18);
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
-    h1{
-      margin:14px 0 0;
-      font-size:44px;
-      line-height:1.05;
-      letter-spacing:-.9px;
-    }
-    @media (max-width: 520px){ h1{font-size:34px} }
-
-    .grad{
-      background:linear-gradient(90deg, var(--c1), var(--c2), var(--c4), var(--c3));
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
-
-    .lead{
-      margin:12px 0 0;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.8;
-      max-width:76ch;
-    }
-
-    .ctaRow{
-      margin-top:16px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      align-items:center;
-    }
-    .btn{
-      appearance:none;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.04);
-      color:var(--text);
-      font-weight:900;
-      font-size:13px;
-      padding:12px 14px;
-      border-radius:14px;
-      cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      user-select:none;
-      transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease);
-    }
-    .btn:hover{
-      transform:translateY(-1px);
-      border-color:rgba(0,229,255,.22);
-      box-shadow:0 0 26px rgba(0,229,255,.12);
-      background:rgba(255,255,255,.05);
-    }
-    .btn.primary{
-      border:0;
-      color:#061018;
-      background:linear-gradient(90deg, rgba(0,229,255,.95), rgba(255,212,90,.92), rgba(124,92,255,.95));
-      box-shadow:0 0 30px rgba(0,229,255,.14);
-    }
-    .btn.primary:hover{
-      box-shadow:0 0 34px rgba(255,212,90,.18);
-    }
-    .btn svg{opacity:.9}
-
-    /* Right side: human card + stats */
-    .identity{
-      border-radius:calc(var(--r) + 6px);
-      border:1px solid rgba(255,255,255,.12);
-      background:
-        radial-gradient(circle at 20% 20%, rgba(0,229,255,.12), transparent 60%),
-        rgba(0,0,0,.18);
-      padding:18px;
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-      box-shadow:0 22px 90px rgba(255,212,90,.06);
-      overflow:hidden;
-      position:relative;
-    }
-
-    .who{
-      display:flex;
-      gap:12px;
-      align-items:center;
-    }
-    .avatar{
-      width:74px;height:74px;
-      border-radius:20px;
-      overflow:hidden;
-      border:2px solid rgba(0,229,255,.55);
-      box-shadow:0 0 24px rgba(0,229,255,.16);
-      background:rgba(0,0,0,.25);
-      flex:0 0 auto;
-    }
-    .avatar img{width:100%;height:100%;object-fit:cover}
-    .whoText h3{margin:0;font-size:15px;font-weight:900}
-    .whoText p{margin:4px 0 0;font-size:12px;color:var(--muted);line-height:1.45}
-
-    .chips{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-    }
-    .chip{
-      font-size:11px;
-      font-weight:900;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.03);
-      color:rgba(247,248,255,.88);
-    }
-    .chip b{color:var(--c1)}
-
-    .stats{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:10px;
-    }
-    @media (max-width: 480px){
-      .stats{grid-template-columns:1fr}
-    }
-    .stat{
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.20);
-      padding:12px;
-      position:relative;
-      overflow:hidden;
-    }
-    .stat::before{
-      content:"";
-      position:absolute;
-      inset:-30%;
-      background:linear-gradient(90deg, transparent, rgba(0,229,255,.12), transparent);
-      transform:rotate(18deg);
-      opacity:.28;
-      animation:statShine 4.4s var(--ease) infinite;
-      pointer-events:none;
-    }
-    @keyframes statShine{
-      0%,100%{transform:translateX(-12%) rotate(18deg); opacity:.14}
-      50%{transform:translateX(12%) rotate(18deg); opacity:.38}
-    }
-    .statNum{
-      font-weight:900;
-      font-size:18px;
-      letter-spacing:-.3px;
-      background:linear-gradient(90deg, var(--c1), var(--c2), var(--c3));
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      position:relative;
-      z-index:1;
-    }
-    .statLbl{
-      margin-top:4px;
-      font-size:11px;
-      color:var(--muted);
-      font-weight:800;
-      position:relative;
-      z-index:1;
-    }
-
-    /* ---------- Section scaffolding ---------- */
-    section{
-      scroll-margin-top:calc(var(--navH) + 20px);
-    }
-    .sectionHead{
-      margin-top:18px;
-      display:flex;
-      justify-content:space-between;
-      gap:14px;
-      align-items:flex-end;
-    }
-    .sectionHead h2{
-      margin:0;
-      font-size:15px;
-      font-weight:900;
-      letter-spacing:-.2px;
-    }
-    .sectionHead p{
-      margin:0;
-      font-size:12px;
-      color:var(--muted);
-      max-width:74ch;
-      line-height:1.7;
-    }
-
-    .panel{
-      margin-top:12px;
-      border-radius:calc(var(--r) + 6px);
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.03);
-      overflow:hidden;
-    }
-    .panelBody{padding:18px}
-
-    /* ---------- Work ---------- */
-    .toolbar{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
-      flex-wrap:wrap;
-      margin-bottom:12px;
-    }
-    .search{
-      flex:1 1 260px;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.18);
-      padding:10px 12px;
-    }
-    .search input{
-      width:100%;
-      border:0;
-      outline:none;
-      background:transparent;
-      color:var(--text);
-      font-weight:800;
-      font-size:13px;
-    }
-    .filters{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      justify-content:flex-end;
-    }
-    .f{
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.03);
-      color:rgba(247,248,255,.88);
-      font-weight:900;
-      font-size:11px;
-      padding:9px 10px;
-      border-radius:999px;
-      cursor:pointer;
-      transition:transform .15s var(--ease), border-color .15s var(--ease), background .15s var(--ease), box-shadow .15s var(--ease);
-      user-select:none;
-    }
-    .f:hover{transform:translateY(-1px); border-color:rgba(0,229,255,.20); box-shadow:0 0 16px rgba(0,229,255,.08)}
-    .f.active{border-color:rgba(0,229,255,.30); background:rgba(0,229,255,.08); color:rgba(0,229,255,1); box-shadow:0 0 18px rgba(0,229,255,.10)}
-
-    .workGrid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:12px;
-    }
-    .proj{
-      grid-column:span 4;
-      border-radius:22px;
-      border:1px solid rgba(255,255,255,.12);
-      background:
-        radial-gradient(circle at 22% 18%, rgba(255,212,90,.10), transparent 55%),
-        rgba(255,255,255,.03);
-      overflow:hidden;
-      cursor:pointer;
-      transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
-      position:relative;
-    }
-    .proj:hover{
-      transform:translateY(-2px);
-      border-color:rgba(0,229,255,.24);
-      box-shadow:0 0 34px rgba(0,229,255,.12);
-    }
-    @media (max-width: 1020px){ .proj{grid-column:span 6} }
-    @media (max-width: 720px){ .proj{grid-column:span 12} }
-
-    .thumb{
-      height:160px;
-      background:
-        radial-gradient(circle at 25% 30%, rgba(0,229,255,.20), transparent 55%),
-        radial-gradient(circle at 75% 25%, rgba(255,212,90,.16), transparent 55%),
-        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border-bottom:1px solid rgba(255,255,255,.10);
-      position:relative;
-      overflow:hidden;
-    }
-    .thumb img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92}
-    .thumb::after{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background:linear-gradient(90deg, transparent, rgba(0,229,255,.18), transparent);
-      transform:rotate(18deg);
-      opacity:.32;
-      animation:thumbShine 4.2s var(--ease) infinite;
-      pointer-events:none;
-      mix-blend-mode:screen;
-    }
-    @keyframes thumbShine{
-      0%,100%{transform:translateX(-14%) rotate(18deg); opacity:.14}
-      50%{transform:translateX(14%) rotate(18deg); opacity:.42}
-    }
-
-    .projBody{padding:14px}
-    .projTitle{margin:0;font-size:13px;font-weight:900}
-    .projBlurb{margin:7px 0 0;font-size:12px;color:var(--muted);line-height:1.65}
-    .pills{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
-    .tag{
-      font-size:11px;
-      font-weight:900;
-      padding:6px 9px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.18);
-      color:rgba(247,248,255,.86);
-    }
-    .tag.e{border-color:rgba(0,229,255,.22); color:rgba(0,229,255,.95)}
-    .tag.g{border-color:rgba(255,212,90,.20); color:rgba(255,212,90,.95)}
-    .tag.v{border-color:rgba(124,92,255,.22); color:rgba(124,92,255,.95)}
-    .tag.m{border-color:rgba(255,43,214,.20); color:rgba(255,43,214,.95)}
-
-    /* ---------- Capabilities ---------- */
-    .caps{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:12px;
-    }
-    .cap{
-      grid-column:span 6;
-      border-radius:22px;
-      border:1px solid rgba(255,255,255,.12);
-      background:
-        radial-gradient(circle at 18% 18%, rgba(0,229,255,.10), transparent 55%),
-        rgba(255,255,255,.03);
-      padding:16px;
-      transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
-    }
-    .cap:hover{
-      transform:translateY(-2px);
-      border-color:rgba(0,229,255,.22);
-      box-shadow:0 0 30px rgba(0,229,255,.10);
-    }
-    @media (max-width: 900px){ .cap{grid-column:span 12} }
-    .capTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:6px}
-    .cap h3{margin:0;font-size:14px;font-weight:900}
-    .cap p{margin:0;color:var(--muted);font-size:12px;line-height:1.75;max-width:80ch}
-    .badge{
-      font-size:11px;
-      font-weight:900;
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.18);
-      color:rgba(247,248,255,.88);
-      white-space:nowrap;
-    }
-    .badge.e{border-color:rgba(0,229,255,.22); color:rgba(0,229,255,.95)}
-    .badge.g{border-color:rgba(255,212,90,.20); color:rgba(255,212,90,.95)}
-    .badge.v{border-color:rgba(124,92,255,.22); color:rgba(124,92,255,.95)}
-    .badge.m{border-color:rgba(255,43,214,.20); color:rgba(255,43,214,.95)}
-
-    /* ---------- Testimonials ---------- */
-    .quoteGrid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:12px;
-    }
-    .quote{
-      grid-column:span 6;
-      border-radius:22px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.18);
-      padding:16px;
-      position:relative;
-      overflow:hidden;
-    }
-    .quote::before{
-      content:"";
-      position:absolute;
-      inset:-30%;
-      background:radial-gradient(circle at 30% 30%, rgba(0,229,255,.12), transparent 60%);
-      opacity:.7;
-      pointer-events:none;
-    }
-    @media (max-width: 900px){ .quote{grid-column:span 12} }
-    .qText{margin:0; position:relative; z-index:1; color:rgba(247,248,255,.86); font-size:12px; line-height:1.85}
-    .qFrom{margin-top:10px; position:relative; z-index:1; color:var(--muted); font-size:11px; font-weight:900}
-
-    /* ---------- Contact ---------- */
-    .contactGrid{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:12px;
-      align-items:stretch;
-    }
-    @media (max-width: 980px){
-      .contactGrid{grid-template-columns:1fr}
-    }
-    .contactCard{
-      border-radius:22px;
-      border:1px solid rgba(255,255,255,.12);
-      background:
-        radial-gradient(circle at 18% 18%, rgba(255,212,90,.10), transparent 55%),
-        rgba(0,0,0,.18);
-      padding:16px;
-      transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
-    }
-    .contactCard:hover{
-      transform:translateY(-2px);
-      border-color:rgba(0,229,255,.22);
-      box-shadow:0 0 28px rgba(0,229,255,.10);
-    }
-    .contactCard h3{margin:0;font-size:14px;font-weight:900}
-    .contactCard p{margin:8px 0 0;color:var(--muted);font-size:12px;line-height:1.8}
-    .copyNote{margin-top:10px;color:rgba(0,229,255,.95);font-weight:900;font-size:12px;display:none}
-
-    .footer{
-      margin-top:16px;
-      text-align:center;
-      color:var(--muted);
-      font-size:12px;
-      padding:14px 0 0;
-    }
-
-    /* ---------- Reveal ---------- */
-    .reveal{
-      opacity:0;
-      transform:translate3d(0, 14px, 0);
-      transition:opacity .6s var(--ease), transform .6s var(--ease);
-      will-change:opacity, transform;
-    }
-    .reveal.on{
-      opacity:1;
-      transform:translate3d(0,0,0);
-    }
-
-    /* ---------- Modal ---------- */
-    .modal{
-      position:fixed;
-      inset:0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:18px;
-      background:rgba(0,0,0,.62);
-      backdrop-filter:blur(14px);
-      z-index:100;
-    }
-    .modal.open{display:flex}
-    .modalCard{
-      width:min(980px, 100%);
-      border-radius:26px;
-      border:1px solid rgba(255,255,255,.16);
-      background:
-        radial-gradient(circle at 20% 20%, rgba(0,229,255,.18), transparent 55%),
-        radial-gradient(circle at 80% 20%, rgba(255,212,90,.12), transparent 55%),
-        rgba(8,8,20,.92);
-      box-shadow:0 36px 160px rgba(0,0,0,.62);
-      overflow:hidden;
-      transform:translate3d(0, 10px, 0);
-      opacity:0;
-      animation:pop .35s var(--ease) forwards;
-    }
-    @keyframes pop{to{transform:translate3d(0,0,0);opacity:1}}
-    .modalTop{
-      padding:16px 16px 12px;
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:10px;
-      border-bottom:1px solid rgba(255,255,255,.10);
-    }
-    .modalTop h3{margin:0;font-size:16px;font-weight:900}
-    .close{
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.04);
-      color:var(--text);
-      font-weight:900;
-      border-radius:14px;
-      padding:10px 12px;
-      cursor:pointer;
-      transition:transform .15s var(--ease), border-color .15s var(--ease), box-shadow .15s var(--ease);
-    }
-    .close:hover{transform:translateY(-1px); border-color:rgba(0,229,255,.22); box-shadow:0 0 18px rgba(0,229,255,.10)}
-    .modalBody{
-      padding:16px;
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap:14px;
-    }
-    @media (max-width: 900px){ .modalBody{grid-template-columns:1fr} }
-    .modalMedia{
-      border-radius:22px;
-      border:1px solid rgba(255,255,255,.12);
-      overflow:hidden;
-      background:rgba(0,0,0,.25);
-      min-height:260px;
-      position:relative;
-    }
-    .modalMedia img{width:100%;height:100%;object-fit:cover;display:block;opacity:.96}
-    .modalText{
-      border-radius:22px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.03);
-      padding:14px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-    .modalText p{margin:0;color:var(--muted);font-size:12px;line-height:1.85}
-    .modalBadges{display:flex;flex-wrap:wrap;gap:8px}
-    .modalLinks{display:flex;flex-wrap:wrap;gap:10px}
-    .linkBtn{
-      font-weight:900;
-      font-size:12px;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.04);
-      color:var(--text);
-      transition:transform .15s var(--ease), border-color .15s var(--ease), box-shadow .15s var(--ease);
-    }
-    .linkBtn:hover{transform:translateY(-1px); border-color:rgba(0,229,255,.22); box-shadow:0 0 18px rgba(0,229,255,.10)}
-
-    /* ---------- Reduced motion ---------- */
-    @media (prefers-reduced-motion: reduce){
-      .ambient::before,.ambient::after{animation:none}
-      .mark::before{animation:none}
-      .hero::after{animation:none}
-      .thumb::after{animation:none}
-      .stat::before{animation:none}
-      .reveal{transition:none}
-      body.speed .speedforce,
-      body.speed .speedforce::before,
-      body.speed .speedforce::after{animation:none; opacity:0}
-      body.speed .site{filter:none}
-      .pill,.btn,.cap,.proj,.contactCard{transition:none}
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 1.8em;
+      }
+      
+      .game-btn {
+        padding: 10px 16px;
+        font-size: 14px;
+      }
     }
   </style>
 </head>
-
 <body>
-  <div class="ambient"></div>
-  <div class="grain"></div>
-  <div class="cursorGlow" id="cursorGlow"></div>
-  <div class="speedforce" aria-hidden="true"></div>
 
-  <header>
-    <div class="nav">
-      <div class="brand">
-        <div class="mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M13 2 3 14h7l-1 8 12-14h-7l-1-6Z" fill="rgba(255,255,255,.92)"/>
-          </svg>
-        </div>
-        <div class="brandText">
-          <div class="name" id="brandName">NoraVex</div>
-          <div class="sub" id="brandSub">Roblox Scripter • Builder • UI Systems</div>
-        </div>
-      </div>
-
-      <nav class="navLinks" aria-label="Primary">
-        <button class="pill active" data-jump="top">Top</button>
-        <button class="pill" data-jump="work">Work</button>
-        <button class="pill" data-jump="capabilities">Capabilities</button>
-        <button class="pill" data-jump="proof">Proof</button>
-        <button class="pill" data-jump="contact">Contact</button>
-      </nav>
-    </div>
-  </header>
-
-  <main class="site">
-    <div class="wrap" id="top">
-      <!-- HERO -->
-      <section class="hero reveal" aria-label="Intro">
-        <div class="heroGrid">
-          <div>
-            <div class="kicker"><span class="dot"></span> Speedforce UI • Instant response • Clean systems</div>
-            <h1><span class="grad" id="heroName">NoraVex</span> builds Roblox experiences that feel fast.</h1>
-            <p class="lead" id="heroLead">
-              I deliver responsive gameplay, clean UI systems, and builds that support the flow of play.
-              My priority is “feel”: quick feedback, stable performance, and polish that looks intentional.
-            </p>
-
-            <div class="ctaRow">
-              <button class="btn primary" data-jump="work">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M13 2 3 14h7l-1 8 12-14h-7l-1-6Z" fill="rgba(6,16,24,.95)"/>
-                </svg>
-                View Work
-              </button>
-              <button class="btn" data-jump="capabilities">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="rgba(247,248,255,.85)" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-                Capabilities
-              </button>
-              <button class="btn" data-jump="contact">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M4 4h16v12H5.17L4 17.17V4Z" stroke="rgba(247,248,255,.85)" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M7 7h10M7 10h8" stroke="rgba(247,248,255,.65)" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-                Contact
-              </button>
-            </div>
-          </div>
-
-          <aside class="identity reveal" aria-label="Profile and stats">
-            <div class="who">
-              <div class="avatar">
-                <img id="avatarImg" alt="Roblox avatar" />
-              </div>
-              <div class="whoText">
-                <h3 id="whoTitle">Lightning-themed developer</h3>
-                <p id="whoDesc">Fast iteration, clean visuals, and systems that feel instant.</p>
-              </div>
-            </div>
-
-            <div class="chips" id="chipRow"></div>
-
-            <!-- Small stats strip -->
-            <div class="stats" id="statsRow" aria-label="Stats"></div>
-          </aside>
-        </div>
-      </section>
-
-      <!-- WORK -->
-      <section id="work" class="reveal" aria-label="Selected work">
-        <div class="sectionHead">
-          <div>
-            <h2><span class="grad">Selected work</span></h2>
-            <p>Projects that show systems, polish, and “feel.” Click a project for the full view.</p>
-          </div>
-        </div>
-
-        <div class="panel reveal">
-          <div class="panelBody">
-            <div class="toolbar">
-              <div class="search">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="rgba(247,248,255,0.65)" stroke-width="2"/>
-                  <path d="M16.5 16.5 21 21" stroke="rgba(247,248,255,0.65)" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-                <input id="qWork" type="text" placeholder="Search (title, tags, description)..." autocomplete="off" />
-              </div>
-              <div class="filters" id="workFilters" aria-label="Work filters"></div>
-            </div>
-
-            <div class="workGrid" id="workGrid"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- CAPABILITIES -->
-      <section id="capabilities" class="reveal" aria-label="Capabilities">
-        <div class="sectionHead">
-          <div>
-            <h2><span class="grad">Capabilities</span></h2>
-            <p>What you can expect from my delivery: performance-first systems, polished UI, and clean iteration.</p>
-          </div>
-        </div>
-
-        <div class="panel reveal">
-          <div class="panelBody">
-            <div class="caps" id="capsGrid"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- PROOF -->
-      <section id="proof" class="reveal" aria-label="Proof and testimonials">
-        <div class="sectionHead">
-          <div>
-            <h2><span class="grad">Proof</span></h2>
-            <p>Short “human” signals: how I work, what teammates notice, and what stays consistent.</p>
-          </div>
-        </div>
-
-        <div class="panel reveal">
-          <div class="panelBody">
-            <div class="quoteGrid" id="quoteGrid"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- CONTACT -->
-      <section id="contact" class="reveal" aria-label="Contact">
-        <div class="sectionHead">
-          <div>
-            <h2><span class="grad">Contact</span></h2>
-            <p>Fastest: Discord. If you send the basics, I can respond with an accurate plan quickly.</p>
-          </div>
-        </div>
-
-        <div class="panel reveal">
-          <div class="panelBody">
-            <div class="contactGrid">
-              <div class="contactCard reveal">
-                <h3>Discord</h3>
-                <p>Username: <b id="discordUser">pure_script</b></p>
-                <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-                  <button class="btn primary" id="copyDiscord">Copy</button>
-                  <button class="btn" data-jump="work">Back to Work</button>
-                </div>
-                <div class="copyNote" id="copyNote">Copied.</div>
-              </div>
-
-              <div class="contactCard reveal">
-                <h3>What to send</h3>
-                <p id="contactTemplate">
-                  Project name + what you need (script, UI, build, tools) + timeframe + references.
-                  If you have a task list or footage, that helps immediately.
-                </p>
-              </div>
-            </div>
-
-            <div class="footer">© <span id="year"></span> <span id="footerName">NoraVex</span></div>
-          </div>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <!-- PROJECT MODAL -->
-  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Project details">
-    <div class="modalCard">
-      <div class="modalTop">
-        <div>
-          <h3 id="mTitle">Project</h3>
-          <div class="modalBadges" id="mBadges"></div>
-        </div>
-        <button class="close" id="closeModal">Close</button>
-      </div>
-      <div class="modalBody">
-        <div class="modalMedia">
-          <img id="mImg" alt="Project image" />
-        </div>
-        <div class="modalText">
-          <p id="mDesc"></p>
-          <div class="modalLinks" id="mLinks"></div>
-        </div>
-      </div>
+<div class="container">
+  <div class="header">
+    <h1>GAMING HUB</h1>
+    <div class="game-selector">
+      <button class="game-btn active" data-game="0">Crazy Ball</button>
+      <button class="game-btn" data-game="1">Stack Tower</button>
+      <button class="game-btn" data-game="2">Car Racing</button>
+      <button class="game-btn" data-game="3">Bubble Shooter</button>
+      <button class="game-btn" data-game="4">Snake Game</button>
+      <button class="game-btn" data-game="5">Puzzle Master</button>
     </div>
   </div>
 
-  <script>
-    // ============== EDIT HERE (one place) ==============
-    const DATA = {
-      brand: {
-        name: "NoraVex",
-        sub: "Roblox Scripter • Builder • UI Systems",
-        avatar: "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-3D3D154A992D2FD15574CCC33634CD36-Png/150/150/AvatarHeadshot/Webp/noFilter"
-      },
-      hero: {
-        lead:
-          "I deliver responsive gameplay, clean UI systems, and builds that support the flow of play. My priority is feel: quick feedback, stable performance, and polish that looks intentional."
-      },
-      identity: {
-        title: "Lightning-themed developer",
-        desc: "Fast iteration, clean visuals, and systems that feel instant.",
-        chips: [
-          { strong: "Luau", text: "scripting" },
-          { strong: "UI", text: "polish" },
-          { strong: "Build", text: "work" },
-          { strong: "Perf", text: "focus" }
-        ]
-      },
-      // small stats strip (edit these)
-      stats: [
-        { value: "Fast", label: "Response + iteration" },
-        { value: "Clean", label: "Modular systems" },
-        { value: "Polished", label: "UI + feel" }
-      ],
-      work: [
-        {
-          title: "Dynamic Creations",
-          blurb: "Team dev work — The Flash Earth Prime",
-          desc:
-            "Scripting + building support for a fast-feeling superhero experience. Focus: responsive systems, clean movement feedback, and gameplay-first map composition.",
-          image: "https://tr.rbxcdn.com/180DAY-0596677997fbad98e2c9ee9d418bc8d5/150/150/Image/Webp/noFilter",
-          tags: ["roblox","system","build"],
-          links: [
-            { label: "Community", url: "https://www.roblox.com/communities/5799624/Dynamic-Creations#!/about" }
-          ]
-        },
-        // Add more projects like this:
-        // {
-        //   title: "Project Name",
-        //   blurb: "One-line summary",
-        //   desc: "A slightly longer description (what you did, impact, what it proves).",
-        //   image: "https://...",
-        //   tags: ["ui","system","build"],
-        //   links: [{ label:"Demo", url:"https://..." }]
-        // }
-      ],
-      capabilities: [
-        {
-          title: "Gameplay Systems",
-          badge: { text: "LUAU", tone: "e" },
-          desc: "Modular server/client boundaries, predictable state, and responsive events that make mechanics feel instant."
-        },
-        {
-          title: "UI Systems & UX",
-          badge: { text: "UI/UX", tone: "g" },
-          desc: "Clean layouts, fast feedback, and UI that supports gameplay instead of slowing it down."
-        },
-        {
-          title: "Tools & Admin",
-          badge: { text: "TOOLS", tone: "v" },
-          desc: "Logs, moderation tooling, and quality-of-life utilities that help teams ship and maintain faster."
-        },
-        {
-          title: "Building & Atmosphere",
-          badge: { text: "BUILD", tone: "m" },
-          desc: "Readable spaces, strong composition, and lighting that enhances navigation and action clarity."
-        }
-      ],
-      proof: [
-        {
-          quote:
-            "Delivers features that feel finished. Even small systems ship with polish and clear UX, not just ‘it works.’",
-          from: "Teammate feedback"
-        },
-        {
-          quote:
-            "Communicates quickly, scopes cleanly, and keeps performance in mind while still making things look good.",
-          from: "Project lead feedback"
-        }
-      ],
-      contact: {
-        discord: "pure_script",
-        template:
-          "Project name + what you need (script, UI, build, tools) + timeframe + references. If you have a task list or footage, that helps immediately."
+  <div class="game-container">
+    <div class="loading">
+      <div class="spinner"></div>
+      <div>Loading Game...</div>
+    </div>
+    <iframe id="game-0" class="game-frame active" allow="autoplay" allowfullscreen></iframe>
+    <iframe id="game-1" class="game-frame" allow="autoplay" allowfullscreen></iframe>
+    <iframe id="game-2" class="game-frame" allow="autoplay" allowfullscreen></iframe>
+    <iframe id="game-3" class="game-frame" allow="autoplay" allowfullscreen></iframe>
+    <iframe id="game-4" class="game-frame" allow="autoplay" allowfullscreen></iframe>
+    <iframe id="game-5" class="game-frame" allow="autoplay" allowfullscreen></iframe>
+  </div>
+</div>
+
+<script>
+(function () {
+
+  const GAMES = [
+    { id: "dd2ab5adad664c508d3fa032bd19e8c8", name: "Crazy Ball" },
+    { id: "c0b0c3323e414f0ba7f7e50b29ca0c90", name: "Stack Tower" },
+    { id: "7a7d4c0f0a6f4e7f9a8e5c4b3d2a1f0e", name: "Car Racing" },
+    { id: "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6", name: "Bubble Shooter" },
+    { id: "f1e2d3c4b5a69788796a5b4c3d2e1f0", name: "Snake Game" },
+    { id: "9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d", name: "Puzzle Master" }
+  ];
+
+  let currentGame = 0;
+  const bridges = [];
+  const hasImpressions = [];
+  const hasSuccesses = [];
+  const loadedGames = [];
+
+  GAMES.forEach((game, index) => {
+    bridges[index] = null;
+    hasImpressions[index] = false;
+    hasSuccesses[index] = false;
+    loadedGames[index] = false;
+  });
+
+  window.GD_OPTIONS = {
+    gameId: GAMES[currentGame].id,
+    loader: { enabled: true, sdk_version: "1.15.2" },
+
+    onLoaderEvent: function (event) {
+      if (event.name === "LOADER_DATA") {
+        bridges[currentGame] = event.message.bridge;
       }
-    };
+    },
 
-    // ============== Speedforce trigger ==============
-    let speedTimer = null;
-    const speed = () => {
-      document.body.classList.add("speed");
-      if (speedTimer) clearTimeout(speedTimer);
-      speedTimer = setTimeout(() => document.body.classList.remove("speed"), 600);
-    };
+    onEvent: function (event) {
+      switch (event.name) {
+        case "SDK_GAME_START":
+          loadGame(currentGame);
+          break;
 
-    // ============== Cursor glow tracking ==============
-    const glow = document.getElementById("cursorGlow");
-    const setGlow = (x, y) => {
-      const mx = Math.max(0, Math.min(100, (x / window.innerWidth) * 100));
-      const my = Math.max(0, Math.min(100, (y / window.innerHeight) * 100));
-      glow.style.setProperty("--mx", mx + "%");
-      glow.style.setProperty("--my", my + "%");
-    };
-    window.addEventListener("pointermove", (e) => setGlow(e.clientX, e.clientY), { passive: true });
+        case "ALL_ADS_COMPLETED":
+        case "COMPLETE":
+        case "USER_CLOSE":
+        case "SKIPPED":
+          hasImpressions[currentGame] = true;
+          hasSuccesses[currentGame] = true;
+          break;
 
-    // ============== Populate brand/hero/profile/stats ==============
-    document.getElementById("brandName").textContent = DATA.brand.name;
-    document.getElementById("brandSub").textContent = DATA.brand.sub;
-    document.getElementById("heroName").textContent = DATA.brand.name;
-    document.getElementById("heroLead").textContent = DATA.hero.lead;
-    document.getElementById("avatarImg").src = DATA.brand.avatar;
-    document.getElementById("whoTitle").textContent = DATA.identity.title;
-    document.getElementById("whoDesc").textContent = DATA.identity.desc;
-    document.getElementById("footerName").textContent = DATA.brand.name;
-    document.getElementById("discordUser").textContent = DATA.contact.discord;
-    document.getElementById("contactTemplate").textContent = DATA.contact.template;
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Chips
-    const chipRow = document.getElementById("chipRow");
-    chipRow.innerHTML = DATA.identity.chips
-      .map(c => `<span class="chip"><b>${c.strong}</b> ${c.text}</span>`)
-      .join("");
-
-    // Stats strip
-    const statsRow = document.getElementById("statsRow");
-    statsRow.innerHTML = DATA.stats
-      .map(s => `
-        <div class="stat">
-          <div class="statNum">${s.value}</div>
-          <div class="statLbl">${s.label}</div>
-        </div>
-      `).join("");
-
-    // ============== Capabilities + Proof ==============
-    const capsGrid = document.getElementById("capsGrid");
-    capsGrid.innerHTML = DATA.capabilities.map(c => `
-      <div class="cap reveal">
-        <div class="capTop">
-          <h3>${c.title}</h3>
-          <span class="badge ${c.badge.tone}">${c.badge.text}</span>
-        </div>
-        <p>${c.desc}</p>
-      </div>
-    `).join("");
-
-    const quoteGrid = document.getElementById("quoteGrid");
-    quoteGrid.innerHTML = DATA.proof.map(q => `
-      <div class="quote reveal">
-        <p class="qText">“${q.quote}”</p>
-        <div class="qFrom">— ${q.from}</div>
-      </div>
-    `).join("");
-
-    // ============== Work rendering + filter/search ==============
-    const tagClass = (tag) => tag === "ui" ? "g" : tag === "system" ? "e" : tag === "build" ? "m" : "v";
-    const normalizeLinks = (links) => (links || []).map(l => typeof l === "string" ? ({label:"Link", url:l}) : ({label:l.label||"Link", url:l.url||"#"}));
-
-    const uniqueTags = (arr) => {
-      const s = new Set();
-      arr.forEach(x => (x.tags||[]).forEach(t => s.add(String(t))));
-      return ["all", ...[...s].sort((a,b)=>a.localeCompare(b))];
-    };
-
-    const makeFilterBar = (el, tags, onPick) => {
-      el.innerHTML = tags.map((t,i)=>`<button class="f ${i===0?"active":""}" data-f="${t}">${t.toUpperCase()}</button>`).join("");
-      [...el.querySelectorAll(".f")].forEach(btn => {
-        btn.addEventListener("click", () => {
-          [...el.querySelectorAll(".f")].forEach(b => b.classList.remove("active"));
-          btn.classList.add("active");
-          onPick(btn.dataset.f);
-        });
-      });
-    };
-
-    const grid = document.getElementById("workGrid");
-    const qWork = document.getElementById("qWork");
-    const workFilters = document.getElementById("workFilters");
-
-    const tags = uniqueTags(DATA.work);
-    let activeTag = "all";
-
-    const drawWork = () => {
-      const query = (qWork.value || "").trim().toLowerCase();
-
-      const items = DATA.work.filter(p => {
-        const tagOk = activeTag === "all" || (p.tags||[]).map(String).includes(activeTag);
-        const blob = ((p.title||"") + " " + (p.blurb||"") + " " + (p.desc||"") + " " + (p.tags||[]).join(" ")).toLowerCase();
-        const qOk = !query || blob.includes(query);
-        return tagOk && qOk;
-      });
-
-      grid.innerHTML = items.map((p,idx) => {
-        const pills = (p.tags || []).slice(0,4).map(t => `<span class="tag ${tagClass(String(t))}">${String(t).toUpperCase()}</span>`).join("");
-        const img = p.image ? `<img src="${p.image}" alt="${p.title} image" loading="lazy" />` : "";
-        return `
-          <article class="proj reveal" data-idx="${idx}">
-            <div class="thumb">${img}</div>
-            <div class="projBody">
-              <h3 class="projTitle">${p.title || "Untitled"}</h3>
-              <p class="projBlurb">${p.blurb || ""}</p>
-              <div class="pills">${pills}</div>
-            </div>
-          </article>
-        `;
-      }).join("");
-
-      [...grid.querySelectorAll(".proj")].forEach(tile => {
-        const idx = Number(tile.dataset.idx);
-        const shown = items[idx];
-        tile.addEventListener("click", () => openModal(shown));
-      });
-
-      requestAnimationFrame(() => runReveal(document));
-    };
-
-    makeFilterBar(workFilters, tags, (f) => { activeTag = f; speed(); drawWork(); });
-    qWork.addEventListener("input", () => drawWork());
-    drawWork();
-
-    // ============== Modal ==============
-    const modal = document.getElementById("modal");
-    const mTitle = document.getElementById("mTitle");
-    const mBadges = document.getElementById("mBadges");
-    const mImg = document.getElementById("mImg");
-    const mDesc = document.getElementById("mDesc");
-    const mLinks = document.getElementById("mLinks");
-
-    const openModal = (p) => {
-      speed();
-      mTitle.textContent = p.title || "Project";
-      mDesc.textContent = p.desc || "";
-      mBadges.innerHTML = (p.tags || []).map(tag =>
-        `<span class="badge ${tagClass(String(tag))}">${String(tag).toUpperCase()}</span>`
-      ).join("");
-
-      if(p.image){
-        mImg.src = p.image;
-        mImg.style.display = "block";
-      }else{
-        mImg.removeAttribute("src");
-        mImg.style.display = "none";
+        case "AD_ERROR":
+        case "AD_SDK_CANCELED":
+          hasImpressions[currentGame] = hasSuccesses[currentGame];
+          break;
       }
+    }
+  };
 
-      const links = normalizeLinks(p.links);
-      mLinks.innerHTML = links.map(l => `<a class="linkBtn" href="${l.url}" target="_blank" rel="noopener noreferrer">${l.label}</a>`).join("");
+  function loadGame(gameIndex) {
+    if (loadedGames[gameIndex] || !bridges[gameIndex]) {
+      setTimeout(() => hideLoading(), 500);
+      return;
+    }
+    
+    loadedGames[gameIndex] = true;
 
-      modal.classList.add("open");
-      document.body.style.overflow = "hidden";
-    };
-
-    const closeModal = () => {
-      modal.classList.remove("open");
-      document.body.style.overflow = "";
-    };
-
-    document.getElementById("closeModal").addEventListener("click", closeModal);
-    modal.addEventListener("click", (e) => { if(e.target === modal) closeModal(); });
-    window.addEventListener("keydown", (e) => { if(e.key === "Escape" && modal.classList.contains("open")) closeModal(); });
-
-    // ============== Scroll navigation + active pills + speedforce on jump ==============
-    const pills = [...document.querySelectorAll(".pill")];
-    const jump = (id) => {
-      const el = document.getElementById(id);
-      if(!el) return;
-      speed();
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    };
-
-    pills.forEach(p => p.addEventListener("click", () => {
-      const id = p.dataset.jump;
-      jump(id);
-    }));
-    document.querySelectorAll("[data-jump]").forEach(b => {
-      if (b.classList.contains("pill")) return;
-      b.addEventListener("click", () => jump(b.dataset.jump));
+    const params = bridges[gameIndex].exports.formatTokenURLSearch({
+      parentURL: bridges[gameIndex].parentURL,
+      parentDomain: bridges[gameIndex].parentDomain,
+      topDomain: bridges[gameIndex].topDomain,
+      hasImpression: hasImpressions[gameIndex],
+      host: location.hostname,
+      version: "1.5.18"
     });
 
-    const setActivePill = (id) => {
-      pills.forEach(p => p.classList.toggle("active", p.dataset.jump === id));
+    const iframe = document.getElementById(`game-${gameIndex}`);
+    iframe.src = "//html5.gamedistribution.com/rvvASMiM/" + GAMES[gameIndex].id + "/index.html" + params;
+    
+    iframe.onload = function() {
+      hideLoading();
     };
+  }
 
-    const sections = ["top","work","capabilities","proof","contact"].map(id => document.getElementById(id));
-    const navIO = new IntersectionObserver((entries) => {
-      const visible = entries.filter(e => e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
-      if(!visible) return;
-      setActivePill(visible.target.id);
-    }, { threshold: [0.35, 0.5, 0.65] });
+  function hideLoading() {
+    const loading = document.querySelector('.loading');
+    if (loading) {
+      loading.style.display = 'none';
+    }
+  }
 
-    sections.forEach(s => s && navIO.observe(s));
+  function showLoading() {
+    const loading = document.querySelector('.loading');
+    if (loading) {
+      loading.style.display = 'block';
+    }
+  }
 
-    // ============== Reveal on scroll ==============
-    const revealIO = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add("on"); });
-    }, { threshold: 0.12 });
+  function switchGame(gameIndex) {
+    if (gameIndex === currentGame) return;
 
-    const runReveal = (scope) => {
-      (scope || document).querySelectorAll(".reveal").forEach(el => revealIO.observe(el));
-    };
-    runReveal(document);
+    showLoading();
 
-    // ============== Copy Discord ==============
-    const copyBtn = document.getElementById("copyDiscord");
-    const copyNote = document.getElementById("copyNote");
-    copyBtn.addEventListener("click", async () => {
-      try{
-        await navigator.clipboard.writeText(DATA.contact.discord);
-        copyNote.style.display = "block";
-        copyNote.textContent = "Copied: " + DATA.contact.discord;
-      }catch{
-        copyNote.style.display = "block";
-        copyNote.textContent = "Discord: " + DATA.contact.discord;
-      }
-      speed();
+    document.querySelectorAll('.game-frame').forEach(frame => {
+      frame.classList.remove('active');
     });
 
-    // Initial glow position
-    setGlow(window.innerWidth*0.5, window.innerHeight*0.33);
-  </script>
+    document.querySelectorAll('.game-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+
+    document.querySelector(`[data-game="${gameIndex}"]`).classList.add('active');
+    document.getElementById(`game-${gameIndex}`).classList.add('active');
+
+    currentGame = gameIndex;
+
+    if (!loadedGames[gameIndex]) {
+      window.GD_OPTIONS.gameId = GAMES[gameIndex].id;
+      
+      if (window.gdsdk) {
+        window.gdsdk.showAd();
+      }
+      
+      loadGame(gameIndex);
+    } else {
+      hideLoading();
+    }
+  }
+
+  document.querySelectorAll('.game-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const gameIndex = parseInt(this.getAttribute('data-game'));
+      switchGame(gameIndex);
+    });
+  });
+
+  const script = document.createElement("script");
+  script.src = "https://html5.api.gamedistribution.com/main.min.js";
+  script.async = true;
+  document.body.appendChild(script);
+
+})();
+</script>
+
 </body>
 </html>
