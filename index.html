@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Epic Gaming Hub - 20 Amazing Games</title>
+  <title>Games</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   
   <style>
@@ -220,6 +220,12 @@
       display: block;
     }
 
+    #gameCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
     .game-frame {
       width: 100%;
       height: 100%;
@@ -283,8 +289,8 @@
   <button class="back-btn" id="backBtn">← Back to Games</button>
 
   <div class="header">
-    <h1>⚡ GAMING HUB ⚡</h1>
-    <div class="subtitle">Choose Your Adventure</div>
+    <h1> GAMING HUB (ALPHA)</h1>
+    <div class="subtitle">Choose A Game</div>
   </div>
 
   <div class="game-grid" id="gameGrid">
@@ -292,7 +298,7 @@
       <div class="game-icon">🍎</div>
       <div class="game-info">
         <div class="game-title">Snake Feast</div>
-        <div class="game-description">Classic snake game - eat apples and grow longer!</div>
+        <div class="game-description">Classic snake game eat apples and grow longer!</div>
         <button class="play-btn">Play Now</button>
       </div>
     </div>
@@ -545,6 +551,26 @@ function openGame(gameIndex) {
     case 19: initStarCollector(canvas, ctx); break;
   }
 }
+
+function closeGame() {
+  if (gameInterval) clearInterval(gameInterval);
+  gameContainer.classList.remove('active');
+  gameGrid.style.display = 'grid';
+  backBtn.classList.remove('show');
+  currentGame = -1;
+}
+
+document.querySelectorAll('.game-card').forEach(card => {
+  card.addEventListener('click', function() {
+    const gameIndex = parseInt(this.getAttribute('data-game'));
+    openGame(gameIndex);
+  });
+});
+
+backBtn.addEventListener('click', closeGame);
+</script>
+
+<script src="games.js"></script>
 
 </body>
 </html>
