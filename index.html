@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NoraVex - Roblox Developer Portfolio</title>
+  <title>NoraVex</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     * {
@@ -31,6 +31,52 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .stars-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .shooting-star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+      animation: shoot 2s ease-out forwards;
+    }
+
+    @keyframes shoot {
+      0% {
+        transform: translate(0, 0);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-300px, 300px);
+        opacity: 0;
+      }
     }
 
     .background {
@@ -41,9 +87,29 @@
       height: 100%;
       z-index: -1;
       background: 
-        radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.1), transparent 50%),
-        radial-gradient(circle at 70% 80%, rgba(96, 165, 250, 0.08), transparent 50%),
+        radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.15), transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(96, 165, 250, 0.12), transparent 50%),
         var(--bg);
+    }
+
+    .grid-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-image: 
+        linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 20s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
     }
 
     nav {
@@ -55,6 +121,7 @@
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
       padding: 20px 60px;
+      transition: transform 0.3s;
     }
 
     .nav-container {
@@ -70,6 +137,11 @@
       font-weight: 800;
       color: var(--accent);
       cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
     }
 
     .nav-links {
@@ -83,11 +155,27 @@
       text-decoration: none;
       font-weight: 500;
       font-size: 15px;
-      transition: color 0.3s;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s;
     }
 
     .nav-links a:hover {
       color: var(--accent);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
     }
 
     .container {
@@ -101,6 +189,7 @@
       display: flex;
       align-items: center;
       padding-top: 80px;
+      position: relative;
     }
 
     .hero-grid {
@@ -109,6 +198,18 @@
       gap: 80px;
       align-items: center;
       width: 100%;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .hero-left h1 {
@@ -123,6 +224,16 @@
       background: linear-gradient(135deg, var(--accent), var(--accent-light));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      animation: gradientPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes gradientPulse {
+      0%, 100% {
+        filter: brightness(1);
+      }
+      50% {
+        filter: brightness(1.3);
+      }
     }
 
     .hero-left p {
@@ -131,12 +242,19 @@
       margin-bottom: 40px;
       line-height: 1.7;
       max-width: 600px;
+      animation: fadeIn 1.2s ease-out 0.3s both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .cta-group {
       display: flex;
       gap: 20px;
       flex-wrap: wrap;
+      animation: fadeIn 1.4s ease-out 0.5s both;
     }
 
     .btn {
@@ -149,16 +267,38 @@
       text-decoration: none;
       display: inline-block;
       border: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.5s, height 0.5s;
+    }
+
+    .btn:hover::before {
+      width: 300px;
+      height: 300px;
     }
 
     .btn-primary {
       background: var(--accent);
       color: white;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
     }
 
     .btn-primary:hover {
       background: var(--accent-light);
       transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(59, 130, 246, 0.5);
     }
 
     .btn-secondary {
@@ -170,6 +310,7 @@
     .btn-secondary:hover {
       border-color: var(--accent);
       color: var(--accent);
+      transform: translateY(-2px);
     }
 
     .profile-card {
@@ -178,6 +319,44 @@
       border-radius: 24px;
       padding: 40px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: floatCard 6s ease-in-out infinite;
+      position: relative;
+    }
+
+    @keyframes floatCard {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    .profile-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(
+        from 0deg,
+        transparent,
+        rgba(59, 130, 246, 0.1),
+        transparent 30%
+      );
+      animation: rotate 8s linear infinite;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .profile-card:hover::before {
+      opacity: 1;
     }
 
     .profile-header {
@@ -185,6 +364,8 @@
       align-items: center;
       gap: 24px;
       margin-bottom: 32px;
+      position: relative;
+      z-index: 1;
     }
 
     .avatar {
@@ -193,6 +374,17 @@
       border-radius: 50%;
       border: 3px solid var(--accent);
       object-fit: cover;
+      box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+      animation: avatarPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes avatarPulse {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 40px rgba(59, 130, 246, 0.8);
+      }
     }
 
     .profile-info h3 {
@@ -208,9 +400,11 @@
 
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 16px;
       margin-top: 32px;
+      position: relative;
+      z-index: 1;
     }
 
     .stat-box {
@@ -224,7 +418,8 @@
 
     .stat-box:hover {
       background: rgba(59, 130, 246, 0.1);
-      transform: translateY(-4px);
+      transform: translateY(-4px) scale(1.05);
+      border-color: var(--accent);
     }
 
     .stat-value {
@@ -243,6 +438,7 @@
 
     section {
       padding: 120px 0;
+      position: relative;
     }
 
     .section-header {
@@ -293,6 +489,7 @@
     .search-input:focus {
       border-color: var(--accent);
       background: rgba(59, 130, 246, 0.05);
+      transform: scale(1.02);
     }
 
     .filters {
@@ -318,12 +515,14 @@
     .filter-btn:hover {
       border-color: var(--accent);
       background: rgba(59, 130, 246, 0.05);
+      transform: scale(1.05);
     }
 
     .filter-btn.active {
       background: var(--accent);
       color: white;
       border-color: var(--accent);
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
     }
 
     .projects-grid {
@@ -338,13 +537,29 @@
       border-radius: 20px;
       overflow: hidden;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.4s;
+      position: relative;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .project-card:hover::before {
+      left: 100%;
     }
 
     .project-card:hover {
-      transform: translateY(-8px);
+      transform: translateY(-12px) scale(1.02);
       border-color: var(--accent);
-      box-shadow: 0 20px 60px rgba(59, 130, 246, 0.2);
+      box-shadow: 0 30px 80px rgba(59, 130, 246, 0.3);
     }
 
     .project-image {
@@ -352,6 +567,11 @@
       height: 240px;
       object-fit: cover;
       background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(96, 165, 250, 0.1));
+      transition: transform 0.4s;
+    }
+
+    .project-card:hover .project-image {
+      transform: scale(1.1);
     }
 
     .project-content {
@@ -386,6 +606,12 @@
       font-weight: 600;
       color: var(--accent);
       text-transform: uppercase;
+      transition: all 0.3s;
+    }
+
+    .tag:hover {
+      background: rgba(59, 130, 246, 0.2);
+      transform: scale(1.1);
     }
 
     .skills-grid {
@@ -400,28 +626,61 @@
       border-radius: 20px;
       padding: 40px;
       text-align: center;
-      transition: all 0.3s;
+      transition: all 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.2), transparent 70%);
+      transform: translate(-50%, -50%);
+      transition: width 0.5s, height 0.5s;
+      border-radius: 50%;
+    }
+
+    .skill-card:hover::before {
+      width: 500px;
+      height: 500px;
     }
 
     .skill-card:hover {
       border-color: var(--accent);
-      transform: translateY(-8px);
+      transform: translateY(-12px);
+      box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
     }
 
     .skill-icon {
       font-size: 64px;
       margin-bottom: 24px;
+      animation: iconBounce 3s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes iconBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
 
     .skill-card h3 {
       font-size: 22px;
       margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
     }
 
     .skill-card p {
       color: var(--text-muted);
       font-size: 15px;
       line-height: 1.7;
+      position: relative;
+      z-index: 1;
     }
 
     .testimonials-grid {
@@ -435,12 +694,25 @@
       border: 1px solid var(--border);
       border-radius: 20px;
       padding: 40px;
-      transition: all 0.3s;
+      transition: all 0.4s;
+      position: relative;
+    }
+
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      font-size: 100px;
+      color: rgba(59, 130, 246, 0.1);
+      font-weight: 900;
+      line-height: 1;
     }
 
     .testimonial-card:hover {
       border-color: var(--accent);
-      transform: translateY(-8px);
+      transform: translateY(-12px);
+      box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
     }
 
     .testimonial-text {
@@ -448,11 +720,15 @@
       font-size: 16px;
       line-height: 1.8;
       margin-bottom: 24px;
+      position: relative;
+      z-index: 1;
     }
 
     .testimonial-author {
       font-weight: 600;
       color: var(--accent);
+      position: relative;
+      z-index: 1;
     }
 
     .contact-grid {
@@ -466,6 +742,13 @@
       border: 1px solid var(--border);
       border-radius: 20px;
       padding: 48px;
+      transition: all 0.4s;
+    }
+
+    .contact-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
     }
 
     .contact-card h3 {
@@ -487,6 +770,12 @@
       padding: 32px;
       text-align: center;
       margin-bottom: 24px;
+      transition: all 0.3s;
+    }
+
+    .discord-box:hover {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: var(--accent);
     }
 
     .discord-username {
@@ -502,6 +791,18 @@
       color: #10b981;
       font-weight: 600;
       margin-top: 16px;
+      animation: slideDown 0.4s;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .modal {
@@ -517,6 +818,12 @@
       align-items: center;
       justify-content: center;
       padding: 40px;
+      animation: modalFade 0.3s;
+    }
+
+    @keyframes modalFade {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .modal.open {
@@ -531,6 +838,18 @@
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
+      animation: modalSlide 0.4s;
+    }
+
+    @keyframes modalSlide {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
 
     .modal-header {
@@ -561,6 +880,7 @@
       background: var(--accent);
       border-color: var(--accent);
       color: white;
+      transform: scale(1.05);
     }
 
     .modal-body {
@@ -670,7 +990,9 @@
   </style>
 </head>
 <body>
+  <div class="stars-canvas" id="starsCanvas"></div>
   <div class="background"></div>
+  <div class="grid-overlay"></div>
 
   <nav>
     <div class="nav-container">
@@ -692,7 +1014,7 @@
             Build <span class="gradient-text">Lightning-Fast</span> Roblox Experiences
           </h1>
           <p>
-            I create high-performance Roblox systems with polished UI, responsive gameplay, and optimized code. Every project is built with performance and player experience in mind.
+            I create high-performance Roblox systems with responsive gameplay and optimized code. Specializing in gameplay mechanics, building, and backend systems.
           </p>
           <div class="cta-group">
             <a href="#work" class="btn btn-primary">View Work</a>
@@ -703,25 +1025,21 @@
         <div class="hero-right">
           <div class="profile-card">
             <div class="profile-header">
-              <img class="avatar" src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-3D3D154A992D2FD15574CCC33634CD36-Png/150/150/AvatarHeadshot/Webp/noFilter" alt="NoraVex Avatar" />
+              <img class="avatar" src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-D37D462F3B6EDE9C70CE6A9B0EF0CEAA-Png/150/150/AvatarHeadshot/Webp/noFilter" alt="NoraVex Avatar" />
               <div class="profile-info">
                 <h3>NoraVex</h3>
-                <p>Performance-Focused Developer</p>
+                <p>Roblox Systems Developer</p>
               </div>
             </div>
 
             <div class="stats-grid">
               <div class="stat-box">
-                <div class="stat-value">5+</div>
-                <div class="stat-label">Years</div>
+                <div class="stat-value">8+</div>
+                <div class="stat-label">Years of experience</div>
               </div>
               <div class="stat-box">
                 <div class="stat-value">50+</div>
                 <div class="stat-label">Projects</div>
-              </div>
-              <div class="stat-box">
-                <div class="stat-value">99%</div>
-                <div class="stat-label">Uptime</div>
               </div>
             </div>
           </div>
@@ -790,7 +1108,7 @@
           <h3>What to Include</h3>
           <p>
             <strong>Project Name:</strong> What are you building?<br><br>
-            <strong>Scope:</strong> Scripting, UI, building, or tools?<br><br>
+            <strong>Scope:</strong> Scripting, building, or backend systems?<br><br>
             <strong>Timeline:</strong> When do you need it?<br><br>
             <strong>Budget:</strong> What's your budget range?<br><br>
             <strong>References:</strong> Any examples or inspiration?<br><br>
@@ -822,39 +1140,39 @@
   </div>
 
   <script>
+    const starsCanvas = document.getElementById('starsCanvas');
+    
+    for (let i = 0; i < 200; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 3 + 's';
+      star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      starsCanvas.appendChild(star);
+    }
+
+    setInterval(() => {
+      const shootingStar = document.createElement('div');
+      shootingStar.className = 'shooting-star';
+      shootingStar.style.left = Math.random() * 100 + '%';
+      shootingStar.style.top = Math.random() * 50 + '%';
+      starsCanvas.appendChild(shootingStar);
+      
+      setTimeout(() => {
+        shootingStar.remove();
+      }, 2000);
+    }, 3000);
+
     const DATA = {
       projects: [
         {
           title: "Dynamic Creations",
           description: "The Flash Earth Prime — Team Development",
-          fullDescription: "Full-scale superhero experience featuring responsive movement systems, polished UI feedback, and performance-optimized gameplay. Built modular server/client architecture for scalability. Includes custom admin tools, real-time combat systems, and dynamic environmental interactions.",
+          fullDescription: "Full-scale superhero experience featuring responsive movement systems and performance-optimized gameplay. Built modular server/client architecture for scalability. Includes custom admin tools, real-time combat systems, and dynamic environmental interactions.",
           image: "https://tr.rbxcdn.com/180DAY-0596677997fbad98e2c9ee9d418bc8d5/768/432/Image/Webp/noFilter",
-          tags: ["roblox", "system", "build", "ui"],
+          tags: ["roblox", "system", "build"],
           links: [{ label: "View Community", url: "https://www.roblox.com/communities/5799624/Dynamic-Creations#!/about" }]
-        },
-        {
-          title: "Speed Combat System",
-          description: "Lightning-fast combat mechanics",
-          fullDescription: "Created a high-performance combat system with frame-perfect inputs, combo chains, and visual feedback. Features client-side prediction with server-side validation, custom hitbox detection, and smooth animation blending.",
-          image: "https://tr.rbxcdn.com/180DAY-0596677997fbad98e2c9ee9d418bc8d5/768/432/Image/Webp/noFilter",
-          tags: ["system", "ui"],
-          links: []
-        },
-        {
-          title: "Admin Dashboard Pro",
-          description: "Professional moderation tools",
-          fullDescription: "Comprehensive admin panel with real-time player monitoring, ban management, teleportation tools, and server analytics. Features a sleek UI with role-based permissions and command history logging.",
-          image: "https://tr.rbxcdn.com/180DAY-0596677997fbad98e2c9ee9d418bc8d5/768/432/Image/Webp/noFilter",
-          tags: ["ui", "system"],
-          links: []
-        },
-        {
-          title: "Neon City Build",
-          description: "Cyberpunk themed environment",
-          fullDescription: "Atmospheric cyberpunk city with dynamic lighting, particle effects, and optimized LOD systems. Features interactive billboards, weather effects, and performance-optimized assets for mobile support.",
-          image: "https://tr.rbxcdn.com/180DAY-0596677997fbad98e2c9ee9d418bc8d5/768/432/Image/Webp/noFilter",
-          tags: ["build", "roblox"],
-          links: []
         }
       ],
       skills: [
@@ -864,14 +1182,9 @@
           description: "Modular, high-performance Luau systems with clean client-server separation and instant response."
         },
         {
-          icon: "🎨",
-          title: "UI/UX Design",
-          description: "Polished interfaces with smooth animations and intuitive layouts that enhance gameplay."
-        },
-        {
           icon: "🔧",
-          title: "Admin Tools",
-          description: "Custom moderation panels and developer tools that accelerate workflow."
+          title: "Backend Systems",
+          description: "Reliable datastores with auto-save, backups, session management, and migration tools."
         },
         {
           icon: "🏗️",
@@ -881,25 +1194,25 @@
         {
           icon: "🚀",
           title: "Performance",
-          description: "Optimization-first approach with profiling and scalability for 60+ FPS."
+          description: "Optimization-first approach with profiling and scalability for 60+ FPS gameplay."
         },
         {
-          icon: "💾",
-          title: "Data Systems",
-          description: "Reliable datastores with auto-save, backups, and migration tools."
+          icon: "🎮",
+          title: "Combat Systems",
+          description: "Frame-perfect combat mechanics with smooth animations and responsive feedback."
         }
       ],
       testimonials: [
         {
-          text: "NoraVex delivers features that feel finished. Even small systems ship with polish and clear UX, not just 'it works.' A real professional.",
+          text: "NoraVex delivers features that feel finished. Even small systems ship with polish and clear functionality, not just 'it works.' A real professional.",
           author: "Teammate Feedback"
         },
         {
-          text: "Fast communication, clean scope definition, and always keeps performance in mind while making things look amazing. Would work with again.",
+          text: "Fast communication, clean scope definition, and always keeps performance in mind. Would definitely work with again on future projects.",
           author: "Project Lead"
         },
         {
-          text: "The admin tools saved us hours every week. Everything is intuitive, fast, and just works. Best dev tools we've used.",
+          text: "The backend systems are rock solid. Everything is reliable, fast, and well-documented. Best systems developer we've worked with.",
           author: "Game Owner"
         }
       ]
