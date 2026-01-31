@@ -16,7 +16,7 @@
       width: 100%;
       height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
       overflow: hidden;
     }
 
@@ -28,51 +28,184 @@
     }
 
     .header {
-      background: rgba(0, 0, 0, 0.3);
-      padding: 20px;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2));
+      padding: 30px 20px;
       text-align: center;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border-bottom: 2px solid rgba(255, 255, 255, 0.1);
     }
 
     .header h1 {
       color: #fff;
-      font-size: 2.5em;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      font-size: 3em;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(138, 43, 226, 0.5);
       margin-bottom: 10px;
+      letter-spacing: 3px;
+      font-weight: 900;
     }
 
-    .game-selector {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      margin-top: 15px;
+    .subtitle {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.2em;
+      margin-top: 5px;
     }
 
-    .game-btn {
+    .back-btn {
+      position: absolute;
+      top: 30px;
+      left: 30px;
       background: rgba(255, 255, 255, 0.2);
       color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      padding: 12px 24px;
-      font-size: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      padding: 12px 30px;
+      font-size: 18px;
       font-weight: bold;
       cursor: pointer;
-      border-radius: 25px;
+      border-radius: 30px;
       transition: all 0.3s ease;
-      backdrop-filter: blur(5px);
+      backdrop-filter: blur(10px);
+      display: none;
+      z-index: 1000;
     }
 
-    .game-btn:hover {
-      background: rgba(255, 255, 255, 0.4);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateX(-5px);
+      box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
     }
 
-    .game-btn.active {
-      background: #fff;
-      color: #667eea;
-      border-color: #fff;
+    .back-btn.show {
+      display: block;
+    }
+
+    .game-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 40px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    }
+
+    .game-grid::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .game-grid::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .game-grid::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+    }
+
+    .game-card {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+      border-radius: 20px;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      position: relative;
+      min-height: 250px;
+    }
+
+    .game-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(67, 97, 238, 0.3));
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .game-card:hover::before {
+      opacity: 1;
+    }
+
+    .game-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 20px 60px rgba(138, 43, 226, 0.4), 0 0 40px rgba(67, 97, 238, 0.3);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .game-icon {
+      width: 100%;
+      height: 150px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4em;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-icon::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    .game-info {
+      padding: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .game-title {
+      color: #fff;
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .game-description {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.95em;
+      line-height: 1.4;
+    }
+
+    .play-btn {
+      margin-top: 15px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      width: 100%;
+    }
+
+    .play-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
     }
 
     .game-container {
@@ -80,20 +213,17 @@
       position: relative;
       overflow: hidden;
       background: #000;
-    }
-
-    .game-frame {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
       display: none;
     }
 
-    .game-frame.active {
+    .game-container.active {
       display: block;
+    }
+
+    .game-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
 
     .loading {
@@ -104,14 +234,15 @@
       color: white;
       font-size: 24px;
       text-align: center;
+      z-index: 10;
     }
 
     .spinner {
       border: 4px solid rgba(255, 255, 255, 0.3);
       border-top: 4px solid white;
       border-radius: 50%;
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       animation: spin 1s linear infinite;
       margin: 0 auto 20px;
     }
@@ -123,12 +254,25 @@
 
     @media (max-width: 768px) {
       .header h1 {
-        font-size: 1.8em;
+        font-size: 2em;
+        letter-spacing: 2px;
       }
-      
-      .game-btn {
-        padding: 10px 16px;
-        font-size: 14px;
+
+      .subtitle {
+        font-size: 1em;
+      }
+
+      .game-grid {
+        grid-template-columns: 1fr;
+        padding: 20px;
+        gap: 20px;
+      }
+
+      .back-btn {
+        top: 15px;
+        left: 15px;
+        padding: 10px 20px;
+        font-size: 16px;
       }
     }
   </style>
@@ -136,29 +280,75 @@
 <body>
 
 <div class="container">
+  <button class="back-btn" id="backBtn">← Back to Games</button>
+
   <div class="header">
-    <h1>GAMING HUB</h1>
-    <div class="game-selector">
-      <button class="game-btn active" data-game="0">Crazy Ball</button>
-      <button class="game-btn" data-game="1">Stack Tower</button>
-      <button class="game-btn" data-game="2">Car Racing</button>
-      <button class="game-btn" data-game="3">Bubble Shooter</button>
-      <button class="game-btn" data-game="4">Snake Game</button>
-      <button class="game-btn" data-game="5">Puzzle Master</button>
+    <h1>⚡ GAMING HUB ⚡</h1>
+    <div class="subtitle">Choose Your Adventure</div>
+  </div>
+
+  <div class="game-grid" id="gameGrid">
+    <div class="game-card" data-game="0">
+      <div class="game-icon">🎱</div>
+      <div class="game-info">
+        <div class="game-title">Crazy Ball</div>
+        <div class="game-description">Navigate through obstacles and reach the finish line!</div>
+        <button class="play-btn">Play Now</button>
+      </div>
+    </div>
+
+    <div class="game-card" data-game="1">
+      <div class="game-icon">🏗️</div>
+      <div class="game-info">
+        <div class="game-title">Stack Tower</div>
+        <div class="game-description">Build the tallest tower without letting it fall!</div>
+        <button class="play-btn">Play Now</button>
+      </div>
+    </div>
+
+    <div class="game-card" data-game="2">
+      <div class="game-icon">🏎️</div>
+      <div class="game-info">
+        <div class="game-title">Car Racing</div>
+        <div class="game-description">Race against time and become the ultimate champion!</div>
+        <button class="play-btn">Play Now</button>
+      </div>
+    </div>
+
+    <div class="game-card" data-game="3">
+      <div class="game-icon">🎯</div>
+      <div class="game-info">
+        <div class="game-title">Bubble Shooter</div>
+        <div class="game-description">Match and pop colorful bubbles in this classic game!</div>
+        <button class="play-btn">Play Now</button>
+      </div>
+    </div>
+
+    <div class="game-card" data-game="4">
+      <div class="game-icon">🐍</div>
+      <div class="game-info">
+        <div class="game-title">Snake Game</div>
+        <div class="game-description">Grow your snake and avoid hitting the walls!</div>
+        <button class="play-btn">Play Now</button>
+      </div>
+    </div>
+
+    <div class="game-card" data-game="5">
+      <div class="game-icon">🧩</div>
+      <div class="game-info">
+        <div class="game-title">Puzzle Master</div>
+        <div class="game-description">Challenge your brain with mind-bending puzzles!</div>
+        <button class="play-btn">Play Now</button>
+      </div>
     </div>
   </div>
 
-  <div class="game-container">
-    <div class="loading">
+  <div class="game-container" id="gameContainer">
+    <div class="loading" id="loading">
       <div class="spinner"></div>
       <div>Loading Game...</div>
     </div>
-    <iframe id="game-0" class="game-frame active" allow="autoplay" allowfullscreen></iframe>
-    <iframe id="game-1" class="game-frame" allow="autoplay" allowfullscreen></iframe>
-    <iframe id="game-2" class="game-frame" allow="autoplay" allowfullscreen></iframe>
-    <iframe id="game-3" class="game-frame" allow="autoplay" allowfullscreen></iframe>
-    <iframe id="game-4" class="game-frame" allow="autoplay" allowfullscreen></iframe>
-    <iframe id="game-5" class="game-frame" allow="autoplay" allowfullscreen></iframe>
+    <iframe id="gameFrame" class="game-frame" allow="autoplay" allowfullscreen></iframe>
   </div>
 </div>
 
@@ -174,132 +364,128 @@
     { id: "9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d", name: "Puzzle Master" }
   ];
 
-  let currentGame = 0;
-  const bridges = [];
-  const hasImpressions = [];
-  const hasSuccesses = [];
-  const loadedGames = [];
+  let currentGame = -1;
+  let bridge = null;
+  let hasImpression = false;
+  let hasSuccess = false;
+  let loaded = false;
 
-  GAMES.forEach((game, index) => {
-    bridges[index] = null;
-    hasImpressions[index] = false;
-    hasSuccesses[index] = false;
-    loadedGames[index] = false;
-  });
+  const gameGrid = document.getElementById('gameGrid');
+  const gameContainer = document.getElementById('gameContainer');
+  const gameFrame = document.getElementById('gameFrame');
+  const loading = document.getElementById('loading');
+  const backBtn = document.getElementById('backBtn');
 
   window.GD_OPTIONS = {
-    gameId: GAMES[currentGame].id,
+    gameId: "",
     loader: { enabled: true, sdk_version: "1.15.2" },
 
     onLoaderEvent: function (event) {
       if (event.name === "LOADER_DATA") {
-        bridges[currentGame] = event.message.bridge;
+        bridge = event.message.bridge;
       }
     },
 
     onEvent: function (event) {
       switch (event.name) {
         case "SDK_GAME_START":
-          loadGame(currentGame);
+          loadGame();
           break;
 
         case "ALL_ADS_COMPLETED":
         case "COMPLETE":
         case "USER_CLOSE":
         case "SKIPPED":
-          hasImpressions[currentGame] = true;
-          hasSuccesses[currentGame] = true;
+          hasImpression = true;
+          hasSuccess = true;
           break;
 
         case "AD_ERROR":
         case "AD_SDK_CANCELED":
-          hasImpressions[currentGame] = hasSuccesses[currentGame];
+          hasImpression = hasSuccess;
           break;
       }
     }
   };
 
-  function loadGame(gameIndex) {
-    if (loadedGames[gameIndex] || !bridges[gameIndex]) {
-      setTimeout(() => hideLoading(), 500);
-      return;
-    }
-    
-    loadedGames[gameIndex] = true;
+  function loadGame() {
+    if (loaded || !bridge || currentGame === -1) return;
+    loaded = true;
 
-    const params = bridges[gameIndex].exports.formatTokenURLSearch({
-      parentURL: bridges[gameIndex].parentURL,
-      parentDomain: bridges[gameIndex].parentDomain,
-      topDomain: bridges[gameIndex].topDomain,
-      hasImpression: hasImpressions[gameIndex],
+    const params = bridge.exports.formatTokenURLSearch({
+      parentURL: bridge.parentURL,
+      parentDomain: bridge.parentDomain,
+      topDomain: bridge.topDomain,
+      hasImpression: hasImpression,
       host: location.hostname,
       version: "1.5.18"
     });
 
-    const iframe = document.getElementById(`game-${gameIndex}`);
-    iframe.src = "//html5.gamedistribution.com/rvvASMiM/" + GAMES[gameIndex].id + "/index.html" + params;
+    gameFrame.src = "//html5.gamedistribution.com/rvvASMiM/" + GAMES[currentGame].id + "/index.html" + params;
     
-    iframe.onload = function() {
+    gameFrame.onload = function() {
       hideLoading();
     };
+
+    setTimeout(() => {
+      hideLoading();
+    }, 3000);
   }
 
   function hideLoading() {
-    const loading = document.querySelector('.loading');
-    if (loading) {
-      loading.style.display = 'none';
-    }
+    loading.style.display = 'none';
   }
 
   function showLoading() {
-    const loading = document.querySelector('.loading');
-    if (loading) {
-      loading.style.display = 'block';
-    }
+    loading.style.display = 'block';
   }
 
-  function switchGame(gameIndex) {
-    if (gameIndex === currentGame) return;
+  function openGame(gameIndex) {
+    currentGame = gameIndex;
+    loaded = false;
+    bridge = null;
 
+    gameGrid.style.display = 'none';
+    gameContainer.classList.add('active');
+    backBtn.classList.add('show');
     showLoading();
 
-    document.querySelectorAll('.game-frame').forEach(frame => {
-      frame.classList.remove('active');
-    });
+    window.GD_OPTIONS.gameId = GAMES[gameIndex].id;
 
-    document.querySelectorAll('.game-btn').forEach(btn => {
-      btn.classList.remove('active');
-    });
+    gameFrame.src = "";
 
-    document.querySelector(`[data-game="${gameIndex}"]`).classList.add('active');
-    document.getElementById(`game-${gameIndex}`).classList.add('active');
-
-    currentGame = gameIndex;
-
-    if (!loadedGames[gameIndex]) {
-      window.GD_OPTIONS.gameId = GAMES[gameIndex].id;
-      
+    if (!window.gdsdkLoaded) {
+      const script = document.createElement("script");
+      script.src = "https://html5.api.gamedistribution.com/main.min.js";
+      script.async = true;
+      script.onload = function() {
+        window.gdsdkLoaded = true;
+      };
+      document.body.appendChild(script);
+    } else {
       if (window.gdsdk) {
         window.gdsdk.showAd();
       }
-      
-      loadGame(gameIndex);
-    } else {
-      hideLoading();
     }
   }
 
-  document.querySelectorAll('.game-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
+  function closeGame() {
+    gameContainer.classList.remove('active');
+    gameGrid.style.display = 'grid';
+    backBtn.classList.remove('show');
+    gameFrame.src = "";
+    currentGame = -1;
+    loaded = false;
+  }
+
+  document.querySelectorAll('.game-card').forEach(card => {
+    card.addEventListener('click', function(e) {
       const gameIndex = parseInt(this.getAttribute('data-game'));
-      switchGame(gameIndex);
+      openGame(gameIndex);
     });
   });
 
-  const script = document.createElement("script");
-  script.src = "https://html5.api.gamedistribution.com/main.min.js";
-  script.async = true;
-  document.body.appendChild(script);
+  backBtn.addEventListener('click', closeGame);
 
 })();
 </script>
